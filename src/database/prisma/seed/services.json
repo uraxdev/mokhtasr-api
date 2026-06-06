@@ -1,0 +1,82 @@
+[
+	{
+		"id": "plumbing",
+		"name": "Plumbing",
+		"category": "Home Maintenance"
+	},
+	{
+		"id": "electrical",
+		"name": "Electrical Services",
+		"category": "Home Maintenance"
+	},
+	{
+		"id": "carpentry",
+		"name": "Carpentry",
+		"category": "Home Maintenance"
+	},
+	{
+		"id": "painting",
+		"name": "Painting",
+		"category": "Home Maintenance"
+	},
+	{
+		"id": "air_conditioning",
+		"name": "Air Conditioning & HVAC",
+		"category": "Home Maintenance"
+	},
+	{
+		"id": "appliance_repair",
+		"name": "Appliance Repair",
+		"category": "Home Maintenance"
+	},
+	{
+		"id": "cleaning",
+		"name": "Cleaning Services",
+		"category": "Home Services"
+	},
+	{
+		"id": "pest_control",
+		"name": "Pest Control",
+		"category": "Home Services"
+	},
+	{
+		"id": "security_systems",
+		"name": "Security Systems",
+		"category": "Home Services"
+	},
+	{
+		"id": "handyman",
+		"name": "Handyman",
+		"category": "General Services"
+	},
+	{
+		"id": "gardening",
+		"name": "Gardening & Landscaping",
+		"category": "Outdoor Services"
+	},
+	{
+		"id": "moving",
+		"name": "Moving & Relocation",
+		"category": "Logistics"
+	},
+	{
+		"id": "it_support",
+		"name": "IT Support",
+		"category": "Technical Services"
+	},
+	{
+		"id": "mobile_repair",
+		"name": "Mobile Phone Repair",
+		"category": "Technical Services"
+	},
+	{
+		"id": "car_mechanic",
+		"name": "Car Mechanic",
+		"category": "Automotive"
+	},
+	{
+		"id": "car_wash",
+		"name": "Car Wash",
+		"category": "Automotive"
+	}
+]

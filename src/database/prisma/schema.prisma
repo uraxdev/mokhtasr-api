@@ -1,0 +1,382 @@
+// ─── Config ───────────────────────────────────────────────────────────────────
+generator client {
+  provider = "prisma-client"
+  output   = "../generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum UserRole {
+  ADMIN
+  HANDYMAN
+  CUSTOMER
+}
+
+enum ApplicationStatus {
+  PENDING
+  REJECTED
+  EXPIRED
+  ACCEPTED
+}
+
+enum HandymanStatus {
+  PENDING
+  REJECTED
+  BLOCKED
+  ACCEPTED
+}
+
+enum WeekDay {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}
+
+enum ProposalStatus {
+  WAITING_OFFERS
+  OFFERS_RECEIVED
+  ACCEPTED
+  IN_PROGRESS
+  AWAITING_COMPLETION
+  COMPLETED
+  CANCELLED
+}
+
+enum OfferStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  COMPLETED
+}
+
+enum JobStage {
+  INITIATED
+  AT_LOCATION
+  AWAITING_CODE
+}
+
+enum TransactionStatus {
+  RECEIVED
+  PENDING
+  REFUNDED
+}
+
+enum ChatMessageType {
+  TEXT
+  IMAGE
+  RESCHEDULE
+}
+
+enum RescheduleStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
+// ─── Models ───────────────────────────────────────────────────────────────────
+
+model Region {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  name           String  @unique @map("name")
+  parentRegionId String? @map("parent_region_id")
+
+  // Relation fields
+  parentRegion Region?       @relation("RegionTree", fields: [parentRegionId], references: [id], onDelete: Cascade)
+  subRegions   Region[]      @relation("RegionTree")
+  handymans    Handyman[]
+  applications Application[]
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("regions")
+}
+
+model Service {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  name String @unique @map("name")
+
+  // Relation fields
+  handymans    Handyman[]
+  applications Application[]
+  proposals    Proposal[]
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("services")
+}
+
+model User {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  name   String   @map("name")
+  phone  String   @unique @map("phone")
+  role   UserRole @default(HANDYMAN) @map("role")
+  avatar String?  @map("avatar")
+
+  // Relation fields
+  admin        Admin?
+  customer     Customer?
+  handyman     Handyman?
+  chatMessages ChatMessage[]
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("users")
+}
+
+model Admin {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  userId String @unique @map("user_id")
+
+  // Relation fields
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("admins")
+}
+
+model Handyman {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  workDays  WeekDay[]      @default([SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY]) @map("work_days")
+  status    HandymanStatus @default(PENDING) @map("status")
+  birthdate DateTime?      @map("birthdate")
+  userId    String         @unique @map("user_id")
+
+  // Relation fields
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  regions     Region[]
+  services    Service[]
+  application Application?
+  offers      Offer[]
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("handymen")
+}
+
+model Customer {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  userId String @unique @map("user_id")
+
+  // Relation fields
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  proposals Proposal[]
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("customers")
+}
+
+model Verification {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  token     String   @unique @map("token")
+  expiresAt DateTime @map("expires_at")
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("verification")
+}
+
+model Application {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  firstName       String            @map("first_name")
+  lastName        String            @map("last_name")
+  nationalIdFront String            @map("national_id_front")
+  nationalIdBack  String            @map("national_id_back")
+  selfie          String            @map("selfie")
+  birthdate       DateTime          @map("birthdate")
+  handymanId      String            @unique @map("handyman_id")
+  status          ApplicationStatus @default(PENDING) @map("status")
+  expiresAt       DateTime          @map("expires_at")
+  notes           String?           @map("notes")
+
+  // Relation fields
+  handyman Handyman  @relation(fields: [handymanId], references: [id], onDelete: Cascade)
+  regions  Region[]
+  services Service[]
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("applications")
+}
+
+model Proposal {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  title       String         @map("title")
+  description String         @map("description")
+  address     String         @map("address")
+  status      ProposalStatus @default(WAITING_OFFERS) @map("status")
+  dueDate     DateTime       @map("due_date")
+  latitude    Float?         @map("latitude")
+  longitude   Float?         @map("longitude")
+  serviceId   String         @map("service_id")
+  customerId  String         @map("customer_id")
+
+  // Relation fields
+  service  Service  @relation(fields: [serviceId], references: [id])
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  offers   Offer[]
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("proposals")
+}
+
+model Offer {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  price             Float       @map("price")
+  currency          String      @default("EGP") @map("currency")
+  status            OfferStatus @default(PENDING) @map("status")
+  completionCode    String      @map("completion_code")
+  message           String?     @map("message")
+  estimatedDuration String?     @map("estimated_duration")
+  stage             JobStage?   @map("stage")
+  proposalId        String      @map("proposal_id")
+  handymanId        String      @map("handyman_id")
+
+  // Relation fields
+  proposal    Proposal      @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  handyman    Handyman      @relation(fields: [handymanId], references: [id], onDelete: Cascade)
+  messages    ChatMessage[]
+  review      Review?
+  transaction Transaction?
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("offers")
+}
+
+model Review {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  offerId      String  @unique @map("offer_id")
+  reviewerName String  @map("reviewer_name")
+  rating       Float   @map("rating")
+  comment      String? @map("comment")
+
+  // Relation fields
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("reviews")
+}
+
+model Transaction {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  offerId  String            @unique @map("offer_id")
+  amount   Float             @map("amount")
+  currency String            @map("currency")
+  status   TransactionStatus @default(RECEIVED) @map("status")
+
+  // Relation fields
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("transactions")
+}
+
+model ChatMessage {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  offerId          String            @map("offer_id")
+  senderId         String            @map("sender_id")
+  type             ChatMessageType   @map("type")
+  text             String?           @map("text")
+  imageUrl         String?           @map("image_url")
+  proposedDate     DateTime?         @map("proposed_date")
+  rescheduleStatus RescheduleStatus? @map("reschedule_status")
+
+  // Relation fields
+  offer  Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  sender User  @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("chat_messages")
+}

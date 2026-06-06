@@ -1,0 +1,35 @@
+[
+	{
+		"id": "cairo",
+		"name": "Cairo",
+		"cities": [
+			{ "id": "nasr_city", "name": "Nasr City" },
+			{ "id": "heliopolis", "name": "Heliopolis" },
+			{ "id": "el_shorouk", "name": "El Shorouk" },
+			{ "id": "maadi", "name": "Maadi" },
+			{ "id": "new_cairo", "name": "New Cairo" },
+			{ "id": "zamalek", "name": "Zamalek" },
+			{ "id": "downtown", "name": "Downtown Cairo" },
+			{ "id": "ain_shams", "name": "Ain Shams" },
+			{ "id": "shubra", "name": "Shubra" },
+			{ "id": "mokattam", "name": "Mokattam" },
+			{ "id": "helwan", "name": "Helwan" }
+		]
+	},
+	{
+		"id": "giza",
+		"name": "Giza",
+		"cities": [
+			{ "id": "dokki", "name": "Dokki" },
+			{ "id": "mohandessin", "name": "Mohandessin" },
+			{ "id": "6th_of_october", "name": "6th of October City" },
+			{ "id": "sheikh_zayed", "name": "Sheikh Zayed City" },
+			{ "id": "haram", "name": "Haram" },
+			{ "id": "faisal", "name": "Faisal" },
+			{ "id": "imbaba", "name": "Imbaba" },
+			{ "id": "agouza", "name": "Agouza" },
+			{ "id": "badrashein", "name": "Badrashein" },
+			{ "id": "hawamdeya", "name": "Hawamdeya" }
+		]
+	}
+]
