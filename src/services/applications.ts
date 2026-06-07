@@ -51,7 +51,14 @@ export class ApplicationService {
 		if (new Date(Date.now()) > application.expiresAt) throw new Error('Application expired');
 
 		await this.client.application.update({ where: { id }, data: { status: 'ACCEPTED' } });
-		await this.client.handyman.update({ where: { id: application.handymanId }, data: { status: 'ACCEPTED' } });
+		await this.client.handyman.update({
+			where: { id: application.handymanId },
+			data: {
+				status: 'ACCEPTED',
+				services: { connect: application.services.map((service) => ({ id: service.id })) },
+				regions: { connect: application.regions.map((region) => ({ id: region.id })) }
+			}
+		});
 
 		return { id };
 	}
