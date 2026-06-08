@@ -4,7 +4,10 @@ import type { Router } from 'express';
 
 export default (router: Router) => {
 	router.get('/applications', async (_req, res, next) => {
+		const adminId = res.locals.entities.admin;
+
 		try {
+			if (!adminId) return next(new Error('Forbidden: admins only'));
 			return res.status(200).json(await new ApplicationService(client).list());
 		} catch (error) {
 			return next(error);
@@ -33,8 +36,10 @@ export default (router: Router) => {
 
 	router.patch('/applications/:id/accept', async (req, res, next) => {
 		const id = req.params['id'];
+		const adminId = res.locals.entities.admin;
 
 		try {
+			if (!adminId) return next(new Error('Forbidden: admins only'));
 			return res.status(200).json(await new ApplicationService(client).accept(id));
 		} catch (error) {
 			return next(error);
@@ -44,8 +49,10 @@ export default (router: Router) => {
 	router.patch('/applications/:id/reject', async (req, res, next) => {
 		const id = req.params['id'];
 		const payload = req.body;
+		const adminId = res.locals.entities.admin;
 
 		try {
+			if (!adminId) return next(new Error('Forbidden: admins only'));
 			return res.status(200).json(await new ApplicationService(client).reject(id, payload));
 		} catch (error) {
 			return next(error);
