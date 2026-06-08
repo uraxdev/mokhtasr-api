@@ -26,8 +26,10 @@ export default (router: Router) => {
 
 	router.get('/applications/:id/status', async (req, res, next) => {
 		const id = req.params['id'];
+		const handymanId = res.locals.entities.handyman;
 
 		try {
+			if (!handymanId) return next(new Error('Forbidden: handymen only'));
 			return res.status(200).json(await new ApplicationService(client).status(id));
 		} catch (error) {
 			return next(error);
