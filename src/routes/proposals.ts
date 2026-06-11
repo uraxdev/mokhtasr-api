@@ -19,7 +19,6 @@ export default (router: Router) => {
 		const customerId = res.locals.entities.customer;
 
 		try {
-			if (!customerId) throw new Error('Forbidden: customer only');
 			return res.status(200).json(await new ProposalService(client).list(customerId));
 		} catch (error) {
 			return next(error);

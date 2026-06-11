@@ -11,9 +11,9 @@ export class ProposalService {
 		offers: { include: { handyman: { include: { user: true } }, review: true } }
 	} satisfies Prisma.ProposalInclude;
 
-	async list(customerId: string) {
+	async list(customerId?: string) {
 		return await this.client.proposal.findMany({
-			where: { customerId },
+			...(customerId && { where: { customerId } }),
 			orderBy: { createdAt: 'desc' },
 			include: this.include
 		});
