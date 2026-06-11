@@ -7,12 +7,21 @@ export default (router: Router) => {
 		const handymanId = res.locals.entities.handyman;
 		const payload = req.body;
 
-		if (!handymanId) {
-			return next(new Error('Forbidden: only handymen can update a handyman profile'));
+		try {
+			if (!handymanId) throw new Error('Forbidden: handymen only');
+			return res.status(200).json(await new HandymanService(client).update({ id: handymanId }, payload));
+		} catch (error) {
+			return next(error);
 		}
+	});
+
+	router.post('/handymen/:id/block', async (req, res, next) => {
+		const id = req.params['id'];
+		const handymanId = res.locals.entities.handyman;
 
 		try {
-			return res.status(200).json(await new HandymanService(client).update({ id: handymanId }, payload));
+			if (!handymanId) throw new Error('Forbidden: handymen only');
+			return res.status(200).json(await new HandymanService(client).block(id));
 		} catch (error) {
 			return next(error);
 		}

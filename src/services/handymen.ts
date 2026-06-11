@@ -71,4 +71,32 @@ export class HandymanService {
 			return existing;
 		});
 	}
+
+	async block(id: string) {
+		return await (this.client as PrismaClient).$transaction(async (tx) => {
+			const handyman = await tx.handyman.findUnique({ where: { id }, include: { application: true, offers: true } });
+			if (!handyman) throw new Error('Handyman not found');
+
+			if (handyman.application && handyman.application.status !== 'REJECTED') {
+				await tx.application.update({
+					where: { handymanId: id },
+					data: { status: 'REJECTED' }
+				});
+			}
+
+			if (handyman.offers.length) {
+				await tx.offer.updateMany({
+					where: { handymanId: id },
+					data: { status: 'DECLINED' }
+				});
+			}
+
+			tx.handyman.update({
+				where: { id },
+				data: { status: 'BLOCKED' }
+			});
+
+			return handyman;
+		});
+	}
 }
