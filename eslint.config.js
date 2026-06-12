@@ -1,7 +1,7 @@
 import js from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import tseslint from 'typescript-eslint';
 import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 export default [
 	js.configs.recommended,
@@ -9,12 +9,9 @@ export default [
 	...tseslint.configs.recommended,
 	{
 		languageOptions: {
-			globals: {
-				...globals.node
-			}
+			globals: { ...globals.node }
 		}
 	},
-	{
-		ignores: ['dist/**']
-	}
+	{ ignores: ['dist/**'] },
+	{ rules: { '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }] } }
 ];

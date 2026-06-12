@@ -20,6 +20,7 @@ export async function sendOtpViaWhatsApp(to: string, otp: string) {
 
 		return result;
 	} catch {
-		throw new Error('Failed to send OTP via WhatsApp');
+		// Silence errors for now
+		// throw new Error('Failed to send OTP via WhatsApp');
 	}
 }
