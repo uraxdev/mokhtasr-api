@@ -1,6 +1,6 @@
 import z from 'zod';
 
-import { PhoneSchema, Refined } from '@/lib/schemas';
+import { Refined } from '@/lib/schemas';
 import { HandymanStatus, WeekDay } from '../generated/enums';
 
 export class HandymanRepository {
@@ -28,9 +28,6 @@ export class HandymanRepository {
 
 	static update() {
 		return Refined({
-			name: z.string().optional(),
-			phone: PhoneSchema.optional(),
-			birthdate: z.iso.datetime().optional(),
 			regions: z.array(z.uuid()).optional(),
 			workDays: z.array(z.enum(HandymanRepository.weekdays)).optional()
 		});

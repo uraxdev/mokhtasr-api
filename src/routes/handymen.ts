@@ -17,10 +17,10 @@ export default (router: Router) => {
 
 	router.post('/handymen/:id/block', async (req, res, next) => {
 		const id = req.params['id'];
-		const handymanId = res.locals.entities.handyman;
+		const adminId = res.locals.entities.admin;
 
 		try {
-			if (!handymanId) throw new Error('Forbidden: handymen only');
+			if (!adminId) throw new Error('Forbidden: admins only');
 			return res.status(200).json(await new HandymanService(client).block(id));
 		} catch (error) {
 			return next(error);

@@ -27,6 +27,16 @@ export class ApplicationService {
 			throw new Error('Handyman not found');
 		}
 
+		const regions = await this.client.region.findMany({ where: { id: { in: payload.regions } } });
+		if (regions.length !== payload.regions.length) {
+			throw new Error('Some regions are not found');
+		}
+
+		const services = await this.client.service.findMany({ where: { id: { in: payload.services } } });
+		if (services.length !== payload.services.length) {
+			throw new Error('Some services are not found');
+		}
+
 		const data = {
 			firstName: payload.firstName,
 			lastName: payload.lastName,
@@ -35,8 +45,8 @@ export class ApplicationService {
 			selfie: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnp6Pxvj7XysiWnhSIsAKBRlVbE5GwyWidoQ&s',
 			birthdate: payload.birthdate,
 			handyman: { connect: { id: payload.handymanId } },
-			regions: { connect: payload.regions.map((region) => ({ id: region })) },
-			services: { connect: payload.services.map((service) => ({ id: service })) },
+			regions: { connect: regions.map((region) => ({ id: region.id })) },
+			services: { connect: services.map((service) => ({ id: service.id })) },
 			expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
 		} satisfies Prisma.ApplicationCreateInput;
 
@@ -55,6 +65,7 @@ export class ApplicationService {
 			where: { id: application.handymanId },
 			data: {
 				status: 'ACCEPTED',
+				birthdate: application.birthdate,
 				services: { connect: application.services.map((service) => ({ id: service.id })) },
 				regions: { connect: application.regions.map((region) => ({ id: region.id })) }
 			}

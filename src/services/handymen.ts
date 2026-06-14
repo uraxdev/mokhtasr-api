@@ -37,23 +37,21 @@ export class HandymanService {
 
 			if (!existing) throw new Error('Handyman not found');
 
-			const updateData: Prisma.HandymanUpdateInput = {};
-
-			if (payload.birthdate) {
-				updateData.birthdate = new Date(payload.birthdate);
-			}
+			const data: Prisma.HandymanUpdateInput = {};
 
 			if (payload.regions) {
-				updateData.regions = { connect: payload.regions.map((id) => ({ id })) };
+				const regions = await this.client.region.findMany({ where: { id: { in: payload.regions } } });
+				if (regions.length !== payload.regions.length) throw new Error('Some regions are not found');
+				data.regions = { connect: regions.map((region) => ({ id: region.id })) };
 			}
 
 			if (payload.workDays) {
 				const DEFAULT_WORK_DAYS = [...HandymanRepository.weekdays];
-				updateData.workDays = payload.workDays.length > 0 ? [...payload.workDays] : [...DEFAULT_WORK_DAYS];
+				data.workDays = payload.workDays.length > 0 ? [...payload.workDays] : [...DEFAULT_WORK_DAYS];
 			}
 
-			if (Object.keys(updateData).length > 0) {
-				await tx.handyman.update({ where, data: updateData });
+			if (Object.keys(data).length > 0) {
+				await tx.handyman.update({ where, data });
 			}
 
 			return existing;
@@ -91,12 +89,12 @@ export class HandymanService {
 				});
 			}
 
-			tx.handyman.update({
+			const updated = await tx.handyman.update({
 				where: { id },
 				data: { status: 'BLOCKED' }
 			});
 
-			return handyman;
+			return updated;
 		});
 	}
 }
