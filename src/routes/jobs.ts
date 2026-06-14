@@ -8,7 +8,7 @@ export default (router: Router) => {
 
 		if (!handymanId) return next(new Error('Forbidden: handymen only'));
 
-		const { category, dateRange, page, limit } = req.query as Record<string, string | undefined>;
+		const { service, dateRange, page, limit } = req.query as Record<string, string | undefined>;
 		const take = Math.min(Math.max(1, parseInt(limit ?? '20', 10) || 20), 100);
 		const skip = (Math.max(1, parseInt(page ?? '1', 10) || 1) - 1) * take;
 		const dueDate = parseDateRange(dateRange);
@@ -17,7 +17,7 @@ export default (router: Router) => {
 			const proposals = await client.proposal.findMany({
 				where: {
 					status: { in: ['WAITING_OFFERS', 'OFFERS_RECEIVED'] },
-					...(category ? { serviceId: category } : {}),
+					...(service ? { serviceId: service } : {}),
 					...(dueDate ? { dueDate } : {})
 				},
 				skip,
