@@ -14,7 +14,7 @@ export class AuthService {
 		const otp = generateOTP();
 		const token = generateToken({ ...payload, otp }, { expiresIn: '5m' });
 
-		if (process.env['NODE_ENV'] === 'production') {
+		if (process.env['NODE_ENV'] === 'production' && process.env['USE_RANDOM_OTP'] === 'YES') {
 			await sendOtpViaWhatsApp(payload.phone, otp);
 		}
 

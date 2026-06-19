@@ -150,11 +150,8 @@ export function verifyToken<T extends jwt.JwtPayload>(token: string): T | null {
 }
 
 export function generateOTP() {
-	if (process.env['NODE_ENV'] === 'production') {
-		return Math.floor(100000 + Math.random() * 900000).toString();
-	} else {
-		return '123456';
-	}
+	if (process.env['USE_RANDOM_OTP'] !== 'YES') return '123456';
+	return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
 export function parseDateRange(range?: string): { gte: Date; lte: Date } | undefined {
