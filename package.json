@@ -9,9 +9,7 @@
 	"scripts": {
 		"dev": "tsx watch src/index.ts",
 		"build": "prisma generate && tsc -p tsconfig.json && tsc-alias -p tsconfig.json --resolve-full-paths --resolve-full-extension .js --verbose",
-		"build:staging": "NODE_ENV=staging npm run build",
 		"start": "node dist/index.js",
-		"start:staging": "NODE_ENV=staging npm run start",
 		"compile": "tsc --noEmit",
 		"lint": "eslint src/",
 		"db:generate": "prisma generate",
@@ -43,9 +41,7 @@
 		"eslint-config-prettier": "^10.1.1",
 		"globals": "^16.5.0",
 		"prisma": "^7.7.0",
-		"ts-node": "^10.9.2",
 		"tsc-alias": "^1.8.16",
-		"tsconfig-paths": "^4.2.0",
 		"tsx": "^4.21.0",
 		"typescript": "^5.9.2",
 		"typescript-eslint": "^8.50.0"
