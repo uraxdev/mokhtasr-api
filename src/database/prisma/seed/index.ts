@@ -1,7 +1,7 @@
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../../generated/client';
+import categories from './categories.json';
 import regions from './regions.json';
-import services from './services.json';
 
 const adapter = new PrismaPg({ connectionString: process.env['DATABASE_URL']! });
 const client = new PrismaClient({ adapter });
@@ -20,10 +20,15 @@ async function main() {
 		});
 	}
 
-	for (const service of services) {
-		await client.service.create({
+	for (const category of categories.categories) {
+		await client.category.create({
 			data: {
-				name: service.name
+				name: category.name,
+				services: {
+					createMany: {
+						data: category.services.map((service) => ({ name: { ar: service.ar, en: service.en } }))
+					}
+				}
 			}
 		});
 	}

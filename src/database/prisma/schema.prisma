@@ -105,14 +105,34 @@ model Region {
   @@map("regions")
 }
 
+model Category {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  name Json @map("name")
+
+  // Relation fields
+  services Service[]
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("categories")
+}
+
 model Service {
   // Primary key
   id String @id @default(uuid()) @map("id")
 
   // Own fields
-  name String @unique @map("name")
+  name       Json   @map("name")
+  categoryId String @map("category_id")
 
   // Relation fields
+  category     Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   handymans    Handyman[]
   applications Application[]
   proposals    Proposal[]

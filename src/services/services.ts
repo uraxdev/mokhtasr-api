@@ -4,7 +4,7 @@ export class ServiceService {
 	constructor(private readonly client: Client) {}
 
 	async list() {
-		return await this.client.service.findMany({ orderBy: { name: 'asc' } });
+		return await this.client.service.findMany({ orderBy: { createdAt: 'asc' } });
 	}
 
 	async find(id: string) {

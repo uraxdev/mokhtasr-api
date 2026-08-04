@@ -1,0 +1,594 @@
+{
+	"categories": [
+		{
+			"id": "plumbing",
+			"name": {
+				"ar": "السباكة",
+				"en": "Plumbing"
+			},
+			"services": [
+				{
+					"id": "drain_cleaning",
+					"ar": "تسليك المجاري",
+					"en": "Drain Cleaning"
+				},
+				{
+					"id": "water_leak_repair",
+					"ar": "إصلاح تسريب المياه",
+					"en": "Water Leak Repair"
+				},
+				{
+					"id": "faucet_installation",
+					"ar": "تركيب الحنفيات والخلاطات",
+					"en": "Faucet Installation"
+				},
+				{
+					"id": "bathroom_installation",
+					"ar": "تركيب أطقم الحمامات",
+					"en": "Bathroom Fixture Installation"
+				},
+				{
+					"id": "water_heater_installation",
+					"ar": "تركيب السخانات",
+					"en": "Water Heater Installation"
+				},
+				{
+					"id": "water_tank_installation",
+					"ar": "تركيب الخزانات والمواتير",
+					"en": "Water Tank & Pump Installation"
+				},
+				{
+					"id": "pipe_replacement",
+					"ar": "تغيير المواسير",
+					"en": "Pipe Replacement"
+				},
+				{
+					"id": "water_filter_installation",
+					"ar": "تركيب فلاتر المياه",
+					"en": "Water Filter Installation"
+				},
+				{
+					"id": "bathroom_fan_installation",
+					"ar": "تركيب شفاطات الحمام",
+					"en": "Bathroom Exhaust Fan Installation"
+				},
+				{
+					"id": "plumbing_maintenance",
+					"ar": "صيانة شبكات المياه والصرف",
+					"en": "Plumbing System Maintenance"
+				}
+			]
+		},
+		{
+			"id": "electrical",
+			"name": {
+				"ar": "الكهرباء",
+				"en": "Electrical"
+			},
+			"services": [
+				{
+					"id": "electrical_repair",
+					"ar": "إصلاح الأعطال الكهربائية",
+					"en": "Electrical Repair"
+				},
+				{
+					"id": "lighting_installation",
+					"ar": "تركيب الإضاءة والنجف",
+					"en": "Lighting Installation"
+				},
+				{
+					"id": "electrical_wiring",
+					"ar": "تأسيس كهرباء",
+					"en": "Electrical Wiring"
+				},
+				{
+					"id": "switch_socket_installation",
+					"ar": "تركيب مفاتيح وبرايز",
+					"en": "Switch & Socket Installation"
+				},
+				{
+					"id": "ceiling_fan_installation",
+					"ar": "تركيب مراوح سقف",
+					"en": "Ceiling Fan Installation"
+				},
+				{
+					"id": "cctv_installation",
+					"ar": "تركيب كاميرات مراقبة",
+					"en": "CCTV Installation"
+				},
+				{
+					"id": "intercom_installation",
+					"ar": "تركيب إنتركم",
+					"en": "Intercom Installation"
+				},
+				{
+					"id": "electrical_panel_installation",
+					"ar": "تركيب لوحات وقواطع الكهرباء",
+					"en": "Electrical Panel Installation"
+				},
+				{
+					"id": "network_cabling",
+					"ar": "تمديد كابلات الإنترنت",
+					"en": "Network Cabling"
+				},
+				{
+					"id": "home_electrical_maintenance",
+					"ar": "صيانة الكهرباء المنزلية",
+					"en": "Home Electrical Maintenance"
+				}
+			]
+		},
+		{
+			"id": "carpentry",
+			"name": {
+				"ar": "النجارة",
+				"en": "Carpentry"
+			},
+			"services": [
+				{
+					"id": "furniture_assembly",
+					"ar": "فك وتركيب الأثاث",
+					"en": "Furniture Assembly"
+				},
+				{
+					"id": "wardrobe_making",
+					"ar": "تفصيل دواليب",
+					"en": "Custom Wardrobes"
+				},
+				{
+					"id": "kitchen_cabinets",
+					"ar": "تفصيل مطابخ",
+					"en": "Kitchen Cabinets"
+				},
+				{
+					"id": "door_repair",
+					"ar": "إصلاح الأبواب",
+					"en": "Door Repair"
+				},
+				{
+					"id": "shelf_installation",
+					"ar": "تركيب أرفف",
+					"en": "Shelf Installation"
+				},
+				{
+					"id": "parquet_installation",
+					"ar": "تركيب باركيه",
+					"en": "Parquet Installation"
+				},
+				{
+					"id": "furniture_repair",
+					"ar": "صيانة الأثاث",
+					"en": "Furniture Repair"
+				},
+				{
+					"id": "office_furniture",
+					"ar": "تفصيل مكاتب",
+					"en": "Office Furniture"
+				},
+				{
+					"id": "hinges_locks",
+					"ar": "تركيب مفصلات وأقفال",
+					"en": "Hinges & Locks Installation"
+				},
+				{
+					"id": "wood_storage_units",
+					"ar": "تصنيع مكتبات ووحدات تخزين",
+					"en": "Wood Storage Units"
+				}
+			]
+		},
+		{
+			"id": "metalwork",
+			"name": {
+				"ar": "الحدادة والألوميتال",
+				"en": "Metalwork & Aluminum"
+			},
+			"services": [
+				{
+					"id": "iron_doors",
+					"ar": "تركيب أبواب حديد",
+					"en": "Iron Door Installation"
+				},
+				{
+					"id": "iron_windows",
+					"ar": "تركيب شبابيك حديد",
+					"en": "Iron Window Installation"
+				},
+				{
+					"id": "welding",
+					"ar": "أعمال اللحام",
+					"en": "Welding"
+				},
+				{
+					"id": "wrought_iron",
+					"ar": "تصنيع كريتال",
+					"en": "Wrought Iron Fabrication"
+				},
+				{
+					"id": "metal_stairs",
+					"ar": "تركيب سلالم حديد",
+					"en": "Metal Stair Installation"
+				},
+				{
+					"id": "pergolas",
+					"ar": "مظلات وبرجولات",
+					"en": "Pergolas & Shades"
+				},
+				{
+					"id": "aluminum_windows",
+					"ar": "تركيب شبابيك ألوميتال",
+					"en": "Aluminum Windows"
+				},
+				{
+					"id": "glass_facades",
+					"ar": "واجهات زجاج وألوميتال",
+					"en": "Glass & Aluminum Facades"
+				},
+				{
+					"id": "aluminum_repair",
+					"ar": "صيانة الألوميتال",
+					"en": "Aluminum Repair"
+				},
+				{
+					"id": "security_grills",
+					"ar": "تركيب سلك حماية وحواجز",
+					"en": "Security Grills Installation"
+				}
+			]
+		},
+		{
+			"id": "hvac",
+			"name": {
+				"ar": "التكييف والتبريد",
+				"en": "HVAC"
+			},
+			"services": [
+				{
+					"id": "ac_installation",
+					"ar": "تركيب تكييف",
+					"en": "AC Installation"
+				},
+				{
+					"id": "ac_relocation",
+					"ar": "فك ونقل تكييف",
+					"en": "AC Relocation"
+				},
+				{
+					"id": "ac_maintenance",
+					"ar": "صيانة التكييف",
+					"en": "AC Maintenance"
+				},
+				{
+					"id": "freon_refill",
+					"ar": "شحن فريون",
+					"en": "Freon Refill"
+				},
+				{
+					"id": "ac_cleaning",
+					"ar": "تنظيف التكييف",
+					"en": "AC Cleaning"
+				},
+				{
+					"id": "ac_repair",
+					"ar": "إصلاح أعطال التكييف",
+					"en": "AC Repair"
+				},
+				{
+					"id": "refrigerator_repair",
+					"ar": "صيانة الثلاجات",
+					"en": "Refrigerator Repair"
+				},
+				{
+					"id": "freezer_repair",
+					"ar": "صيانة الديب فريزر",
+					"en": "Freezer Repair"
+				},
+				{
+					"id": "water_cooler_repair",
+					"ar": "صيانة مبردات المياه",
+					"en": "Water Cooler Repair"
+				},
+				{
+					"id": "ventilation_installation",
+					"ar": "تركيب وصيانة الشفاطات",
+					"en": "Ventilation Fan Installation"
+				}
+			]
+		},
+		{
+			"id": "home_appliances",
+			"name": {
+				"ar": "صيانة الأجهزة المنزلية",
+				"en": "Home Appliances"
+			},
+			"services": [
+				{
+					"id": "washing_machine",
+					"ar": "صيانة الغسالات",
+					"en": "Washing Machine Repair"
+				},
+				{
+					"id": "dishwasher",
+					"ar": "صيانة غسالة الأطباق",
+					"en": "Dishwasher Repair"
+				},
+				{
+					"id": "stove",
+					"ar": "صيانة البوتاجاز",
+					"en": "Stove Repair"
+				},
+				{
+					"id": "oven",
+					"ar": "صيانة الفرن",
+					"en": "Oven Repair"
+				},
+				{
+					"id": "microwave",
+					"ar": "صيانة الميكروويف",
+					"en": "Microwave Repair"
+				},
+				{
+					"id": "dryer",
+					"ar": "صيانة المجفف",
+					"en": "Dryer Repair"
+				},
+				{
+					"id": "vacuum",
+					"ar": "صيانة المكنسة الكهربائية",
+					"en": "Vacuum Cleaner Repair"
+				},
+				{
+					"id": "water_heater_repair",
+					"ar": "صيانة السخان",
+					"en": "Water Heater Repair"
+				},
+				{
+					"id": "appliance_installation",
+					"ar": "تركيب الأجهزة",
+					"en": "Appliance Installation"
+				},
+				{
+					"id": "appliance_inspection",
+					"ar": "فحص الأجهزة",
+					"en": "Appliance Inspection"
+				}
+			]
+		},
+		{
+			"id": "painting",
+			"name": {
+				"ar": "الدهانات والديكور",
+				"en": "Painting & Decoration"
+			},
+			"services": [
+				{
+					"id": "interior_paint",
+					"ar": "دهانات داخلية",
+					"en": "Interior Painting"
+				},
+				{
+					"id": "exterior_paint",
+					"ar": "دهانات خارجية",
+					"en": "Exterior Painting"
+				},
+				{
+					"id": "wall_preparation",
+					"ar": "معجون وتجهيز",
+					"en": "Wall Preparation"
+				},
+				{
+					"id": "wallpaper",
+					"ar": "تركيب ورق حائط",
+					"en": "Wallpaper Installation"
+				},
+				{
+					"id": "gypsum_board",
+					"ar": "جبس بورد",
+					"en": "Gypsum Board"
+				},
+				{
+					"id": "false_ceiling",
+					"ar": "أسقف معلقة",
+					"en": "False Ceiling"
+				},
+				{
+					"id": "wood_panels",
+					"ar": "بديل الخشب",
+					"en": "Wood Panels"
+				},
+				{
+					"id": "marble_panels",
+					"ar": "بديل الرخام",
+					"en": "Marble Panels"
+				},
+				{
+					"id": "tv_wall",
+					"ar": "ديكور حائط التلفزيون",
+					"en": "TV Wall Design"
+				},
+				{
+					"id": "wall_restoration",
+					"ar": "ترميم الحوائط",
+					"en": "Wall Restoration"
+				}
+			]
+		},
+		{
+			"id": "cleaning",
+			"name": {
+				"ar": "التنظيف",
+				"en": "Cleaning"
+			},
+			"services": [
+				{
+					"id": "home_cleaning",
+					"ar": "تنظيف المنازل",
+					"en": "Home Cleaning"
+				},
+				{
+					"id": "office_cleaning",
+					"ar": "تنظيف الشركات",
+					"en": "Office Cleaning"
+				},
+				{
+					"id": "carpet_cleaning",
+					"ar": "تنظيف السجاد",
+					"en": "Carpet Cleaning"
+				},
+				{
+					"id": "sofa_cleaning",
+					"ar": "تنظيف الكنب",
+					"en": "Sofa Cleaning"
+				},
+				{
+					"id": "mattress_cleaning",
+					"ar": "تنظيف المراتب",
+					"en": "Mattress Cleaning"
+				},
+				{
+					"id": "post_construction_cleaning",
+					"ar": "تنظيف بعد التشطيب",
+					"en": "Post Construction Cleaning"
+				},
+				{
+					"id": "water_tank_cleaning",
+					"ar": "تنظيف الخزانات",
+					"en": "Water Tank Cleaning"
+				},
+				{
+					"id": "glass_cleaning",
+					"ar": "تنظيف الزجاج والواجهات",
+					"en": "Glass Cleaning"
+				},
+				{
+					"id": "disinfection",
+					"ar": "تعقيم المنازل",
+					"en": "Home Disinfection"
+				},
+				{
+					"id": "ac_cleaning_service",
+					"ar": "تنظيف المكيفات",
+					"en": "AC Cleaning Service"
+				}
+			]
+		},
+		{
+			"id": "moving",
+			"name": {
+				"ar": "نقل العفش",
+				"en": "Moving"
+			},
+			"services": [
+				{
+					"id": "local_moving",
+					"ar": "نقل داخل المدينة",
+					"en": "Local Moving"
+				},
+				{
+					"id": "intercity_moving",
+					"ar": "نقل بين المحافظات",
+					"en": "Intercity Moving"
+				},
+				{
+					"id": "packing",
+					"ar": "تغليف العفش",
+					"en": "Packing"
+				},
+				{
+					"id": "unpacking",
+					"ar": "فك وتركيب الأثاث",
+					"en": "Furniture Assembly"
+				},
+				{
+					"id": "crane_service",
+					"ar": "رفع بالأوناش",
+					"en": "Crane Service"
+				},
+				{
+					"id": "office_moving",
+					"ar": "نقل المكاتب",
+					"en": "Office Moving"
+				},
+				{
+					"id": "storage",
+					"ar": "تخزين العفش",
+					"en": "Furniture Storage"
+				},
+				{
+					"id": "appliance_transport",
+					"ar": "نقل الأجهزة",
+					"en": "Appliance Transport"
+				},
+				{
+					"id": "glass_packing",
+					"ar": "تغليف الزجاج",
+					"en": "Glass Packing"
+				},
+				{
+					"id": "piano_moving",
+					"ar": "نقل البيانو",
+					"en": "Piano Moving"
+				}
+			]
+		},
+		{
+			"id": "pest_control",
+			"name": {
+				"ar": "مكافحة الحشرات",
+				"en": "Pest Control"
+			},
+			"services": [
+				{
+					"id": "cockroaches",
+					"ar": "مكافحة الصراصير",
+					"en": "Cockroach Control"
+				},
+				{
+					"id": "ants",
+					"ar": "مكافحة النمل",
+					"en": "Ant Control"
+				},
+				{
+					"id": "bedbugs",
+					"ar": "مكافحة البق",
+					"en": "Bed Bug Control"
+				},
+				{
+					"id": "rats",
+					"ar": "مكافحة الفئران",
+					"en": "Rodent Control"
+				},
+				{
+					"id": "mosquitoes",
+					"ar": "مكافحة الناموس",
+					"en": "Mosquito Control"
+				},
+				{
+					"id": "flies",
+					"ar": "مكافحة الذباب",
+					"en": "Fly Control"
+				},
+				{
+					"id": "snakes",
+					"ar": "مكافحة الثعابين",
+					"en": "Snake Removal"
+				},
+				{
+					"id": "scorpions",
+					"ar": "مكافحة العقارب",
+					"en": "Scorpion Control"
+				},
+				{
+					"id": "garden_pests",
+					"ar": "مكافحة حشرات الحدائق",
+					"en": "Garden Pest Control"
+				},
+				{
+					"id": "home_disinfection",
+					"ar": "تعقيم المنازل",
+					"en": "Home Disinfection"
+				}
+			]
+		}
+	]
+}

@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import applications from '../routes/applications';
 import auth from '../routes/auth';
+import categories from '../routes/categories';
 import chat from '../routes/chat';
 import financials from '../routes/financials';
 import handymen from '../routes/handymen';
@@ -18,6 +19,7 @@ const router = Router();
 export default (): Router => {
 	applications(router);
 	auth(router);
+	categories(router);
 	chat(router);
 	financials(router);
 	jobs(router);
