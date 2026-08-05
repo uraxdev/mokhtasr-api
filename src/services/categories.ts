@@ -1,10 +1,11 @@
+import { Prisma } from '@/database/generated/client';
 import { Client } from '@/database/lib/types';
 
 export class CategoryService {
 	constructor(private readonly client: Client) {}
 
-	async list() {
-		return await this.client.category.findMany({ orderBy: { createdAt: 'asc' } });
+	async list(where: Prisma.CategoryWhereInput = {}) {
+		return await this.client.category.findMany({ where, orderBy: { createdAt: 'asc' } });
 	}
 
 	async find(id: string) {
