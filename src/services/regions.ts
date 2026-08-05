@@ -1,10 +1,11 @@
+import { Prisma } from '@/database/generated/client';
 import { Client } from '@/database/lib/types';
 
 export class RegionService {
 	constructor(private readonly client: Client) {}
 
-	async list() {
-		return await this.client.region.findMany({ orderBy: { name: 'asc' } });
+	async list(where: Prisma.RegionWhereInput = {}) {
+		return await this.client.region.findMany({ where, orderBy: { name: 'asc' } });
 	}
 
 	async find(id: string) {
