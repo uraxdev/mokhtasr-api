@@ -1,5 +1,5 @@
 import { client } from '@/database/lib/client';
-import { AuthService } from '@/services/auth';
+import { AuthSystem } from '@/subsystems/auth';
 import type { Router } from 'express';
 
 export default (router: Router) => {
@@ -7,7 +7,7 @@ export default (router: Router) => {
 		const payload = req.body;
 
 		try {
-			return res.status(200).json(await new AuthService(client).initiate(payload));
+			return res.status(200).json(await new AuthSystem(client).initiate(payload));
 		} catch (error) {
 			return next(error);
 		}
@@ -17,7 +17,7 @@ export default (router: Router) => {
 		const payload = req.body;
 
 		try {
-			return res.status(200).json(await new AuthService(client).verify(payload));
+			return res.status(200).json(await new AuthSystem(client).verify(payload));
 		} catch (error) {
 			return next(error);
 		}
@@ -27,7 +27,7 @@ export default (router: Router) => {
 		const payload = req.body;
 
 		try {
-			return res.status(200).json(await new AuthService(client).refresh(payload));
+			return res.status(200).json(await new AuthSystem(client).refresh(payload));
 		} catch (error) {
 			return next(error);
 		}

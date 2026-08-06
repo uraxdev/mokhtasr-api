@@ -1,11 +1,11 @@
 import { Client } from '@/database/lib/types';
 import { AccessTokenPayload, AuthRepository, InitiatePayload, RefreshPayload, Session, VerifyPayload } from '@/database/repositories/auth';
 import { User } from '@/database/repositories/user';
-import { sendOtpViaWhatsApp } from '@/lib/twilio';
 import { generateOTP, generateToken, validateSchema, verifyToken } from '@/lib/utils';
-import { UserService } from './users';
+import { UserService } from '@/services/users';
+import { sendOtpViaWhatsApp } from '@/subsystems/twilio';
 
-export class AuthService {
+export class AuthSystem {
 	constructor(private readonly client: Client) {}
 
 	async initiate(payload: InitiatePayload) {

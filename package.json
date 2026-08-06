@@ -13,6 +13,9 @@
 		"compile": "tsc --noEmit",
 		"lint": "eslint src/",
 		"format": "prettier . --write",
+		"clear": "find . \\( -name node_modules -o -name dist -o -name generated \\) -type d -prune -exec rm -rf '{}' +",
+		"reset": "pnpm clear && pnpm install && pnpm db:generate",
+		"check": "pnpm lint && pnpm compile && echo \"✅ All checks passed\"",
 		"db:generate": "prisma generate",
 		"db:migrate": "prisma migrate dev --skip-generate",
 		"db:seed": "prisma db seed"

@@ -2,11 +2,11 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 
-import { upload } from '@/lib/multer';
-import router from '@/lib/router';
-import { withAuthentication } from '@/middlewares/with-authentication';
 import { withErrorBoundary } from '@/middlewares/with-error-boundary';
 import { withRequestLogging } from '@/middlewares/with-request-logging';
+import router from '@/routes/_router';
+import { withAuthentication } from '@/subsystems/auth/with-authentication';
+import { upload } from '@/subsystems/multer';
 
 dotenv.config({ quiet: true });
 
