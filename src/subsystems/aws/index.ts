@@ -12,12 +12,12 @@ export const s3 = new S3Client({
 });
 
 export async function uploadToBucket(file: Express.Multer.File) {
-	const command = new PutObjectCommand({ Bucket: env('S3_BUCKET'), Key: file.originalname, Body: file.buffer, ContentType: file.mimetype });
+	const command = new PutObjectCommand({ Bucket: env('S3_BUCKET'), Key: `uploads/${file.originalname}`, Body: file.buffer, ContentType: file.mimetype });
 	const bucketName = env('S3_BUCKET');
 
 	try {
 		await s3.send(command);
-		return `https://t3.storage.dev/${bucketName}/${file.originalname}`;
+		return `${s3.config.endpoint}/${bucketName}/uploads/${file.originalname}`;
 	} catch (error) {
 		console.error('Error uploading file to S3:', error);
 		throw new Error('Failed to upload file to S3');
