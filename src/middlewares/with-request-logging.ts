@@ -1,8 +1,8 @@
-import { getClientIp } from '@/lib/utils';
+import { env, getClientIp } from '@/lib/utils';
 import { RequestHandler } from 'express';
 
 export const withRequestLogging: RequestHandler = (req, res, next) => {
-	if (process.env['NODE_ENV'] === 'production' || process.env['LOG_REQUESTS'] === 'false') return next();
+	if (env('NODE_ENV') === 'production' || env('LOG_REQUESTS') === 'false') return next();
 
 	const isAuthenticated = req.headers['authorization'] ? 'yes' : 'no';
 

@@ -16,9 +16,12 @@ export default (router: Router) => {
 	router.patch('/users', async (req, res, next) => {
 		const userId = res.locals.entities.user;
 		const payload = req.body;
+		const files = req.files as Express.Multer.File[];
+
+		const avatar = files?.find((file) => file.fieldname === 'avatar');
 
 		try {
-			return res.status(200).json(await new UserService(client).update({ id: userId }, payload));
+			return res.status(200).json(await new UserService(client).update({ id: userId }, { ...payload, avatar }));
 		} catch (error) {
 			return next(error);
 		}

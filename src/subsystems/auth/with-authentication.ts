@@ -1,6 +1,6 @@
 import { client } from '@/database/lib/client';
 import { AccessTokenPayload } from '@/database/repositories/auth';
-import { verifyToken } from '@/lib/utils';
+import { env, verifyToken } from '@/lib/utils';
 import { UserService } from '@/services/users';
 import { NextFunction, Request, Response } from 'express';
 
@@ -18,7 +18,7 @@ function isPublicRequest(method: string, path: string) {
 
 export async function withAuthentication(req: Request, res: Response, next: NextFunction) {
 	const authHeader = req.headers.authorization;
-	const canPass = process.env['NODE_ENV'] !== 'production' && authHeader === 'Bearer PA$$';
+	const canPass = env('NODE_ENV') !== 'production' && authHeader === 'Bearer PA$$';
 
 	if (isPublicRequest(req.method, req.path) || canPass) {
 		return next();

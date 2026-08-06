@@ -2,6 +2,7 @@ import { Prisma } from '@/database/generated/client';
 import { Client } from '@/database/lib/types';
 import { ApplicationCreatePayload, ApplicationRejectPayload, ApplicationRepository } from '@/database/repositories/application';
 import { validateSchema } from '@/lib/utils';
+import { uploadToBucket } from '@/subsystems/aws';
 
 export class ApplicationService {
 	constructor(private readonly client: Client) {}
@@ -37,12 +38,16 @@ export class ApplicationService {
 			throw new Error('Some services are not found');
 		}
 
+		const uploads = [uploadToBucket(payload.nationalIdFront), uploadToBucket(payload.nationalIdBack), uploadToBucket(payload.selfie)];
+
+		const images = await Promise.all(uploads);
+
 		const data = {
 			firstName: payload.firstName,
 			lastName: payload.lastName,
-			nationalIdFront: 'https://www.elaosboa.com/wp-content/uploads/2022/07/elaosboa64891.jpg',
-			nationalIdBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4mZjlaphukkj1qgNbWuo9U6aFNlQ7vXkc4g&s',
-			selfie: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnp6Pxvj7XysiWnhSIsAKBRlVbE5GwyWidoQ&s',
+			nationalIdFront: images[0] || '#',
+			nationalIdBack: images[1] || '#',
+			selfie: images[2] || '#',
 			birthdate: payload.birthdate,
 			handyman: { connect: { id: payload.handymanId } },
 			regions: { connect: regions.map((region) => ({ id: region.id })) },

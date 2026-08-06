@@ -1,9 +1,10 @@
+import { env } from '@/lib/utils';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../../generated/client';
 import categories from './categories.json';
 import regions from './regions.json';
 
-const adapter = new PrismaPg({ connectionString: process.env['DATABASE_URL']! });
+const adapter = new PrismaPg({ connectionString: env('DATABASE_URL') });
 const client = new PrismaClient({ adapter });
 
 async function main() {

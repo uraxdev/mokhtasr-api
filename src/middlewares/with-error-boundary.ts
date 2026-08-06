@@ -1,4 +1,4 @@
-import { getClientIp } from '@/lib/utils';
+import { env, getClientIp } from '@/lib/utils';
 import { NextFunction, Request, Response } from 'express';
 
 interface ExpressError extends Error {
@@ -8,7 +8,7 @@ interface ExpressError extends Error {
 }
 
 function isProduction() {
-	return process.env['NODE_ENV'] === 'production';
+	return env('NODE_ENV') === 'production';
 }
 
 function resolveStatus(error: ExpressError): number {

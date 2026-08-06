@@ -1,7 +1,7 @@
 import { Client } from '@/database/lib/types';
 import { AccessTokenPayload, AuthRepository, InitiatePayload, RefreshPayload, Session, VerifyPayload } from '@/database/repositories/auth';
 import { User } from '@/database/repositories/user';
-import { generateOTP, generateToken, validateSchema, verifyToken } from '@/lib/utils';
+import { env, generateOTP, generateToken, validateSchema, verifyToken } from '@/lib/utils';
 import { UserService } from '@/services/users';
 import { sendOtpViaWhatsApp } from '@/subsystems/twilio';
 
@@ -14,7 +14,7 @@ export class AuthSystem {
 		const otp = generateOTP();
 		const token = generateToken({ ...payload, otp }, { expiresIn: '5m' });
 
-		if (process.env['NODE_ENV'] === 'production' && process.env['USE_RANDOM_OTP'] === 'YES') {
+		if (env('NODE_ENV') === 'production') {
 			await sendOtpViaWhatsApp(payload.phone, otp);
 		}
 

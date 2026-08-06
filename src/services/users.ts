@@ -2,6 +2,7 @@ import { Prisma } from '@/database/generated/client';
 import { Client } from '@/database/lib/types';
 import { UserCreatePayload, UserRepository, UserUpdatePayload } from '@/database/repositories/user';
 import { validateSchema } from '@/lib/utils';
+import { uploadToBucket } from '@/subsystems/aws';
 
 export class UserService {
 	constructor(private readonly client: Client) {}
@@ -46,7 +47,8 @@ export class UserService {
 		}
 
 		if (payload.avatar) {
-			updateData.avatar = payload.avatar;
+			const avatarUrl = await uploadToBucket(payload.avatar);
+			updateData.avatar = avatarUrl;
 		}
 
 		if (Object.keys(updateData).length > 0) {

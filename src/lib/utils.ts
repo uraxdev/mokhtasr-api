@@ -125,7 +125,7 @@ export function getTimePassed(date: Date | string): string {
 }
 
 export function generateToken(data: string | object, options?: jwt.SignOptions): string {
-	const secret = process.env['JWT_SECRET'];
+	const secret = env('JWT_SECRET');
 
 	if (!secret) {
 		throw new Error('JWT_SECRET is not defined');
@@ -135,7 +135,7 @@ export function generateToken(data: string | object, options?: jwt.SignOptions):
 }
 
 export function verifyToken<T extends jwt.JwtPayload>(token: string): T | null {
-	const secret = process.env['JWT_SECRET'];
+	const secret = env('JWT_SECRET');
 
 	if (!secret) {
 		throw new Error('JWT_SECRET is not defined');
@@ -150,7 +150,7 @@ export function verifyToken<T extends jwt.JwtPayload>(token: string): T | null {
 }
 
 export function generateOTP() {
-	if (process.env['USE_RANDOM_OTP'] !== 'YES') return '123456';
+	if (env('NODE_ENV') !== 'production') return '123456';
 	return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
@@ -176,4 +176,12 @@ export function parseDateRange(range?: string): { gte: Date; lte: Date } | undef
 	}
 
 	return { gte: start, lte: end };
+}
+
+export function env(name: string): string {
+	const value = process.env[name];
+	if (!value) {
+		throw new Error(`Missing environment variable: ${name}`);
+	}
+	return value;
 }
