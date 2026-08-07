@@ -53,20 +53,7 @@ This skill provides everything needed to implement a Prisma ORM v7 driver adapte
 Import from `@prisma/driver-adapter-utils`:
 
 ```typescript
-import type {
-	ColumnType,
-	IsolationLevel,
-	SqlDriverAdapter,
-	SqlMigrationAwareDriverAdapterFactory,
-	SqlQuery,
-	SqlQueryable,
-	SqlResultSet,
-	Transaction,
-	TransactionOptions,
-	ArgType,
-	ConnectionInfo,
-	MappedError
-} from '@prisma/driver-adapter-utils';
+import type { ColumnType, IsolationLevel, SqlDriverAdapter, SqlMigrationAwareDriverAdapterFactory, SqlQuery, SqlQueryable, SqlResultSet, Transaction, TransactionOptions, ArgType, ConnectionInfo, MappedError } from '@prisma/driver-adapter-utils';
 import { ColumnTypeEnum, DriverAdapterError } from '@prisma/driver-adapter-utils';
 ```
 

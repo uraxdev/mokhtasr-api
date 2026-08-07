@@ -7,3 +7,4 @@ ios
 pnpm-lock.yaml
 yarn.lock
 package-lock.json
+pnpm-workspace.yaml
