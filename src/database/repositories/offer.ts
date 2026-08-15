@@ -1,5 +1,7 @@
 import z from 'zod';
 
+import { ReviewRepository } from './review';
+
 export class OfferRepository {
 	static status = z.enum(['PENDING', 'COMPLETED', 'CANCELLED']);
 	static stage = z.enum(['AT_LOCATION', 'AWAITING_CODE']);
@@ -17,11 +19,11 @@ export class OfferRepository {
 			proposalId: z.uuid(),
 			handymanId: z.uuid(),
 			createdAt: z.iso.datetime(),
-			updatedAt: z.iso.datetime()
+			updatedAt: z.iso.datetime(),
+			review: ReviewRepository.get().nullable()
 			// proposal: ProposalRepository.get(),
 			// handyman: HandymanRepository.get(),
 			// messages: ChatRepository.get(),
-			// review: ReviewRepository.get(),
 			// transaction: TransactionRepository.get(),
 		});
 	}

@@ -11,6 +11,7 @@ import offers from './offers';
 import proposals from './proposals';
 import regions from './regions';
 import register from './register';
+import reviews from './reviews';
 import services from './services';
 import users from './users';
 
@@ -28,6 +29,7 @@ export default (): Router => {
 	handymen(router);
 	regions(router);
 	register(router);
+	reviews(router);
 	services(router);
 	users(router);
 
