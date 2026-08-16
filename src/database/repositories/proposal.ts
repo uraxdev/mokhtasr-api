@@ -1,10 +1,12 @@
 import z from 'zod';
+
+import { ProposalStatus } from '../generated/enums';
 import { CustomerRepository } from './customer';
-import { OfferRepository } from './offer';
 import { ServiceRepository } from './service';
+import { VisitRepository } from './visit';
 
 export class ProposalRepository {
-	static status = z.enum(['WAITING_OFFERS', 'ACCEPTED', 'REJECTED']);
+	static status = ['WAITING_OFFERS', 'OFFERS_RECEIVED', 'ACCEPTED', 'IN_PROGRESS', 'AWAITING_COMPLETION', 'INSPECTION_COMPLETED', 'COMPLETED', 'CANCELLED'] satisfies ProposalStatus[];
 
 	static get() {
 		return z.object({
@@ -12,7 +14,7 @@ export class ProposalRepository {
 			title: z.string(),
 			description: z.string(),
 			address: z.string(),
-			status: ProposalRepository.status,
+			status: z.enum(ProposalRepository.status),
 			dueDate: z.iso.datetime(),
 			latitude: z.number().nullable(),
 			longitude: z.number().nullable(),
@@ -22,7 +24,7 @@ export class ProposalRepository {
 			updatedAt: z.iso.datetime(),
 			service: ServiceRepository.get(),
 			customer: CustomerRepository.get(),
-			offers: z.array(OfferRepository.get())
+			visits: z.array(VisitRepository.get())
 		});
 	}
 
@@ -30,13 +32,13 @@ export class ProposalRepository {
 		return this.get().pick({ title: true, description: true, address: true, dueDate: true, latitude: true, longitude: true, serviceId: true });
 	}
 
-	static accept() {
+	static acceptVisit() {
 		return z.object({
-			offerId: z.uuid()
+			visitId: z.uuid()
 		});
 	}
 }
 
 export type Proposal = z.infer<ReturnType<typeof ProposalRepository.get>>;
 export type ProposalCreatePayload = z.infer<ReturnType<typeof ProposalRepository.create>>;
-export type AcceptOfferPayload = z.infer<ReturnType<typeof ProposalRepository.accept>>;
+export type AcceptVisitPayload = z.infer<ReturnType<typeof ProposalRepository.acceptVisit>>;

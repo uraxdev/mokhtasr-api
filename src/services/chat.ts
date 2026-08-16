@@ -8,28 +8,28 @@ export class ChatService {
 
 	private include = { sender: { select: { id: true, name: true, role: true } } } satisfies Prisma.ChatMessageInclude;
 
-	private async assertParticipant(offerId: string, userId: string) {
-		const offer = await this.client.offer.findUnique({ where: { id: offerId }, include: { proposal: true, handyman: true } });
-		if (!offer) throw new Error('Offer not found');
+	private async assertParticipant(visitId: string, userId: string) {
+		const visit = await this.client.visit.findUnique({ where: { id: visitId }, include: { proposal: true, handyman: true } });
+		if (!visit) throw new Error('Visit not found');
 
-		const isHandyman = offer.handyman.userId === userId;
-		const isCustomer = offer.proposal.customerId === userId;
+		const isHandyman = visit.handyman.userId === userId;
+		const isCustomer = visit.proposal.customerId === userId;
 		if (!isHandyman && !isCustomer) throw new Error('Forbidden');
 
-		return offer;
+		return visit;
 	}
 
-	async readMessages(offerId: string, userId: string) {
-		await this.assertParticipant(offerId, userId);
-		return await this.client.chatMessage.findMany({ where: { offerId }, orderBy: { createdAt: 'asc' }, include: this.include });
+	async readMessages(visitId: string, userId: string) {
+		await this.assertParticipant(visitId, userId);
+		return await this.client.chatMessage.findMany({ where: { visitId }, orderBy: { createdAt: 'asc' }, include: this.include });
 	}
 
-	async sendMessage(offerId: string, userId: string, payload: unknown) {
+	async sendMessage(visitId: string, userId: string, payload: unknown) {
 		validateSchema(ChatRepository.send(), payload);
-		await this.assertParticipant(offerId, userId);
+		await this.assertParticipant(visitId, userId);
 
 		const data = {
-			offer: { connect: { id: offerId } },
+			visit: { connect: { id: visitId } },
 			sender: { connect: { id: userId } },
 			type: payload.type,
 			text: payload.text ?? null,
@@ -39,12 +39,12 @@ export class ChatService {
 		return await this.client.chatMessage.create({ data, include: this.include });
 	}
 
-	async reschedule(offerId: string, userId: string, payload: unknown) {
+	async reschedule(visitId: string, userId: string, payload: unknown) {
 		validateSchema(ChatRepository.reschedule(), payload);
-		await this.assertParticipant(offerId, userId);
+		await this.assertParticipant(visitId, userId);
 
 		const data = {
-			offer: { connect: { id: offerId } },
+			visit: { connect: { id: visitId } },
 			sender: { connect: { id: userId } },
 			type: 'RESCHEDULE',
 			proposedDate: new Date(payload.proposedDate),

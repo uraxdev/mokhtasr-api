@@ -25,7 +25,7 @@ export default (router: Router) => {
 				orderBy: { createdAt: 'desc' },
 				include: {
 					service: { select: { id: true, name: true } },
-					offers: { select: { id: true, price: true, handyman: { select: { id: true, user: { select: { id: true, name: true, avatar: true } } } }, createdAt: true } }
+					visits: { select: { id: true, price: true, handyman: { select: { id: true, user: { select: { id: true, name: true, avatar: true } } } }, createdAt: true } }
 				}
 			});
 
@@ -37,7 +37,7 @@ export default (router: Router) => {
 				address: p.address,
 				distanceKm: null,
 				dueDate: p.dueDate.toISOString(),
-				offers: p.offers,
+				visits: p.visits,
 				submittedAt: p.createdAt.toISOString()
 			}));
 

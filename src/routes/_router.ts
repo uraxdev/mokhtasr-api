@@ -7,13 +7,13 @@ import chat from './chat';
 import financials from './financials';
 import handymen from './handymen';
 import jobs from './jobs';
-import offers from './offers';
 import proposals from './proposals';
 import regions from './regions';
 import register from './register';
 import reviews from './reviews';
 import services from './services';
 import users from './users';
+import visits from './visits';
 
 const router = Router();
 
@@ -24,7 +24,7 @@ export default (): Router => {
 	chat(router);
 	financials(router);
 	jobs(router);
-	offers(router);
+	visits(router);
 	proposals(router);
 	handymen(router);
 	regions(router);

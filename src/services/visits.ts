@@ -1,0 +1,196 @@
+import { Prisma, PrismaClient } from '@/database/generated/client';
+import { Client } from '@/database/lib/types';
+import { AdvanceStagePayload, ConvertToWorkPayload, VerifyCodePayload, VisitCreatePayload, VisitRepository } from '@/database/repositories/visit';
+import { validateSchema } from '@/lib/utils';
+
+export class VisitService {
+	constructor(private readonly client: Client) {}
+
+	private include = {
+		proposal: { include: { service: { select: { id: true, name: true } } } },
+		handyman: { include: { user: true } },
+		review: true
+	} satisfies Prisma.VisitInclude;
+
+	private calculateDistanceMeters(lat1: number, lon1: number, lat2: number, lon2: number): number {
+		const R = 6_371_000;
+		const toRad = (d: number) => (d * Math.PI) / 180;
+		const dLat = toRad(lat2 - lat1);
+		const dLon = toRad(lon2 - lon1);
+		const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+		return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	}
+
+	private generateCompletionCode(): string {
+		return Math.floor(100000 + Math.random() * 900000).toString();
+	}
+
+	private maskCode<T extends { stage: string | null; completionCode: string }>(visit: T): Omit<T, 'completionCode'> & { completionCode?: string } {
+		const { completionCode, ...rest } = visit;
+		const visible = visit.stage === 'AT_LOCATION' || visit.stage === 'AWAITING_CODE';
+		return visible ? { ...rest, completionCode } : rest;
+	}
+
+	async list(handymanId: string) {
+		const visits = await this.client.visit.findMany({ where: { handymanId }, orderBy: { createdAt: 'desc' }, include: this.include });
+		return visits.map(this.maskCode);
+	}
+
+	async find(id: string, userId: string) {
+		const visit = await this.client.visit.findUnique({ where: { id }, include: this.include });
+
+		if (!visit) throw new Error('Visit not found');
+
+		const isHandyman = visit.handyman.userId === userId;
+		const isCustomer = visit.proposal.customerId === userId;
+		if (!isHandyman && !isCustomer) throw new Error('Forbidden');
+
+		return this.maskCode(visit);
+	}
+
+	async create(handymanId: string, payload: VisitCreatePayload) {
+		validateSchema(VisitRepository.create(), payload);
+
+		const proposal = await this.client.proposal.findUnique({ where: { id: payload.proposalId } });
+		if (!proposal) throw new Error('Proposal not found');
+		if (proposal.status !== 'WAITING_OFFERS' && proposal.status !== 'OFFERS_RECEIVED') {
+			throw new Error(`Cannot submit a visit on a proposal with status ${proposal.status}`);
+		}
+
+		const data = {
+			type: payload.type,
+			price: payload.price,
+			currency: payload.currency,
+			completionCode: this.generateCompletionCode(),
+			message: payload.message ?? null,
+			estimatedDuration: payload.estimatedDuration ?? null,
+			scheduledFor: payload.scheduledFor ? new Date(payload.scheduledFor) : null,
+			proposal: { connect: { id: payload.proposalId } },
+			handyman: { connect: { id: handymanId } }
+		} satisfies Prisma.VisitCreateInput;
+
+		return await (this.client as PrismaClient).$transaction(async (tx) => {
+			const visit = await tx.visit.create({ data, include: { proposal: this.include.proposal, handyman: this.include.handyman } });
+
+			if (proposal.status === 'WAITING_OFFERS') {
+				await tx.proposal.update({ where: { id: payload.proposalId }, data: { status: 'OFFERS_RECEIVED' } });
+			}
+
+			return this.maskCode(visit);
+		});
+	}
+
+	async advanceStage(visitId: string, handymanId: string, payload: AdvanceStagePayload) {
+		validateSchema(VisitRepository.advanceStage(), payload);
+
+		const visit = await this.client.visit.findUnique({ where: { id: visitId }, include: { proposal: true } });
+
+		if (!visit) throw new Error('Visit not found');
+		if (visit.handymanId !== handymanId) throw new Error('Forbidden');
+		if (visit.status !== 'ACCEPTED') throw new Error('Visit is not in accepted state');
+
+		if (payload.stage === 'AT_LOCATION') {
+			if (visit.stage !== 'INITIATED') throw new Error('Invalid stage transition');
+
+			const { latitude: pLat, longitude: pLon } = payload;
+			const { latitude: rLat, longitude: rLon } = visit.proposal;
+
+			if (pLat == null || pLon == null) throw new Error('latitude and longitude are required for AT_LOCATION');
+			if (rLat == null || rLon == null) throw new Error('Proposal has no location coordinates');
+
+			const dist = this.calculateDistanceMeters(pLat, pLon, rLat, rLon);
+			if (dist > 200) throw new Error(`You are ${Math.round(dist)}m away — must be within 200m`);
+		} else if (payload.stage === 'AWAITING_CODE') {
+			if (visit.stage !== 'AT_LOCATION') throw new Error('Invalid stage transition');
+		}
+
+		return await (this.client as PrismaClient).$transaction(async (tx) => {
+			const updated = await tx.visit.update({
+				where: { id: visitId },
+				data: { stage: payload.stage },
+				include: {
+					proposal: { include: { service: { select: { id: true, name: true } } } },
+					handyman: { include: { user: true } }
+				}
+			});
+
+			const proposalStatus = payload.stage === 'AT_LOCATION' ? 'IN_PROGRESS' : 'AWAITING_COMPLETION';
+			await tx.proposal.update({ where: { id: visit.proposalId }, data: { status: proposalStatus } });
+
+			return this.maskCode(updated);
+		});
+	}
+
+	async verifyCode(visitId: string, customerId: string, payload: VerifyCodePayload) {
+		validateSchema(VisitRepository.verifyCode(), payload);
+
+		const visit = await this.client.visit.findUnique({ where: { id: visitId }, include: { proposal: true } });
+
+		if (!visit) throw new Error('Visit not found');
+		if (visit.proposal.customerId !== customerId) throw new Error('Forbidden');
+		if (visit.stage !== 'AWAITING_CODE') throw new Error('Visit is not awaiting code verification');
+		if (visit.completionCode !== payload.code) throw new Error('Invalid completion code');
+
+		return await (this.client as PrismaClient).$transaction(async (tx) => {
+			const completed = await tx.visit.update({
+				where: { id: visitId },
+				data: { status: 'COMPLETED' },
+				include: {
+					proposal: { include: { service: { select: { id: true, name: true } } } },
+					handyman: { include: { user: true } }
+				}
+			});
+
+			const proposalStatus = visit.type === 'WORK' ? 'COMPLETED' : 'INSPECTION_COMPLETED';
+			await tx.proposal.update({ where: { id: visit.proposalId }, data: { status: proposalStatus } });
+
+			if (visit.type === 'WORK' || visit.price != null) {
+				await tx.transaction.create({
+					data: { visitId, amount: visit.price as number, currency: visit.currency, status: 'RECEIVED' }
+				});
+			}
+
+			return this.maskCode(completed);
+		});
+	}
+
+	async convertToWork(visitId: string, handymanId: string, payload: ConvertToWorkPayload) {
+		validateSchema(VisitRepository.convertToWork(), payload);
+
+		const visit = await this.client.visit.findUnique({ where: { id: visitId }, include: { proposal: true, convertedTo: true } });
+
+		if (!visit) throw new Error('Visit not found');
+		if (visit.handymanId !== handymanId) throw new Error('Forbidden');
+		if (visit.type !== 'INSPECTION') throw new Error('Only INSPECTION visits can be converted to work');
+		if (visit.status !== 'COMPLETED') throw new Error(`Cannot convert a visit with status ${visit.status}`);
+		if (visit.convertedTo) throw new Error('This visit has already been converted to a work visit');
+		if (visit.proposal.status !== 'INSPECTION_COMPLETED') {
+			throw new Error(`Cannot convert visit: proposal has status ${visit.proposal.status}`);
+		}
+
+		return await (this.client as PrismaClient).$transaction(async (tx) => {
+			const workVisit = await tx.visit.create({
+				data: {
+					type: 'WORK',
+					status: 'ACCEPTED',
+					stage: 'INITIATED',
+					price: payload.price,
+					currency: visit.currency,
+					completionCode: this.generateCompletionCode(),
+					scheduledFor: payload.scheduledFor ? new Date(payload.scheduledFor) : null,
+					proposal: { connect: { id: visit.proposalId } },
+					handyman: { connect: { id: handymanId } },
+					convertedFrom: { connect: { id: visit.id } }
+				},
+				include: {
+					proposal: { include: { service: { select: { id: true, name: true } } } },
+					handyman: { include: { user: true } }
+				}
+			});
+
+			await tx.proposal.update({ where: { id: visit.proposalId }, data: { status: 'ACCEPTED' } });
+
+			return this.maskCode(workVisit);
+		});
+	}
+}

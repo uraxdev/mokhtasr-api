@@ -9,7 +9,7 @@ export class ChatRepository {
 	static get() {
 		return z.object({
 			id: z.uuid(),
-			offerId: z.string(),
+			visitId: z.string(),
 			senderId: z.string(),
 			type: z.enum(ChatRepository.type),
 			text: z.string().nullable(),

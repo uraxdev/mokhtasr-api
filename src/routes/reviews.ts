@@ -3,7 +3,7 @@ import { ReviewService } from '@/services/reviews';
 import type { Router } from 'express';
 
 export default (router: Router) => {
-	router.post('/offers/:id/review', async (req, res, next) => {
+	router.post('/visits/:id/review', async (req, res, next) => {
 		const id = req.params['id'];
 		const payload = req.body;
 		const customerId = res.locals.entities.customer;

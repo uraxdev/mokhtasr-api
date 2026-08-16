@@ -72,7 +72,7 @@ export class HandymanService {
 
 	async block(id: string) {
 		return await (this.client as PrismaClient).$transaction(async (tx) => {
-			const handyman = await tx.handyman.findUnique({ where: { id }, include: { application: true, offers: true } });
+			const handyman = await tx.handyman.findUnique({ where: { id }, include: { application: true, visits: true } });
 			if (!handyman) throw new Error('Handyman not found');
 
 			if (handyman.application && handyman.application.status !== 'REJECTED') {
@@ -82,8 +82,8 @@ export class HandymanService {
 				});
 			}
 
-			if (handyman.offers.length) {
-				await tx.offer.updateMany({
+			if (handyman.visits.length) {
+				await tx.visit.updateMany({
 					where: { handymanId: id },
 					data: { status: 'DECLINED' }
 				});

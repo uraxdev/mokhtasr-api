@@ -3,8 +3,8 @@ import { ChatService } from '@/services/chat';
 import type { Router } from 'express';
 
 export default (router: Router) => {
-	router.get('/offers/:offerId/chat', async (req, res, next) => {
-		const id = req.params['offerId'];
+	router.get('/visits/:visitId/chat', async (req, res, next) => {
+		const id = req.params['visitId'];
 		const userId = res.locals.entities.user;
 
 		try {
@@ -14,8 +14,8 @@ export default (router: Router) => {
 		}
 	});
 
-	router.post('/offers/:offerId/chat', async (req, res, next) => {
-		const id = req.params['offerId'];
+	router.post('/visits/:visitId/chat', async (req, res, next) => {
+		const id = req.params['visitId'];
 		const payload = req.body;
 		const userId = res.locals.entities.user;
 
@@ -26,8 +26,8 @@ export default (router: Router) => {
 		}
 	});
 
-	router.patch('/offers/:offerId/reschedule', async (req, res, next) => {
-		const id = req.params['offerId'];
+	router.patch('/visits/:visitId/reschedule', async (req, res, next) => {
+		const id = req.params['visitId'];
 		const payload = req.body;
 		const userId = res.locals.entities.user;
 

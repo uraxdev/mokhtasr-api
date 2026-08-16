@@ -46,11 +46,17 @@ enum ProposalStatus {
   ACCEPTED
   IN_PROGRESS
   AWAITING_COMPLETION
+  INSPECTION_COMPLETED
   COMPLETED
   CANCELLED
 }
 
-enum OfferStatus {
+enum VisitType {
+  INSPECTION
+  WORK
+}
+
+enum VisitStatus {
   PENDING
   ACCEPTED
   DECLINED
@@ -219,7 +225,7 @@ model Handyman {
   regions     Region[]
   services    Service[]
   application Application?
-  offers      Offer[]
+  visits      Visit[]
 
   // Timestamps
   createdAt DateTime @default(now()) @map("created_at")
@@ -311,7 +317,7 @@ model Proposal {
   // Relation fields
   service  Service  @relation(fields: [serviceId], references: [id])
   customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  offers   Offer[]
+  visits   Visit[]
 
   // Timestamps
   createdAt DateTime @default(now()) @map("created_at")
@@ -321,34 +327,39 @@ model Proposal {
   @@map("proposals")
 }
 
-model Offer {
+model Visit {
   // Primary key
   id String @id @default(uuid()) @map("id")
 
   // Own fields
-  price             Float       @map("price")
-  currency          String      @default("EGP") @map("currency")
-  status            OfferStatus @default(PENDING) @map("status")
-  completionCode    String      @map("completion_code")
-  message           String?     @map("message")
-  estimatedDuration String?     @map("estimated_duration")
-  stage             JobStage?   @map("stage")
-  proposalId        String      @map("proposal_id")
-  handymanId        String      @map("handyman_id")
+  type                 VisitType   @map("type")
+  price                Float?      @map("price")
+  currency             String      @default("EGP") @map("currency")
+  status               VisitStatus @default(PENDING) @map("status")
+  completionCode       String      @map("completion_code")
+  message              String?     @map("message")
+  estimatedDuration    String?     @map("estimated_duration")
+  scheduledFor         DateTime?   @map("scheduled_for")
+  stage                JobStage?   @map("stage")
+  proposalId           String      @map("proposal_id")
+  handymanId           String      @map("handyman_id")
+  convertedFromVisitId String?     @unique @map("converted_from_visit_id")
 
   // Relation fields
-  proposal    Proposal      @relation(fields: [proposalId], references: [id], onDelete: Cascade)
-  handyman    Handyman      @relation(fields: [handymanId], references: [id], onDelete: Cascade)
-  messages    ChatMessage[]
-  review      Review?
-  transaction Transaction?
+  proposal      Proposal      @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  handyman      Handyman      @relation(fields: [handymanId], references: [id], onDelete: Cascade)
+  convertedFrom Visit?        @relation("VisitConversion", fields: [convertedFromVisitId], references: [id])
+  convertedTo   Visit?        @relation("VisitConversion")
+  messages      ChatMessage[]
+  review        Review?
+  transaction   Transaction?
 
   // Timestamps
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   // Attributes
-  @@map("offers")
+  @@map("visits")
 }
 
 model Review {
@@ -356,14 +367,14 @@ model Review {
   id String @id @default(uuid()) @map("id")
 
   // Own fields
-  offerId      String      @unique @map("offer_id")
+  visitId      String      @unique @map("visit_id")
   reviewerName String      @map("reviewer_name")
   rating       Float       @map("rating")
   comment      String?     @map("comment")
   tags         ReviewTag[] @default([]) @map("tags")
 
   // Relation fields
-  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  visit Visit @relation(fields: [visitId], references: [id], onDelete: Cascade)
 
   // Timestamps
   createdAt DateTime @default(now()) @map("created_at")
@@ -378,13 +389,13 @@ model Transaction {
   id String @id @default(uuid()) @map("id")
 
   // Own fields
-  offerId  String            @unique @map("offer_id")
+  visitId  String            @unique @map("visit_id")
   amount   Float             @map("amount")
   currency String            @map("currency")
   status   TransactionStatus @default(RECEIVED) @map("status")
 
   // Relation fields
-  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  visit Visit @relation(fields: [visitId], references: [id], onDelete: Cascade)
 
   // Timestamps
   createdAt DateTime @default(now()) @map("created_at")
@@ -399,7 +410,7 @@ model ChatMessage {
   id String @id @default(uuid()) @map("id")
 
   // Own fields
-  offerId          String            @map("offer_id")
+  visitId          String            @map("visit_id")
   senderId         String            @map("sender_id")
   type             ChatMessageType   @map("type")
   text             String?           @map("text")
@@ -408,7 +419,7 @@ model ChatMessage {
   rescheduleStatus RescheduleStatus? @map("reschedule_status")
 
   // Relation fields
-  offer  Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  visit  Visit @relation(fields: [visitId], references: [id], onDelete: Cascade)
   sender User  @relation(fields: [senderId], references: [id], onDelete: Cascade)
 
   // Timestamps

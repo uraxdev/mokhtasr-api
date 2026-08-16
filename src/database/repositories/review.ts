@@ -23,7 +23,7 @@ export class ReviewRepository {
 	static get() {
 		return z.object({
 			id: z.uuid(),
-			offerId: z.uuid(),
+			visitId: z.uuid(),
 			reviewerName: z.string(),
 			rating: z.number(),
 			comment: z.string().nullable(),

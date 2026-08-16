@@ -5,7 +5,7 @@ export class FinancialService {
 	constructor(private readonly client: Client) {}
 
 	private include = {
-		offer: {
+		visit: {
 			include: {
 				proposal: {
 					include: { service: true, customer: { include: { user: { select: { name: true } } } } }
@@ -17,11 +17,11 @@ export class FinancialService {
 	async summary(handymanId: string) {
 		const [transactions, completedJobs] = await Promise.all([
 			this.client.transaction.findMany({
-				where: { offer: { handymanId } },
+				where: { visit: { handymanId } },
 				include: this.include,
 				orderBy: { createdAt: 'desc' }
 			}),
-			this.client.offer.count({
+			this.client.visit.count({
 				where: { handymanId, status: 'COMPLETED' }
 			})
 		]);
@@ -64,8 +64,8 @@ export class FinancialService {
 
 		const recentTransactions = transactions.slice(0, 5).map((t) => ({
 			id: t.id,
-			serviceName: t.offer.proposal.service.name,
-			clientName: t.offer.proposal.customer.user.name,
+			serviceName: t.visit.proposal.service.name,
+			clientName: t.visit.proposal.customer.user.name,
 			amount: t.amount,
 			currency: t.currency,
 			status: t.status,
@@ -81,13 +81,13 @@ export class FinancialService {
 
 		const [items, total] = await Promise.all([
 			this.client.transaction.findMany({
-				where: { offer: { handymanId } },
+				where: { visit: { handymanId } },
 				orderBy: { createdAt: 'desc' },
 				skip,
 				take,
 				include: this.include
 			}),
-			this.client.transaction.count({ where: { offer: { handymanId } } })
+			this.client.transaction.count({ where: { visit: { handymanId } } })
 		]);
 
 		return {
@@ -96,8 +96,8 @@ export class FinancialService {
 			limit: take,
 			items: items.map((t) => ({
 				id: t.id,
-				serviceName: t.offer.proposal.service.name,
-				clientName: t.offer.proposal.customer.user.name,
+				serviceName: t.visit.proposal.service.name,
+				clientName: t.visit.proposal.customer.user.name,
 				amount: t.amount,
 				currency: t.currency,
 				status: t.status,

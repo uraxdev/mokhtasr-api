@@ -1,6 +1,6 @@
 import { Prisma, PrismaClient } from '@/database/generated/client';
 import { Client } from '@/database/lib/types';
-import { AcceptOfferPayload, ProposalCreatePayload, ProposalRepository } from '@/database/repositories/proposal';
+import { AcceptVisitPayload, ProposalCreatePayload, ProposalRepository } from '@/database/repositories/proposal';
 import { validateSchema } from '@/lib/utils';
 
 export class ProposalService {
@@ -8,7 +8,7 @@ export class ProposalService {
 
 	private include = {
 		service: { select: { id: true, name: true } },
-		offers: { include: { handyman: { include: { user: true } }, review: true } }
+		visits: { include: { handyman: { include: { user: true } }, review: true } }
 	} satisfies Prisma.ProposalInclude;
 
 	async list(customerId?: string) {
@@ -64,33 +64,33 @@ export class ProposalService {
 		return await this.client.proposal.update({ where: { id }, data });
 	}
 
-	async acceptOffer(proposalId: string, customerId: string, payload: AcceptOfferPayload) {
-		validateSchema(ProposalRepository.accept(), payload);
+	async acceptVisit(proposalId: string, customerId: string, payload: AcceptVisitPayload) {
+		validateSchema(ProposalRepository.acceptVisit(), payload);
 
 		return await (this.client as PrismaClient).$transaction(async (tx) => {
 			const proposal = await tx.proposal.findUnique({
 				where: { id: proposalId },
-				include: { offers: true }
+				include: { visits: true }
 			});
 
 			if (!proposal) throw new Error('Proposal not found');
 			if (proposal.customerId !== customerId) throw new Error('Forbidden');
 			if (proposal.status !== 'WAITING_OFFERS' && proposal.status !== 'OFFERS_RECEIVED') {
-				throw new Error(`Cannot accept an offer on a proposal with status ${proposal.status}`);
+				throw new Error(`Cannot accept a visit on a proposal with status ${proposal.status}`);
 			}
 
-			const offer = proposal.offers.find((o) => o.id === payload.offerId);
-			if (!offer) throw new Error('Offer not found on this proposal');
-			if (offer.status !== 'PENDING') throw new Error('Offer is no longer pending');
+			const visit = proposal.visits.find((v) => v.id === payload.visitId);
+			if (!visit) throw new Error('Visit not found on this proposal');
+			if (visit.status !== 'PENDING') throw new Error('Visit is no longer pending');
 
-			// Accept chosen offer, decline all others
-			await tx.offer.updateMany({
-				where: { proposalId, id: { not: payload.offerId } },
+			// Accept chosen visit, decline all others
+			await tx.visit.updateMany({
+				where: { proposalId, id: { not: payload.visitId } },
 				data: { status: 'DECLINED' }
 			});
 
-			await tx.offer.update({
-				where: { id: payload.offerId },
+			await tx.visit.update({
+				where: { id: payload.visitId },
 				data: { status: 'ACCEPTED', stage: 'INITIATED' }
 			});
 
@@ -99,5 +99,17 @@ export class ProposalService {
 				data: { status: 'ACCEPTED' }
 			});
 		});
+	}
+
+	async reopen(id: string, customerId: string) {
+		const proposal = await this.client.proposal.findUnique({ where: { id } });
+
+		if (!proposal) throw new Error('Proposal not found');
+		if (proposal.customerId !== customerId) throw new Error('Forbidden');
+		if (proposal.status !== 'INSPECTION_COMPLETED') {
+			throw new Error(`Cannot reopen a proposal with status ${proposal.status}`);
+		}
+
+		return await this.client.proposal.update({ where: { id }, data: { status: 'WAITING_OFFERS' } });
 	}
 }
