@@ -1,0 +1,92 @@
+{
+	"Categories List": {
+		"get": {
+			"summary": "List",
+			"deprecated": false,
+			"description": "",
+			"tags": [
+				"Categories"
+			],
+			"parameters": [
+				{
+					"name": "name",
+					"in": "query",
+					"description": "Case-insensitive substring match against either the `ar` or `en` name field",
+					"required": false,
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "array",
+								"items": {
+									"$ref": "../openapi.json#/components/schemas/Category"
+								}
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Categories Find": {
+		"get": {
+			"summary": "Find",
+			"deprecated": false,
+			"description": "",
+			"tags": [
+				"Categories"
+			],
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Category"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	}
+}

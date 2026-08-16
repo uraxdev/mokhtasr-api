@@ -1,0 +1,111 @@
+{
+	"Regions List": {
+		"get": {
+			"summary": "List",
+			"deprecated": false,
+			"description": "",
+			"tags": [
+				"Regions"
+			],
+			"parameters": [
+				{
+					"name": "name",
+					"in": "query",
+					"description": "",
+					"required": false,
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "array",
+								"items": {
+									"$ref": "../openapi.json#/components/schemas/Region"
+								}
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Regions Find": {
+		"get": {
+			"summary": "Find",
+			"deprecated": false,
+			"description": "",
+			"tags": [
+				"Regions"
+			],
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"allOf": [
+									{
+										"$ref": "../openapi.json#/components/schemas/Region"
+									},
+									{
+										"type": "object",
+										"properties": {
+											"subRegions": {
+												"type": "array",
+												"items": {
+													"$ref": "../openapi.json#/components/schemas/Region"
+												}
+											},
+											"parentRegion": {
+												"$ref": "../openapi.json#/components/schemas/Region",
+												"nullable": true
+											}
+										}
+									}
+								]
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	}
+}

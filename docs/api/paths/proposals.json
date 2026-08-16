@@ -1,0 +1,273 @@
+{
+	"Proposals Collection": {
+		"post": {
+			"summary": "Create",
+			"deprecated": false,
+			"description": "Customers only.",
+			"operationId": "createProposal",
+			"tags": [
+				"Proposals"
+			],
+			"parameters": [],
+			"requestBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "../openapi.json#/components/schemas/Proposal Create Payload"
+						},
+						"examples": {}
+					}
+				},
+				"required": true
+			},
+			"responses": {
+				"201": {
+					"description": "Proposal created",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Proposal"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		},
+		"get": {
+			"summary": "List",
+			"deprecated": false,
+			"description": "Customers see their own proposals; other roles receive every proposal.",
+			"operationId": "listProposals",
+			"tags": [
+				"Proposals"
+			],
+			"parameters": [],
+			"responses": {
+				"200": {
+					"description": "List of proposals",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "array",
+								"items": {
+									"$ref": "../openapi.json#/components/schemas/Proposal"
+								}
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Proposals Find": {
+		"get": {
+			"summary": "Find",
+			"deprecated": false,
+			"description": "Customers only; must own the proposal.",
+			"operationId": "getProposal",
+			"tags": [
+				"Proposals"
+			],
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "Proposal found",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Proposal"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Proposals Accept Visit": {
+		"post": {
+			"summary": "Accept Visit",
+			"deprecated": false,
+			"description": "Customers only. Accepts the chosen visit and declines all other pending visits on the proposal.",
+			"operationId": "acceptVisit",
+			"tags": [
+				"Proposals"
+			],
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"requestBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "../openapi.json#/components/schemas/Accept Visit Payload"
+						},
+						"examples": {}
+					}
+				},
+				"required": true
+			},
+			"responses": {
+				"200": {
+					"description": "Visit accepted; proposal status updated to ACCEPTED",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Proposal"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Proposals Cancel": {
+		"patch": {
+			"summary": "Cancel",
+			"deprecated": false,
+			"description": "Customers only.",
+			"operationId": "cancelProposal",
+			"tags": [
+				"Proposals"
+			],
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "Proposal cancelled",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Proposal"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Proposals Reopen": {
+		"patch": {
+			"summary": "Reopen",
+			"deprecated": false,
+			"description": "Customers only. Only valid when the proposal status is INSPECTION_COMPLETED; moves it back to WAITING_OFFERS.",
+			"operationId": "reopenProposal",
+			"tags": [
+				"Proposals"
+			],
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "Proposal reopened",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Proposal"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	}
+}

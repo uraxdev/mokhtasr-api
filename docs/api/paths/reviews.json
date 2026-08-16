@@ -1,0 +1,120 @@
+{
+	"Reviews List For Handyman": {
+		"get": {
+			"summary": "Reviews",
+			"deprecated": false,
+			"description": "",
+			"tags": [
+				"Reviews"
+			],
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"average": {
+										"type": "number"
+									},
+									"count": {
+										"type": "integer"
+									},
+									"reviews": {
+										"type": "array",
+										"items": {
+											"$ref": "../openapi.json#/components/schemas/Review"
+										}
+									}
+								},
+								"required": [
+									"average",
+									"count",
+									"reviews"
+								]
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Reviews Create": {
+		"post": {
+			"summary": "Review",
+			"deprecated": false,
+			"description": "Customers only. The visit must be COMPLETED and not already reviewed.",
+			"tags": [
+				"Reviews"
+			],
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"requestBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "../openapi.json#/components/schemas/Review Create Payload"
+						},
+						"examples": {}
+					}
+				},
+				"required": true
+			},
+			"responses": {
+				"201": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Review"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	}
+}

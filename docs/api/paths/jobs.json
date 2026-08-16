@@ -1,0 +1,196 @@
+{
+	"Jobs List": {
+		"get": {
+			"summary": "List",
+			"deprecated": false,
+			"description": "Handymen only. Browse feed of proposals open for offers.",
+			"tags": [
+				"Jobs"
+			],
+			"parameters": [
+				{
+					"name": "service",
+					"in": "query",
+					"description": "",
+					"required": false,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				},
+				{
+					"name": "dateRange",
+					"in": "query",
+					"description": "",
+					"required": false,
+					"schema": {
+						"type": "string",
+						"enum": [
+							"TODAY",
+							"TOMORROW",
+							"THIS_WEEK"
+						]
+					}
+				},
+				{
+					"name": "page",
+					"in": "query",
+					"description": "",
+					"required": false,
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "limit",
+					"in": "query",
+					"description": "",
+					"required": false,
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"service": {
+											"type": "object",
+											"description": "Bilingual service name (Service.name is stored raw here, not just the localized string)",
+											"properties": {
+												"ar": {
+													"type": "string"
+												},
+												"en": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"ar",
+												"en"
+											]
+										},
+										"title": {
+											"type": "string"
+										},
+										"description": {
+											"type": "string"
+										},
+										"address": {
+											"type": "string"
+										},
+										"distanceKm": {
+											"type": "number",
+											"nullable": true
+										},
+										"dueDate": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"visits": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string",
+														"format": "uuid"
+													},
+													"price": {
+														"type": "number",
+														"nullable": true
+													},
+													"handyman": {
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"user": {
+																"type": "object",
+																"properties": {
+																	"id": {
+																		"type": "string",
+																		"format": "uuid"
+																	},
+																	"name": {
+																		"type": "string"
+																	},
+																	"avatar": {
+																		"type": "string",
+																		"format": "uri",
+																		"nullable": true
+																	}
+																},
+																"required": [
+																	"id",
+																	"name",
+																	"avatar"
+																]
+															}
+														},
+														"required": [
+															"id",
+															"user"
+														]
+													},
+													"createdAt": {
+														"type": "string",
+														"format": "date-time"
+													}
+												},
+												"required": [
+													"id",
+													"price",
+													"handyman",
+													"createdAt"
+												]
+											}
+										},
+										"submittedAt": {
+											"type": "string",
+											"format": "date-time"
+										}
+									},
+									"required": [
+										"id",
+										"service",
+										"title",
+										"description",
+										"address",
+										"distanceKm",
+										"dueDate",
+										"visits",
+										"submittedAt"
+									]
+								}
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	}
+}

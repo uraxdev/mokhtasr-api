@@ -1,0 +1,157 @@
+{
+	"Chat Messages": {
+		"get": {
+			"summary": "List Messages",
+			"deprecated": false,
+			"description": "Must be a participant (the visit's handyman or the proposal's customer).",
+			"tags": [
+				"Chat"
+			],
+			"parameters": [
+				{
+					"name": "visitId",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "array",
+								"items": {
+									"$ref": "../openapi.json#/components/schemas/ChatMessage"
+								}
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		},
+		"post": {
+			"summary": "Send Message",
+			"deprecated": false,
+			"description": "Must be a participant (the visit's handyman or the proposal's customer).",
+			"tags": [
+				"Chat"
+			],
+			"parameters": [
+				{
+					"name": "visitId",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"requestBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "../openapi.json#/components/schemas/Send Message Payload"
+						},
+						"examples": {}
+					}
+				},
+				"required": true
+			},
+			"responses": {
+				"201": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/ChatMessage"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Chat Reschedule": {
+		"patch": {
+			"summary": "Reschedule",
+			"deprecated": false,
+			"description": "Must be a participant. Posts a RESCHEDULE chat message proposing a new date.",
+			"tags": [
+				"Chat"
+			],
+			"parameters": [
+				{
+					"name": "visitId",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"requestBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "../openapi.json#/components/schemas/Reschedule Payload"
+						},
+						"examples": {}
+					}
+				},
+				"required": true
+			},
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/ChatMessage"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	}
+}

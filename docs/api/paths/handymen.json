@@ -1,0 +1,91 @@
+{
+	"Handymen Update": {
+		"patch": {
+			"summary": "Update",
+			"deprecated": false,
+			"description": "Handymen only.",
+			"tags": [
+				"Handymen"
+			],
+			"parameters": [],
+			"requestBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "../openapi.json#/components/schemas/Handyman Update Payload"
+						},
+						"examples": {}
+					}
+				},
+				"required": true
+			},
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Handyman"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Handymen Block": {
+		"post": {
+			"summary": "Block",
+			"deprecated": false,
+			"description": "Admins only. Rejects a pending application (if any) and declines all of the handyman's visits.",
+			"tags": [
+				"Handymen"
+			],
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"example": "c0ad7d10-57a6-44d5-91df-012e213985eb",
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Handyman"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	}
+}

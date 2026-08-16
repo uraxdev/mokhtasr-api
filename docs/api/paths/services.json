@@ -1,0 +1,102 @@
+{
+	"Services List": {
+		"get": {
+			"summary": "List",
+			"deprecated": false,
+			"description": "",
+			"tags": [
+				"Services"
+			],
+			"parameters": [
+				{
+					"name": "name",
+					"in": "query",
+					"description": "Case-insensitive substring match against either the `ar` or `en` name field",
+					"required": false,
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "category",
+					"in": "query",
+					"description": "Filter by category id",
+					"required": false,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "array",
+								"items": {
+									"$ref": "../openapi.json#/components/schemas/Service"
+								}
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Services Find": {
+		"get": {
+			"summary": "Find",
+			"deprecated": false,
+			"description": "",
+			"tags": [
+				"Services"
+			],
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Service"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,260 @@
+{
+	"Applications List": {
+		"get": {
+			"summary": "List",
+			"deprecated": false,
+			"description": "Admins only.",
+			"tags": [
+				"Applications"
+			],
+			"parameters": [],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "array",
+								"items": {
+									"$ref": "../openapi.json#/components/schemas/Application"
+								}
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Applications Find": {
+		"get": {
+			"summary": "Find",
+			"deprecated": false,
+			"description": "",
+			"tags": [
+				"Applications"
+			],
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Application"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Applications Status": {
+		"get": {
+			"summary": "Status",
+			"deprecated": false,
+			"description": "Handymen only.",
+			"tags": [
+				"Applications"
+			],
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"status": {
+										"type": "string",
+										"description": "status",
+										"enum": [
+											"PENDING",
+											"REJECTED",
+											"EXPIRED",
+											"ACCEPTED"
+										]
+									}
+								},
+								"required": [
+									"status"
+								]
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Applications Accept": {
+		"patch": {
+			"summary": "Accept",
+			"deprecated": false,
+			"description": "Admins only.",
+			"tags": [
+				"Applications"
+			],
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "string",
+										"description": "ID",
+										"format": "uuid"
+									}
+								},
+								"required": [
+									"id"
+								]
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Applications Reject": {
+		"patch": {
+			"summary": "Reject",
+			"deprecated": false,
+			"description": "Admins only.",
+			"tags": [
+				"Applications"
+			],
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"requestBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "../openapi.json#/components/schemas/Application Reject Payload"
+						},
+						"examples": {}
+					}
+				},
+				"required": true
+			},
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "string",
+										"description": "ID",
+										"format": "uuid"
+									}
+								},
+								"required": [
+									"id"
+								]
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	}
+}

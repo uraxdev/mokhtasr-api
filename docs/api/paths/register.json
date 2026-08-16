@@ -1,0 +1,217 @@
+{
+	"Register Handyman": {
+		"post": {
+			"summary": "Handyman",
+			"deprecated": false,
+			"description": "",
+			"tags": [
+				"Register"
+			],
+			"parameters": [
+				{
+					"name": "userId",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"example": "23f89f3a-c0ae-4163-b380-af3e53bde363",
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"requestBody": {
+				"content": {
+					"multipart/form-data": {
+						"schema": {
+							"type": "object",
+							"properties": {
+								"firstName": {
+									"example": "Seif",
+									"type": "string"
+								},
+								"lastName": {
+									"example": "Essam",
+									"type": "string"
+								},
+								"nationalIdFront": {
+									"format": "binary",
+									"type": "string"
+								},
+								"nationalIdBack": {
+									"format": "binary",
+									"type": "string"
+								},
+								"selfie": {
+									"format": "binary",
+									"type": "string"
+								},
+								"birthdate": {
+									"example": "2001-01-29T21:35:50.599Z",
+									"type": "string",
+									"format": "date-time"
+								},
+								"regions": {
+									"type": "array",
+									"items": {
+										"type": "string",
+										"format": "uuid"
+									},
+									"example": [
+										"13a1483c-0950-4666-bd1a-5ea00be0451d",
+										"7cfc85a0-5197-40c2-a112-d13cdda85b1c"
+									]
+								},
+								"services": {
+									"type": "array",
+									"items": {
+										"type": "string",
+										"format": "uuid"
+									},
+									"example": [
+										"10c3cb25-7a22-4a76-8279-160b111254a9",
+										"514f1e88-8f64-4727-9490-a3867afe8fd7",
+										"0b93d2df-77bb-4e68-8e34-20c0056e078a"
+									]
+								}
+							},
+							"required": [
+								"firstName",
+								"lastName",
+								"nationalIdFront",
+								"nationalIdBack",
+								"selfie",
+								"birthdate",
+								"regions",
+								"services"
+							]
+						}
+					}
+				},
+				"required": true
+			},
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"handyman": {
+										"$ref": "../openapi.json#/components/schemas/Handyman"
+									},
+									"application": {
+										"$ref": "../openapi.json#/components/schemas/Application"
+									}
+								},
+								"required": [
+									"handyman",
+									"application"
+								]
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Register Customer": {
+		"post": {
+			"summary": "Customer",
+			"deprecated": false,
+			"description": "",
+			"tags": [
+				"Register"
+			],
+			"parameters": [
+				{
+					"name": "userId",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Customer"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Register Admin": {
+		"post": {
+			"summary": "Admin",
+			"deprecated": false,
+			"description": "",
+			"tags": [
+				"Register"
+			],
+			"parameters": [
+				{
+					"name": "userId",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Admin"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	}
+}

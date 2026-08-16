@@ -1,0 +1,87 @@
+{
+	"Financials Summary": {
+		"get": {
+			"summary": "Summary",
+			"deprecated": false,
+			"description": "Handymen only.",
+			"tags": [
+				"Financials"
+			],
+			"parameters": [],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Financial Summary"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
+	"Financials Transactions": {
+		"get": {
+			"summary": "Transactions",
+			"deprecated": false,
+			"description": "Handymen only.",
+			"tags": [
+				"Financials"
+			],
+			"parameters": [
+				{
+					"name": "page",
+					"in": "query",
+					"description": "",
+					"required": false,
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "limit",
+					"in": "query",
+					"description": "",
+					"required": false,
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Financial Transactions"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	}
+}

@@ -31,6 +31,7 @@ There is no test suite in this repo. There is no `check-single-file` equivalent 
 **Request flow:** `src/index.ts` wires global middleware in a fixed order — CORS → JSON body parsing → request logging → **authentication** → `multer.upload.any()` → the router → error boundary. Because `withAuthentication` runs before route registration, every route is authenticated by default; only requests matching the `publicRequests` allowlist in `src/subsystems/auth/with-authentication.ts` (`POST /auth/initiate`, `/auth/verify`, `/auth/refresh`) skip it. In non-production, the header `Authorization: Bearer PA$$` also bypasses auth (see `withAuthentication`) — do not remove this without checking for local/dev tooling dependent on it.
 
 **Layering — routes → services → repositories/database:**
+
 - `src/routes/*.ts` — one file per resource, exports a `(router: Router) => void` that registers Express handlers. Handlers extract identity from `res.locals.entities` (set by `withAuthentication`: `{ user, role, admin?, customer?, handyman? }`), do a manual `if (!xId) throw new Error('Forbidden: ...')` role check, delegate all logic to a `*Service`, and always route errors through `next(error)` — never handle errors inline.
 - `src/services/*.ts` — one class per resource (e.g. `CategoryService`), constructed with a Prisma `Client` (`PrismaClient | Prisma.TransactionClient`, see `src/database/lib/types.ts`), holding the actual business logic and Prisma calls. Services are stateless and instantiated per-request (`new XService(client)`), not singletons.
 - `src/database/repositories/*.ts` — despite the name, these are **Zod schema definitions**, not data-access classes. Each exports a class with a static `get()` returning a `z.object(...)` describing the API shape of that entity (including nested/related entities via getter-based lazy refs to avoid circular-import issues), plus an inferred TS type. Use `validateSchema()` / `parseSchema()` from `src/lib/utils.ts` against these when validating payloads.
@@ -38,6 +39,7 @@ There is no test suite in this repo. There is no `check-single-file` equivalent 
 - `src/database/lib/client.ts` — the shared Prisma client singleton (`client`), built with `PrismaPg` adapter over `DATABASE_URL`, cached on `global` outside production to survive dev hot-reloads.
 
 **Subsystems** (`src/subsystems/`) wrap third-party integrations behind small, focused modules:
+
 - `auth/` — `AuthSystem` class (OTP-based phone login via Twilio WhatsApp in production, fixed `123456` OTP outside production) plus the `withAuthentication` middleware.
 - `aws/` — S3-compatible object storage (Railway Buckets). `uploadToBucket(file)` uploads a Multer in-memory file and returns a full URL built from the plain-string `S3_ENDPOINT` env var; do not call `s3.config.endpoint()` directly for URL construction — it's an async provider function, not a string (see git history around commit `f18546f`).
 - `multer/` — shared `upload` instance using `memoryStorage()`; mounted globally as `upload.any()` in `index.ts`, so files arrive as `req.files` in every route, not just upload endpoints.

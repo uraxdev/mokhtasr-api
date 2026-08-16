@@ -1,0 +1,125 @@
+{
+	"Users Collection": {
+		"get": {
+			"summary": "Find",
+			"deprecated": false,
+			"description": "Returns the authenticated user.",
+			"tags": [
+				"Users"
+			],
+			"parameters": [],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/User"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		},
+		"patch": {
+			"summary": "Update",
+			"deprecated": false,
+			"description": "Updates the authenticated user.",
+			"tags": [
+				"Users"
+			],
+			"parameters": [],
+			"requestBody": {
+				"content": {
+					"multipart/form-data": {
+						"schema": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"avatar": {
+									"type": "string",
+									"format": "binary"
+								}
+							}
+						}
+					}
+				},
+				"required": true
+			},
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/User"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		},
+		"delete": {
+			"summary": "Delete",
+			"deprecated": false,
+			"description": "Deletes the authenticated user.",
+			"tags": [
+				"Users"
+			],
+			"parameters": [],
+			"responses": {
+				"200": {
+					"description": "",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "string",
+										"format": "uuid"
+									}
+								},
+								"required": [
+									"id"
+								]
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	}
+}

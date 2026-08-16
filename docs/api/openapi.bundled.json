@@ -1,0 +1,8120 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"title": "Default module",
+		"description": "",
+		"version": "1.0.0"
+	},
+	"tags": [
+		{
+			"name": "Applications",
+			"description": "Handyman KYC/onboarding applications — review, accept, reject."
+		},
+		{
+			"name": "Auth",
+			"description": "Phone/OTP authentication — initiate, verify, refresh."
+		},
+		{
+			"name": "Categories",
+			"description": "Top-level service categories."
+		},
+		{
+			"name": "Chat",
+			"description": "In-visit chat messages and reschedule proposals."
+		},
+		{
+			"name": "Financials",
+			"description": "Handyman earnings summary and transaction history."
+		},
+		{
+			"name": "Handymen",
+			"description": "Handyman profile updates and admin moderation (block)."
+		},
+		{
+			"name": "Jobs",
+			"description": "Handyman-facing feed of open proposals to bid on."
+		},
+		{
+			"name": "Proposals",
+			"description": "Customer job proposals and their lifecycle."
+		},
+		{
+			"name": "Regions",
+			"description": "Service regions."
+		},
+		{
+			"name": "Register",
+			"description": "Completes registration for a given role after auth."
+		},
+		{
+			"name": "Reviews",
+			"description": "Customer reviews of completed visits."
+		},
+		{
+			"name": "Services",
+			"description": "Services offered within a category."
+		},
+		{
+			"name": "Users",
+			"description": "The authenticated user's own profile."
+		},
+		{
+			"name": "Visits",
+			"description": "Handyman inspection/work visits and their lifecycle."
+		}
+	],
+	"paths": {
+		"/applications": {
+			"get": {
+				"summary": "List",
+				"deprecated": false,
+				"description": "Admins only.",
+				"tags": [
+					"Applications"
+				],
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"firstName": {
+												"type": "string"
+											},
+											"lastName": {
+												"type": "string"
+											},
+											"nationalIdFront": {
+												"type": "string",
+												"format": "uri"
+											},
+											"nationalIdBack": {
+												"type": "string",
+												"format": "uri"
+											},
+											"selfie": {
+												"type": "string",
+												"format": "uri"
+											},
+											"birthdate": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"handymanId": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"status": {
+												"type": "string",
+												"default": "PENDING",
+												"enum": [
+													"PENDING",
+													"REJECTED",
+													"EXPIRED",
+													"ACCEPTED"
+												]
+											},
+											"expiresAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"notes": {
+												"type": "string",
+												"nullable": true
+											},
+											"createdAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"updatedAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"regions": {
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"name": {
+															"type": "string"
+														}
+													},
+													"required": [
+														"id",
+														"name"
+													]
+												}
+											},
+											"services": {
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"name": {
+															"type": "object",
+															"properties": {
+																"ar": {
+																	"type": "string"
+																},
+																"en": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"ar",
+																"en"
+															]
+														}
+													},
+													"required": [
+														"id",
+														"name"
+													]
+												}
+											}
+										},
+										"required": [
+											"id",
+											"firstName",
+											"lastName",
+											"nationalIdFront",
+											"nationalIdBack",
+											"selfie",
+											"birthdate",
+											"handymanId",
+											"status",
+											"expiresAt",
+											"createdAt",
+											"updatedAt",
+											"regions",
+											"services"
+										]
+									}
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/applications/{id}": {
+			"get": {
+				"summary": "Find",
+				"deprecated": false,
+				"description": "",
+				"tags": [
+					"Applications"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"firstName": {
+											"type": "string"
+										},
+										"lastName": {
+											"type": "string"
+										},
+										"nationalIdFront": {
+											"type": "string",
+											"format": "uri"
+										},
+										"nationalIdBack": {
+											"type": "string",
+											"format": "uri"
+										},
+										"selfie": {
+											"type": "string",
+											"format": "uri"
+										},
+										"birthdate": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"handymanId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"status": {
+											"type": "string",
+											"default": "PENDING",
+											"enum": [
+												"PENDING",
+												"REJECTED",
+												"EXPIRED",
+												"ACCEPTED"
+											]
+										},
+										"expiresAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"notes": {
+											"type": "string",
+											"nullable": true
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"regions": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string",
+														"format": "uuid"
+													},
+													"name": {
+														"type": "string"
+													}
+												},
+												"required": [
+													"id",
+													"name"
+												]
+											}
+										},
+										"services": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string",
+														"format": "uuid"
+													},
+													"name": {
+														"type": "object",
+														"properties": {
+															"ar": {
+																"type": "string"
+															},
+															"en": {
+																"type": "string"
+															}
+														},
+														"required": [
+															"ar",
+															"en"
+														]
+													}
+												},
+												"required": [
+													"id",
+													"name"
+												]
+											}
+										}
+									},
+									"required": [
+										"id",
+										"firstName",
+										"lastName",
+										"nationalIdFront",
+										"nationalIdBack",
+										"selfie",
+										"birthdate",
+										"handymanId",
+										"status",
+										"expiresAt",
+										"createdAt",
+										"updatedAt",
+										"regions",
+										"services"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/applications/{id}/status": {
+			"get": {
+				"summary": "Status",
+				"deprecated": false,
+				"description": "Handymen only.",
+				"tags": [
+					"Applications"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "string",
+											"description": "status",
+											"enum": [
+												"PENDING",
+												"REJECTED",
+												"EXPIRED",
+												"ACCEPTED"
+											]
+										}
+									},
+									"required": [
+										"status"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/applications/{id}/accept": {
+			"patch": {
+				"summary": "Accept",
+				"deprecated": false,
+				"description": "Admins only.",
+				"tags": [
+					"Applications"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"description": "ID",
+											"format": "uuid"
+										}
+									},
+									"required": [
+										"id"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/applications/{id}/reject": {
+			"patch": {
+				"summary": "Reject",
+				"deprecated": false,
+				"description": "Admins only.",
+				"tags": [
+					"Applications"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"notes": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"notes"
+								]
+							},
+							"examples": {}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"description": "ID",
+											"format": "uuid"
+										}
+									},
+									"required": [
+										"id"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/auth/initiate": {
+			"post": {
+				"summary": "Initiate",
+				"deprecated": false,
+				"description": "Public. Sends a WhatsApp OTP to the given phone number.",
+				"tags": [
+					"Auth"
+				],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"phone": {
+										"type": "string",
+										"pattern": "^\\+20(10|11|12|15)\\d{8}$"
+									}
+								},
+								"required": [
+									"phone"
+								]
+							},
+							"example": {
+								"phone": "+201558237511"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"verificationId": {
+											"type": "string",
+											"format": "uuid"
+										}
+									},
+									"required": [
+										"verificationId"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": []
+			}
+		},
+		"/auth/verify": {
+			"post": {
+				"summary": "Verify",
+				"deprecated": false,
+				"description": "Public. Verifies the OTP and returns access/refresh tokens.",
+				"tags": [
+					"Auth"
+				],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"verificationId": {
+										"type": "string",
+										"format": "uuid"
+									},
+									"phone": {
+										"type": "string",
+										"pattern": "^\\+20(10|11|12|15)\\d{8}$"
+									},
+									"otp": {
+										"type": "string",
+										"minLength": 6,
+										"maxLength": 6
+									},
+									"role": {
+										"type": "string",
+										"enum": [
+											"ADMIN",
+											"HANDYMAN",
+											"CUSTOMER"
+										],
+										"description": "Required only when verifying for a brand-new user; ignored for existing users"
+									}
+								},
+								"required": [
+									"phone",
+									"verificationId",
+									"otp"
+								]
+							},
+							"example": {
+								"verificationId": "1db06c9a-b7db-4b8d-b87f-fb34853c51b2",
+								"phone": "+201558237511",
+								"otp": "123456",
+								"role": "HANDYMAN"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"access": {
+											"type": "string"
+										},
+										"refresh": {
+											"type": "string"
+										},
+										"user": {
+											"$ref": "#/components/schemas/User"
+										}
+									},
+									"required": [
+										"access",
+										"refresh",
+										"user"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": []
+			}
+		},
+		"/auth/refresh": {
+			"post": {
+				"summary": "Refresh",
+				"deprecated": false,
+				"description": "Public.",
+				"tags": [
+					"Auth"
+				],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"refresh": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"refresh"
+								]
+							},
+							"examples": {}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"access": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"access"
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": []
+			}
+		},
+		"/categories": {
+			"get": {
+				"summary": "List",
+				"deprecated": false,
+				"description": "",
+				"tags": [
+					"Categories"
+				],
+				"parameters": [
+					{
+						"name": "name",
+						"in": "query",
+						"description": "Case-insensitive substring match against either the `ar` or `en` name field",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"name": {
+												"type": "object",
+												"properties": {
+													"ar": {
+														"type": "string"
+													},
+													"en": {
+														"type": "string"
+													}
+												},
+												"required": [
+													"ar",
+													"en"
+												]
+											},
+											"createdAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"updatedAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"services": {
+												"type": "array",
+												"description": "Only present on Find (GET /categories/{id})",
+												"items": {
+													"$ref": "#/components/schemas/Service"
+												}
+											}
+										},
+										"required": [
+											"id",
+											"name",
+											"createdAt",
+											"updatedAt"
+										]
+									}
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/categories/{id}": {
+			"get": {
+				"summary": "Find",
+				"deprecated": false,
+				"description": "",
+				"tags": [
+					"Categories"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"name": {
+											"type": "object",
+											"properties": {
+												"ar": {
+													"type": "string"
+												},
+												"en": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"ar",
+												"en"
+											]
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"services": {
+											"type": "array",
+											"description": "Only present on Find (GET /categories/{id})",
+											"items": {
+												"$ref": "#/components/schemas/Service"
+											}
+										}
+									},
+									"required": [
+										"id",
+										"name",
+										"createdAt",
+										"updatedAt"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/financials/summary": {
+			"get": {
+				"summary": "Summary",
+				"deprecated": false,
+				"description": "Handymen only.",
+				"tags": [
+					"Financials"
+				],
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"totalEarned": {
+											"type": "number",
+											"description": "Sum of RECEIVED transaction amounts"
+										},
+										"thisMonth": {
+											"type": "number"
+										},
+										"pending": {
+											"type": "number",
+											"description": "Sum of PENDING transaction amounts"
+										},
+										"completedJobs": {
+											"type": "integer",
+											"description": "Count of visits with status COMPLETED"
+										},
+										"growthPercent": {
+											"type": "number",
+											"nullable": true,
+											"description": "null when last month had no earnings"
+										},
+										"monthlyData": {
+											"type": "array",
+											"description": "Last 6 months, oldest first",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"monthLabel": {
+														"type": "string"
+													},
+													"amount": {
+														"type": "number"
+													}
+												},
+												"required": [
+													"id",
+													"monthLabel",
+													"amount"
+												]
+											}
+										},
+										"recentTransactions": {
+											"type": "array",
+											"description": "Most recent 5 transactions",
+											"items": {
+												"$ref": "#/components/schemas/Financial Transaction Item"
+											}
+										}
+									},
+									"required": [
+										"totalEarned",
+										"thisMonth",
+										"pending",
+										"completedJobs",
+										"growthPercent",
+										"monthlyData",
+										"recentTransactions"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/financials/transactions": {
+			"get": {
+				"summary": "Transactions",
+				"deprecated": false,
+				"description": "Handymen only.",
+				"tags": [
+					"Financials"
+				],
+				"parameters": [
+					{
+						"name": "page",
+						"in": "query",
+						"description": "",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"description": "",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"total": {
+											"type": "integer"
+										},
+										"page": {
+											"type": "integer"
+										},
+										"limit": {
+											"type": "integer"
+										},
+										"items": {
+											"type": "array",
+											"items": {
+												"$ref": "#/components/schemas/Financial Transaction Item"
+											}
+										}
+									},
+									"required": [
+										"total",
+										"page",
+										"limit",
+										"items"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/handymen": {
+			"patch": {
+				"summary": "Update",
+				"deprecated": false,
+				"description": "Handymen only.",
+				"tags": [
+					"Handymen"
+				],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"description": "At least one field must be provided.",
+								"properties": {
+									"regions": {
+										"type": "array",
+										"items": {
+											"type": "string",
+											"format": "uuid"
+										}
+									},
+									"workDays": {
+										"type": "array",
+										"items": {
+											"type": "string",
+											"enum": [
+												"SUNDAY",
+												"MONDAY",
+												"TUESDAY",
+												"WEDNESDAY",
+												"THURSDAY",
+												"FRIDAY",
+												"SATURDAY"
+											]
+										},
+										"description": "An empty array resets to the default (all seven days)"
+									}
+								}
+							},
+							"examples": {}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"workDays": {
+											"type": "array",
+											"items": {
+												"type": "string",
+												"enum": [
+													"SUNDAY",
+													"MONDAY",
+													"TUESDAY",
+													"WEDNESDAY",
+													"THURSDAY",
+													"FRIDAY",
+													"SATURDAY"
+												]
+											}
+										},
+										"status": {
+											"type": "string",
+											"default": "PENDING",
+											"enum": [
+												"PENDING",
+												"REJECTED",
+												"BLOCKED",
+												"ACCEPTED"
+											]
+										},
+										"birthdate": {
+											"type": "string",
+											"format": "date-time",
+											"nullable": true
+										},
+										"userId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"user": {
+											"$ref": "#/components/schemas/User",
+											"description": "Present whenever the handyman is fetched through HandymanService (list/find/update/delete/block)"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										}
+									},
+									"required": [
+										"id",
+										"workDays",
+										"status",
+										"birthdate",
+										"userId",
+										"createdAt",
+										"updatedAt"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/handymen/{id}/block": {
+			"post": {
+				"summary": "Block",
+				"deprecated": false,
+				"description": "Admins only. Rejects a pending application (if any) and declines all of the handyman's visits.",
+				"tags": [
+					"Handymen"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"example": "c0ad7d10-57a6-44d5-91df-012e213985eb",
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"workDays": {
+											"type": "array",
+											"items": {
+												"type": "string",
+												"enum": [
+													"SUNDAY",
+													"MONDAY",
+													"TUESDAY",
+													"WEDNESDAY",
+													"THURSDAY",
+													"FRIDAY",
+													"SATURDAY"
+												]
+											}
+										},
+										"status": {
+											"type": "string",
+											"default": "PENDING",
+											"enum": [
+												"PENDING",
+												"REJECTED",
+												"BLOCKED",
+												"ACCEPTED"
+											]
+										},
+										"birthdate": {
+											"type": "string",
+											"format": "date-time",
+											"nullable": true
+										},
+										"userId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"user": {
+											"$ref": "#/components/schemas/User",
+											"description": "Present whenever the handyman is fetched through HandymanService (list/find/update/delete/block)"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										}
+									},
+									"required": [
+										"id",
+										"workDays",
+										"status",
+										"birthdate",
+										"userId",
+										"createdAt",
+										"updatedAt"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/handymen/{id}/reviews": {
+			"get": {
+				"summary": "Reviews",
+				"deprecated": false,
+				"description": "",
+				"tags": [
+					"Reviews"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"average": {
+											"type": "number"
+										},
+										"count": {
+											"type": "integer"
+										},
+										"reviews": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string",
+														"format": "uuid"
+													},
+													"visitId": {
+														"type": "string",
+														"format": "uuid"
+													},
+													"reviewerName": {
+														"type": "string"
+													},
+													"rating": {
+														"type": "number"
+													},
+													"comment": {
+														"type": "string",
+														"nullable": true
+													},
+													"tags": {
+														"type": "array",
+														"items": {
+															"type": "string",
+															"enum": [
+																"PROFESSIONAL",
+																"PUNCTUAL",
+																"GOOD_VALUE",
+																"HIGH_QUALITY_WORK",
+																"FRIENDLY",
+																"CLEAN_WORKSPACE",
+																"COMMUNICATIVE",
+																"RESPECTFUL",
+																"EXPERT_ADVICE",
+																"EFFICIENT",
+																"LATE",
+																"POOR_COMMUNICATION",
+																"OVERPRICED",
+																"MESSY_WORKSPACE"
+															]
+														}
+													},
+													"createdAt": {
+														"type": "string",
+														"format": "date-time"
+													},
+													"updatedAt": {
+														"type": "string",
+														"format": "date-time"
+													}
+												},
+												"required": [
+													"id",
+													"visitId",
+													"reviewerName",
+													"rating",
+													"comment",
+													"tags",
+													"createdAt",
+													"updatedAt"
+												]
+											}
+										}
+									},
+									"required": [
+										"average",
+										"count",
+										"reviews"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/jobs": {
+			"get": {
+				"summary": "List",
+				"deprecated": false,
+				"description": "Handymen only. Browse feed of proposals open for offers.",
+				"tags": [
+					"Jobs"
+				],
+				"parameters": [
+					{
+						"name": "service",
+						"in": "query",
+						"description": "",
+						"required": false,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					},
+					{
+						"name": "dateRange",
+						"in": "query",
+						"description": "",
+						"required": false,
+						"schema": {
+							"type": "string",
+							"enum": [
+								"TODAY",
+								"TOMORROW",
+								"THIS_WEEK"
+							]
+						}
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"description": "",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"description": "",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"service": {
+												"type": "object",
+												"description": "Bilingual service name (Service.name is stored raw here, not just the localized string)",
+												"properties": {
+													"ar": {
+														"type": "string"
+													},
+													"en": {
+														"type": "string"
+													}
+												},
+												"required": [
+													"ar",
+													"en"
+												]
+											},
+											"title": {
+												"type": "string"
+											},
+											"description": {
+												"type": "string"
+											},
+											"address": {
+												"type": "string"
+											},
+											"distanceKm": {
+												"type": "number",
+												"nullable": true
+											},
+											"dueDate": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"visits": {
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"price": {
+															"type": "number",
+															"nullable": true
+														},
+														"handyman": {
+															"type": "object",
+															"properties": {
+																"id": {
+																	"type": "string",
+																	"format": "uuid"
+																},
+																"user": {
+																	"type": "object",
+																	"properties": {
+																		"id": {
+																			"type": "string",
+																			"format": "uuid"
+																		},
+																		"name": {
+																			"type": "string"
+																		},
+																		"avatar": {
+																			"type": "string",
+																			"format": "uri",
+																			"nullable": true
+																		}
+																	},
+																	"required": [
+																		"id",
+																		"name",
+																		"avatar"
+																	]
+																}
+															},
+															"required": [
+																"id",
+																"user"
+															]
+														},
+														"createdAt": {
+															"type": "string",
+															"format": "date-time"
+														}
+													},
+													"required": [
+														"id",
+														"price",
+														"handyman",
+														"createdAt"
+													]
+												}
+											},
+											"submittedAt": {
+												"type": "string",
+												"format": "date-time"
+											}
+										},
+										"required": [
+											"id",
+											"service",
+											"title",
+											"description",
+											"address",
+											"distanceKm",
+											"dueDate",
+											"visits",
+											"submittedAt"
+										]
+									}
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/proposals": {
+			"post": {
+				"summary": "Create",
+				"deprecated": false,
+				"description": "Customers only.",
+				"operationId": "createProposal",
+				"tags": [
+					"Proposals"
+				],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"title": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"address": {
+										"type": "string"
+									},
+									"dueDate": {
+										"type": "string",
+										"format": "date-time"
+									},
+									"latitude": {
+										"type": "number",
+										"nullable": true
+									},
+									"longitude": {
+										"type": "number",
+										"nullable": true
+									},
+									"serviceId": {
+										"type": "string",
+										"format": "uuid"
+									}
+								},
+								"required": [
+									"title",
+									"description",
+									"address",
+									"dueDate",
+									"serviceId"
+								]
+							},
+							"examples": {}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"201": {
+						"description": "Proposal created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"title": {
+											"type": "string"
+										},
+										"description": {
+											"type": "string"
+										},
+										"address": {
+											"type": "string"
+										},
+										"status": {
+											"type": "string",
+											"default": "WAITING_OFFERS",
+											"enum": [
+												"WAITING_OFFERS",
+												"OFFERS_RECEIVED",
+												"ACCEPTED",
+												"IN_PROGRESS",
+												"AWAITING_COMPLETION",
+												"INSPECTION_COMPLETED",
+												"COMPLETED",
+												"CANCELLED"
+											]
+										},
+										"dueDate": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"latitude": {
+											"type": "number",
+											"nullable": true
+										},
+										"longitude": {
+											"type": "number",
+											"nullable": true
+										},
+										"serviceId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"customerId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"service": {
+											"$ref": "#/components/schemas/Service"
+										},
+										"visits": {
+											"type": "array",
+											"items": {
+												"$ref": "#/components/schemas/Visit"
+											}
+										}
+									},
+									"required": [
+										"id",
+										"title",
+										"description",
+										"address",
+										"status",
+										"dueDate",
+										"serviceId",
+										"customerId",
+										"createdAt",
+										"updatedAt",
+										"service",
+										"visits"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			},
+			"get": {
+				"summary": "List",
+				"deprecated": false,
+				"description": "Customers see their own proposals; other roles receive every proposal.",
+				"operationId": "listProposals",
+				"tags": [
+					"Proposals"
+				],
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "List of proposals",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"title": {
+												"type": "string"
+											},
+											"description": {
+												"type": "string"
+											},
+											"address": {
+												"type": "string"
+											},
+											"status": {
+												"type": "string",
+												"default": "WAITING_OFFERS",
+												"enum": [
+													"WAITING_OFFERS",
+													"OFFERS_RECEIVED",
+													"ACCEPTED",
+													"IN_PROGRESS",
+													"AWAITING_COMPLETION",
+													"INSPECTION_COMPLETED",
+													"COMPLETED",
+													"CANCELLED"
+												]
+											},
+											"dueDate": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"latitude": {
+												"type": "number",
+												"nullable": true
+											},
+											"longitude": {
+												"type": "number",
+												"nullable": true
+											},
+											"serviceId": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"customerId": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"createdAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"updatedAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"service": {
+												"$ref": "#/components/schemas/Service"
+											},
+											"visits": {
+												"type": "array",
+												"items": {
+													"$ref": "#/components/schemas/Visit"
+												}
+											}
+										},
+										"required": [
+											"id",
+											"title",
+											"description",
+											"address",
+											"status",
+											"dueDate",
+											"serviceId",
+											"customerId",
+											"createdAt",
+											"updatedAt",
+											"service",
+											"visits"
+										]
+									}
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/proposals/{id}": {
+			"get": {
+				"summary": "Find",
+				"deprecated": false,
+				"description": "Customers only; must own the proposal.",
+				"operationId": "getProposal",
+				"tags": [
+					"Proposals"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Proposal found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"title": {
+											"type": "string"
+										},
+										"description": {
+											"type": "string"
+										},
+										"address": {
+											"type": "string"
+										},
+										"status": {
+											"type": "string",
+											"default": "WAITING_OFFERS",
+											"enum": [
+												"WAITING_OFFERS",
+												"OFFERS_RECEIVED",
+												"ACCEPTED",
+												"IN_PROGRESS",
+												"AWAITING_COMPLETION",
+												"INSPECTION_COMPLETED",
+												"COMPLETED",
+												"CANCELLED"
+											]
+										},
+										"dueDate": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"latitude": {
+											"type": "number",
+											"nullable": true
+										},
+										"longitude": {
+											"type": "number",
+											"nullable": true
+										},
+										"serviceId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"customerId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"service": {
+											"$ref": "#/components/schemas/Service"
+										},
+										"visits": {
+											"type": "array",
+											"items": {
+												"$ref": "#/components/schemas/Visit"
+											}
+										}
+									},
+									"required": [
+										"id",
+										"title",
+										"description",
+										"address",
+										"status",
+										"dueDate",
+										"serviceId",
+										"customerId",
+										"createdAt",
+										"updatedAt",
+										"service",
+										"visits"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/proposals/{id}/accept-visit": {
+			"post": {
+				"summary": "Accept Visit",
+				"deprecated": false,
+				"description": "Customers only. Accepts the chosen visit and declines all other pending visits on the proposal.",
+				"operationId": "acceptVisit",
+				"tags": [
+					"Proposals"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"visitId": {
+										"type": "string",
+										"format": "uuid"
+									}
+								},
+								"required": [
+									"visitId"
+								]
+							},
+							"examples": {}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Visit accepted; proposal status updated to ACCEPTED",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"title": {
+											"type": "string"
+										},
+										"description": {
+											"type": "string"
+										},
+										"address": {
+											"type": "string"
+										},
+										"status": {
+											"type": "string",
+											"default": "WAITING_OFFERS",
+											"enum": [
+												"WAITING_OFFERS",
+												"OFFERS_RECEIVED",
+												"ACCEPTED",
+												"IN_PROGRESS",
+												"AWAITING_COMPLETION",
+												"INSPECTION_COMPLETED",
+												"COMPLETED",
+												"CANCELLED"
+											]
+										},
+										"dueDate": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"latitude": {
+											"type": "number",
+											"nullable": true
+										},
+										"longitude": {
+											"type": "number",
+											"nullable": true
+										},
+										"serviceId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"customerId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"service": {
+											"$ref": "#/components/schemas/Service"
+										},
+										"visits": {
+											"type": "array",
+											"items": {
+												"$ref": "#/components/schemas/Visit"
+											}
+										}
+									},
+									"required": [
+										"id",
+										"title",
+										"description",
+										"address",
+										"status",
+										"dueDate",
+										"serviceId",
+										"customerId",
+										"createdAt",
+										"updatedAt",
+										"service",
+										"visits"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/proposals/{id}/cancel": {
+			"patch": {
+				"summary": "Cancel",
+				"deprecated": false,
+				"description": "Customers only.",
+				"operationId": "cancelProposal",
+				"tags": [
+					"Proposals"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Proposal cancelled",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"title": {
+											"type": "string"
+										},
+										"description": {
+											"type": "string"
+										},
+										"address": {
+											"type": "string"
+										},
+										"status": {
+											"type": "string",
+											"default": "WAITING_OFFERS",
+											"enum": [
+												"WAITING_OFFERS",
+												"OFFERS_RECEIVED",
+												"ACCEPTED",
+												"IN_PROGRESS",
+												"AWAITING_COMPLETION",
+												"INSPECTION_COMPLETED",
+												"COMPLETED",
+												"CANCELLED"
+											]
+										},
+										"dueDate": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"latitude": {
+											"type": "number",
+											"nullable": true
+										},
+										"longitude": {
+											"type": "number",
+											"nullable": true
+										},
+										"serviceId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"customerId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"service": {
+											"$ref": "#/components/schemas/Service"
+										},
+										"visits": {
+											"type": "array",
+											"items": {
+												"$ref": "#/components/schemas/Visit"
+											}
+										}
+									},
+									"required": [
+										"id",
+										"title",
+										"description",
+										"address",
+										"status",
+										"dueDate",
+										"serviceId",
+										"customerId",
+										"createdAt",
+										"updatedAt",
+										"service",
+										"visits"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/proposals/{id}/reopen": {
+			"patch": {
+				"summary": "Reopen",
+				"deprecated": false,
+				"description": "Customers only. Only valid when the proposal status is INSPECTION_COMPLETED; moves it back to WAITING_OFFERS.",
+				"operationId": "reopenProposal",
+				"tags": [
+					"Proposals"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Proposal reopened",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"title": {
+											"type": "string"
+										},
+										"description": {
+											"type": "string"
+										},
+										"address": {
+											"type": "string"
+										},
+										"status": {
+											"type": "string",
+											"default": "WAITING_OFFERS",
+											"enum": [
+												"WAITING_OFFERS",
+												"OFFERS_RECEIVED",
+												"ACCEPTED",
+												"IN_PROGRESS",
+												"AWAITING_COMPLETION",
+												"INSPECTION_COMPLETED",
+												"COMPLETED",
+												"CANCELLED"
+											]
+										},
+										"dueDate": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"latitude": {
+											"type": "number",
+											"nullable": true
+										},
+										"longitude": {
+											"type": "number",
+											"nullable": true
+										},
+										"serviceId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"customerId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"service": {
+											"$ref": "#/components/schemas/Service"
+										},
+										"visits": {
+											"type": "array",
+											"items": {
+												"$ref": "#/components/schemas/Visit"
+											}
+										}
+									},
+									"required": [
+										"id",
+										"title",
+										"description",
+										"address",
+										"status",
+										"dueDate",
+										"serviceId",
+										"customerId",
+										"createdAt",
+										"updatedAt",
+										"service",
+										"visits"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/regions": {
+			"get": {
+				"summary": "List",
+				"deprecated": false,
+				"description": "",
+				"tags": [
+					"Regions"
+				],
+				"parameters": [
+					{
+						"name": "name",
+						"in": "query",
+						"description": "",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"name": {
+												"type": "string"
+											},
+											"parentRegionId": {
+												"type": "string",
+												"format": "uuid",
+												"nullable": true
+											},
+											"createdAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"updatedAt": {
+												"type": "string",
+												"format": "date-time"
+											}
+										},
+										"required": [
+											"id",
+											"name",
+											"parentRegionId",
+											"createdAt",
+											"updatedAt"
+										]
+									}
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/regions/{id}": {
+			"get": {
+				"summary": "Find",
+				"deprecated": false,
+				"description": "",
+				"tags": [
+					"Regions"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"name": {
+													"type": "string"
+												},
+												"parentRegionId": {
+													"type": "string",
+													"format": "uuid",
+													"nullable": true
+												},
+												"createdAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"updatedAt": {
+													"type": "string",
+													"format": "date-time"
+												}
+											},
+											"required": [
+												"id",
+												"name",
+												"parentRegionId",
+												"createdAt",
+												"updatedAt"
+											]
+										},
+										{
+											"type": "object",
+											"properties": {
+												"subRegions": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"name": {
+																"type": "string"
+															},
+															"parentRegionId": {
+																"type": "string",
+																"format": "uuid",
+																"nullable": true
+															},
+															"createdAt": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"updatedAt": {
+																"type": "string",
+																"format": "date-time"
+															}
+														},
+														"required": [
+															"id",
+															"name",
+															"parentRegionId",
+															"createdAt",
+															"updatedAt"
+														]
+													}
+												},
+												"parentRegion": {
+													"type": "object",
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"name": {
+															"type": "string"
+														},
+														"parentRegionId": {
+															"type": "string",
+															"format": "uuid",
+															"nullable": true
+														},
+														"createdAt": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"updatedAt": {
+															"type": "string",
+															"format": "date-time"
+														}
+													},
+													"required": [
+														"id",
+														"name",
+														"parentRegionId",
+														"createdAt",
+														"updatedAt"
+													]
+												}
+											}
+										}
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/register/handyman/{userId}": {
+			"post": {
+				"summary": "Handyman",
+				"deprecated": false,
+				"description": "",
+				"tags": [
+					"Register"
+				],
+				"parameters": [
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"example": "23f89f3a-c0ae-4163-b380-af3e53bde363",
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"firstName": {
+										"example": "Seif",
+										"type": "string"
+									},
+									"lastName": {
+										"example": "Essam",
+										"type": "string"
+									},
+									"nationalIdFront": {
+										"format": "binary",
+										"type": "string"
+									},
+									"nationalIdBack": {
+										"format": "binary",
+										"type": "string"
+									},
+									"selfie": {
+										"format": "binary",
+										"type": "string"
+									},
+									"birthdate": {
+										"example": "2001-01-29T21:35:50.599Z",
+										"type": "string",
+										"format": "date-time"
+									},
+									"regions": {
+										"type": "array",
+										"items": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"example": [
+											"13a1483c-0950-4666-bd1a-5ea00be0451d",
+											"7cfc85a0-5197-40c2-a112-d13cdda85b1c"
+										]
+									},
+									"services": {
+										"type": "array",
+										"items": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"example": [
+											"10c3cb25-7a22-4a76-8279-160b111254a9",
+											"514f1e88-8f64-4727-9490-a3867afe8fd7",
+											"0b93d2df-77bb-4e68-8e34-20c0056e078a"
+										]
+									}
+								},
+								"required": [
+									"firstName",
+									"lastName",
+									"nationalIdFront",
+									"nationalIdBack",
+									"selfie",
+									"birthdate",
+									"regions",
+									"services"
+								]
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"handyman": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"workDays": {
+													"type": "array",
+													"items": {
+														"type": "string",
+														"enum": [
+															"SUNDAY",
+															"MONDAY",
+															"TUESDAY",
+															"WEDNESDAY",
+															"THURSDAY",
+															"FRIDAY",
+															"SATURDAY"
+														]
+													}
+												},
+												"status": {
+													"type": "string",
+													"default": "PENDING",
+													"enum": [
+														"PENDING",
+														"REJECTED",
+														"BLOCKED",
+														"ACCEPTED"
+													]
+												},
+												"birthdate": {
+													"type": "string",
+													"format": "date-time",
+													"nullable": true
+												},
+												"userId": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"user": {
+													"$ref": "#/components/schemas/User",
+													"description": "Present whenever the handyman is fetched through HandymanService (list/find/update/delete/block)"
+												},
+												"createdAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"updatedAt": {
+													"type": "string",
+													"format": "date-time"
+												}
+											},
+											"required": [
+												"id",
+												"workDays",
+												"status",
+												"birthdate",
+												"userId",
+												"createdAt",
+												"updatedAt"
+											]
+										},
+										"application": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"firstName": {
+													"type": "string"
+												},
+												"lastName": {
+													"type": "string"
+												},
+												"nationalIdFront": {
+													"type": "string",
+													"format": "uri"
+												},
+												"nationalIdBack": {
+													"type": "string",
+													"format": "uri"
+												},
+												"selfie": {
+													"type": "string",
+													"format": "uri"
+												},
+												"birthdate": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"handymanId": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"status": {
+													"type": "string",
+													"default": "PENDING",
+													"enum": [
+														"PENDING",
+														"REJECTED",
+														"EXPIRED",
+														"ACCEPTED"
+													]
+												},
+												"expiresAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"notes": {
+													"type": "string",
+													"nullable": true
+												},
+												"createdAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"updatedAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"regions": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"name": {
+																"type": "string"
+															}
+														},
+														"required": [
+															"id",
+															"name"
+														]
+													}
+												},
+												"services": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"name": {
+																"type": "object",
+																"properties": {
+																	"ar": {
+																		"type": "string"
+																	},
+																	"en": {
+																		"type": "string"
+																	}
+																},
+																"required": [
+																	"ar",
+																	"en"
+																]
+															}
+														},
+														"required": [
+															"id",
+															"name"
+														]
+													}
+												}
+											},
+											"required": [
+												"id",
+												"firstName",
+												"lastName",
+												"nationalIdFront",
+												"nationalIdBack",
+												"selfie",
+												"birthdate",
+												"handymanId",
+												"status",
+												"expiresAt",
+												"createdAt",
+												"updatedAt",
+												"regions",
+												"services"
+											]
+										}
+									},
+									"required": [
+										"handyman",
+										"application"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/register/customer/{userId}": {
+			"post": {
+				"summary": "Customer",
+				"deprecated": false,
+				"description": "",
+				"tags": [
+					"Register"
+				],
+				"parameters": [
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"userId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										}
+									},
+									"required": [
+										"id",
+										"userId",
+										"createdAt",
+										"updatedAt"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/register/admin/{userId}": {
+			"post": {
+				"summary": "Admin",
+				"deprecated": false,
+				"description": "",
+				"tags": [
+					"Register"
+				],
+				"parameters": [
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"userId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										}
+									},
+									"required": [
+										"id",
+										"userId",
+										"createdAt",
+										"updatedAt"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/services": {
+			"get": {
+				"summary": "List",
+				"deprecated": false,
+				"description": "",
+				"tags": [
+					"Services"
+				],
+				"parameters": [
+					{
+						"name": "name",
+						"in": "query",
+						"description": "Case-insensitive substring match against either the `ar` or `en` name field",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "category",
+						"in": "query",
+						"description": "Filter by category id",
+						"required": false,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"name": {
+												"type": "object",
+												"properties": {
+													"ar": {
+														"type": "string"
+													},
+													"en": {
+														"type": "string"
+													}
+												},
+												"required": [
+													"ar",
+													"en"
+												]
+											},
+											"categoryId": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"createdAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"updatedAt": {
+												"type": "string",
+												"format": "date-time"
+											}
+										},
+										"required": [
+											"id",
+											"name",
+											"categoryId",
+											"createdAt",
+											"updatedAt"
+										]
+									}
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/services/{id}": {
+			"get": {
+				"summary": "Find",
+				"deprecated": false,
+				"description": "",
+				"tags": [
+					"Services"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"name": {
+											"type": "object",
+											"properties": {
+												"ar": {
+													"type": "string"
+												},
+												"en": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"ar",
+												"en"
+											]
+										},
+										"categoryId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										}
+									},
+									"required": [
+										"id",
+										"name",
+										"categoryId",
+										"createdAt",
+										"updatedAt"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/users": {
+			"get": {
+				"summary": "Find",
+				"deprecated": false,
+				"description": "Returns the authenticated user.",
+				"tags": [
+					"Users"
+				],
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"name": {
+											"type": "string"
+										},
+										"phone": {
+											"type": "string",
+											"pattern": "^\\+20(10|11|12|15)\\d{8}$"
+										},
+										"role": {
+											"type": "string",
+											"enum": [
+												"ADMIN",
+												"HANDYMAN",
+												"CUSTOMER"
+											]
+										},
+										"avatar": {
+											"type": "string",
+											"format": "uri",
+											"nullable": true
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"admin": {
+											"$ref": "#/components/schemas/Admin",
+											"nullable": true
+										},
+										"customer": {
+											"$ref": "#/components/schemas/Customer",
+											"nullable": true
+										},
+										"handyman": {
+											"$ref": "#/components/schemas/Handyman",
+											"nullable": true
+										}
+									},
+									"required": [
+										"id",
+										"name",
+										"phone",
+										"role",
+										"createdAt",
+										"updatedAt"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			},
+			"patch": {
+				"summary": "Update",
+				"deprecated": false,
+				"description": "Updates the authenticated user.",
+				"tags": [
+					"Users"
+				],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"avatar": {
+										"type": "string",
+										"format": "binary"
+									}
+								}
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"name": {
+											"type": "string"
+										},
+										"phone": {
+											"type": "string",
+											"pattern": "^\\+20(10|11|12|15)\\d{8}$"
+										},
+										"role": {
+											"type": "string",
+											"enum": [
+												"ADMIN",
+												"HANDYMAN",
+												"CUSTOMER"
+											]
+										},
+										"avatar": {
+											"type": "string",
+											"format": "uri",
+											"nullable": true
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"admin": {
+											"$ref": "#/components/schemas/Admin",
+											"nullable": true
+										},
+										"customer": {
+											"$ref": "#/components/schemas/Customer",
+											"nullable": true
+										},
+										"handyman": {
+											"$ref": "#/components/schemas/Handyman",
+											"nullable": true
+										}
+									},
+									"required": [
+										"id",
+										"name",
+										"phone",
+										"role",
+										"createdAt",
+										"updatedAt"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			},
+			"delete": {
+				"summary": "Delete",
+				"deprecated": false,
+				"description": "Deletes the authenticated user.",
+				"tags": [
+					"Users"
+				],
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										}
+									},
+									"required": [
+										"id"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/visits": {
+			"post": {
+				"summary": "Create",
+				"deprecated": false,
+				"description": "Handymen only. Submits an inspection or work visit against a proposal that is still WAITING_OFFERS or OFFERS_RECEIVED.",
+				"tags": [
+					"Visits"
+				],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"proposalId": {
+										"type": "string",
+										"format": "uuid"
+									},
+									"type": {
+										"type": "string",
+										"enum": [
+											"INSPECTION",
+											"WORK"
+										]
+									},
+									"price": {
+										"type": "number",
+										"nullable": true,
+										"description": "Required (non-null) when type is WORK"
+									},
+									"currency": {
+										"type": "string"
+									},
+									"estimatedDuration": {
+										"type": "string",
+										"nullable": true
+									},
+									"message": {
+										"type": "string",
+										"nullable": true
+									},
+									"scheduledFor": {
+										"type": "string",
+										"format": "date-time",
+										"nullable": true,
+										"description": "Must be null when type is INSPECTION"
+									}
+								},
+								"required": [
+									"proposalId",
+									"type",
+									"price",
+									"currency",
+									"estimatedDuration",
+									"message",
+									"scheduledFor"
+								]
+							},
+							"examples": {}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"201": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"type": {
+											"type": "string",
+											"enum": [
+												"INSPECTION",
+												"WORK"
+											]
+										},
+										"price": {
+											"type": "number",
+											"nullable": true,
+											"description": "Required for WORK visits"
+										},
+										"currency": {
+											"type": "string",
+											"default": "EGP"
+										},
+										"status": {
+											"type": "string",
+											"default": "PENDING",
+											"enum": [
+												"PENDING",
+												"ACCEPTED",
+												"DECLINED",
+												"COMPLETED"
+											]
+										},
+										"completionCode": {
+											"type": "string",
+											"nullable": true,
+											"description": "Only included in the response once the visit's stage is AT_LOCATION or AWAITING_CODE"
+										},
+										"message": {
+											"type": "string",
+											"nullable": true
+										},
+										"estimatedDuration": {
+											"type": "string",
+											"nullable": true
+										},
+										"scheduledFor": {
+											"type": "string",
+											"format": "date-time",
+											"nullable": true,
+											"description": "Not allowed for INSPECTION visits"
+										},
+										"stage": {
+											"type": "string",
+											"enum": [
+												"INITIATED",
+												"AT_LOCATION",
+												"AWAITING_CODE"
+											],
+											"nullable": true
+										},
+										"proposalId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"handymanId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"convertedFromVisitId": {
+											"type": "string",
+											"format": "uuid",
+											"nullable": true
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"handyman": {
+											"$ref": "#/components/schemas/Handyman"
+										},
+										"proposal": {
+											"type": "object",
+											"description": "Partial proposal (only present on visit endpoints, not when nested under Proposal.visits)",
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"title": {
+													"type": "string"
+												},
+												"status": {
+													"type": "string",
+													"enum": [
+														"WAITING_OFFERS",
+														"OFFERS_RECEIVED",
+														"ACCEPTED",
+														"IN_PROGRESS",
+														"AWAITING_COMPLETION",
+														"INSPECTION_COMPLETED",
+														"COMPLETED",
+														"CANCELLED"
+													]
+												},
+												"customerId": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"latitude": {
+													"type": "number",
+													"nullable": true
+												},
+												"longitude": {
+													"type": "number",
+													"nullable": true
+												},
+												"service": {
+													"type": "object",
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"name": {
+															"type": "object",
+															"properties": {
+																"ar": {
+																	"type": "string"
+																},
+																"en": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"ar",
+																"en"
+															]
+														}
+													},
+													"required": [
+														"id",
+														"name"
+													]
+												}
+											}
+										},
+										"review": {
+											"$ref": "#/components/schemas/Review",
+											"nullable": true
+										}
+									},
+									"required": [
+										"id",
+										"type",
+										"price",
+										"currency",
+										"status",
+										"completionCode",
+										"message",
+										"estimatedDuration",
+										"scheduledFor",
+										"stage",
+										"proposalId",
+										"handymanId",
+										"convertedFromVisitId",
+										"createdAt",
+										"updatedAt"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			},
+			"get": {
+				"summary": "List",
+				"deprecated": false,
+				"description": "Handymen only. Lists the authenticated handyman's visits.",
+				"tags": [
+					"Visits"
+				],
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"type": {
+												"type": "string",
+												"enum": [
+													"INSPECTION",
+													"WORK"
+												]
+											},
+											"price": {
+												"type": "number",
+												"nullable": true,
+												"description": "Required for WORK visits"
+											},
+											"currency": {
+												"type": "string",
+												"default": "EGP"
+											},
+											"status": {
+												"type": "string",
+												"default": "PENDING",
+												"enum": [
+													"PENDING",
+													"ACCEPTED",
+													"DECLINED",
+													"COMPLETED"
+												]
+											},
+											"completionCode": {
+												"type": "string",
+												"nullable": true,
+												"description": "Only included in the response once the visit's stage is AT_LOCATION or AWAITING_CODE"
+											},
+											"message": {
+												"type": "string",
+												"nullable": true
+											},
+											"estimatedDuration": {
+												"type": "string",
+												"nullable": true
+											},
+											"scheduledFor": {
+												"type": "string",
+												"format": "date-time",
+												"nullable": true,
+												"description": "Not allowed for INSPECTION visits"
+											},
+											"stage": {
+												"type": "string",
+												"enum": [
+													"INITIATED",
+													"AT_LOCATION",
+													"AWAITING_CODE"
+												],
+												"nullable": true
+											},
+											"proposalId": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"handymanId": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"convertedFromVisitId": {
+												"type": "string",
+												"format": "uuid",
+												"nullable": true
+											},
+											"createdAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"updatedAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"handyman": {
+												"$ref": "#/components/schemas/Handyman"
+											},
+											"proposal": {
+												"type": "object",
+												"description": "Partial proposal (only present on visit endpoints, not when nested under Proposal.visits)",
+												"properties": {
+													"id": {
+														"type": "string",
+														"format": "uuid"
+													},
+													"title": {
+														"type": "string"
+													},
+													"status": {
+														"type": "string",
+														"enum": [
+															"WAITING_OFFERS",
+															"OFFERS_RECEIVED",
+															"ACCEPTED",
+															"IN_PROGRESS",
+															"AWAITING_COMPLETION",
+															"INSPECTION_COMPLETED",
+															"COMPLETED",
+															"CANCELLED"
+														]
+													},
+													"customerId": {
+														"type": "string",
+														"format": "uuid"
+													},
+													"latitude": {
+														"type": "number",
+														"nullable": true
+													},
+													"longitude": {
+														"type": "number",
+														"nullable": true
+													},
+													"service": {
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"name": {
+																"type": "object",
+																"properties": {
+																	"ar": {
+																		"type": "string"
+																	},
+																	"en": {
+																		"type": "string"
+																	}
+																},
+																"required": [
+																	"ar",
+																	"en"
+																]
+															}
+														},
+														"required": [
+															"id",
+															"name"
+														]
+													}
+												}
+											},
+											"review": {
+												"$ref": "#/components/schemas/Review",
+												"nullable": true
+											}
+										},
+										"required": [
+											"id",
+											"type",
+											"price",
+											"currency",
+											"status",
+											"completionCode",
+											"message",
+											"estimatedDuration",
+											"scheduledFor",
+											"stage",
+											"proposalId",
+											"handymanId",
+											"convertedFromVisitId",
+											"createdAt",
+											"updatedAt"
+										]
+									}
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/visits/{id}": {
+			"get": {
+				"summary": "Find",
+				"deprecated": false,
+				"description": "Handymen only.",
+				"tags": [
+					"Visits"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"type": {
+											"type": "string",
+											"enum": [
+												"INSPECTION",
+												"WORK"
+											]
+										},
+										"price": {
+											"type": "number",
+											"nullable": true,
+											"description": "Required for WORK visits"
+										},
+										"currency": {
+											"type": "string",
+											"default": "EGP"
+										},
+										"status": {
+											"type": "string",
+											"default": "PENDING",
+											"enum": [
+												"PENDING",
+												"ACCEPTED",
+												"DECLINED",
+												"COMPLETED"
+											]
+										},
+										"completionCode": {
+											"type": "string",
+											"nullable": true,
+											"description": "Only included in the response once the visit's stage is AT_LOCATION or AWAITING_CODE"
+										},
+										"message": {
+											"type": "string",
+											"nullable": true
+										},
+										"estimatedDuration": {
+											"type": "string",
+											"nullable": true
+										},
+										"scheduledFor": {
+											"type": "string",
+											"format": "date-time",
+											"nullable": true,
+											"description": "Not allowed for INSPECTION visits"
+										},
+										"stage": {
+											"type": "string",
+											"enum": [
+												"INITIATED",
+												"AT_LOCATION",
+												"AWAITING_CODE"
+											],
+											"nullable": true
+										},
+										"proposalId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"handymanId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"convertedFromVisitId": {
+											"type": "string",
+											"format": "uuid",
+											"nullable": true
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"handyman": {
+											"$ref": "#/components/schemas/Handyman"
+										},
+										"proposal": {
+											"type": "object",
+											"description": "Partial proposal (only present on visit endpoints, not when nested under Proposal.visits)",
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"title": {
+													"type": "string"
+												},
+												"status": {
+													"type": "string",
+													"enum": [
+														"WAITING_OFFERS",
+														"OFFERS_RECEIVED",
+														"ACCEPTED",
+														"IN_PROGRESS",
+														"AWAITING_COMPLETION",
+														"INSPECTION_COMPLETED",
+														"COMPLETED",
+														"CANCELLED"
+													]
+												},
+												"customerId": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"latitude": {
+													"type": "number",
+													"nullable": true
+												},
+												"longitude": {
+													"type": "number",
+													"nullable": true
+												},
+												"service": {
+													"type": "object",
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"name": {
+															"type": "object",
+															"properties": {
+																"ar": {
+																	"type": "string"
+																},
+																"en": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"ar",
+																"en"
+															]
+														}
+													},
+													"required": [
+														"id",
+														"name"
+													]
+												}
+											}
+										},
+										"review": {
+											"$ref": "#/components/schemas/Review",
+											"nullable": true
+										}
+									},
+									"required": [
+										"id",
+										"type",
+										"price",
+										"currency",
+										"status",
+										"completionCode",
+										"message",
+										"estimatedDuration",
+										"scheduledFor",
+										"stage",
+										"proposalId",
+										"handymanId",
+										"convertedFromVisitId",
+										"createdAt",
+										"updatedAt"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/visits/{id}/stage": {
+			"patch": {
+				"summary": "Advance Stage",
+				"deprecated": false,
+				"description": "Handymen only. AT_LOCATION requires latitude/longitude within 200m of the proposal; AWAITING_CODE follows AT_LOCATION.",
+				"tags": [
+					"Visits"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"stage": {
+										"type": "string",
+										"enum": [
+											"AT_LOCATION",
+											"AWAITING_CODE"
+										]
+									},
+									"latitude": {
+										"type": "number",
+										"description": "Required when stage is AT_LOCATION"
+									},
+									"longitude": {
+										"type": "number",
+										"description": "Required when stage is AT_LOCATION"
+									}
+								},
+								"required": [
+									"stage"
+								]
+							},
+							"examples": {}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"type": {
+											"type": "string",
+											"enum": [
+												"INSPECTION",
+												"WORK"
+											]
+										},
+										"price": {
+											"type": "number",
+											"nullable": true,
+											"description": "Required for WORK visits"
+										},
+										"currency": {
+											"type": "string",
+											"default": "EGP"
+										},
+										"status": {
+											"type": "string",
+											"default": "PENDING",
+											"enum": [
+												"PENDING",
+												"ACCEPTED",
+												"DECLINED",
+												"COMPLETED"
+											]
+										},
+										"completionCode": {
+											"type": "string",
+											"nullable": true,
+											"description": "Only included in the response once the visit's stage is AT_LOCATION or AWAITING_CODE"
+										},
+										"message": {
+											"type": "string",
+											"nullable": true
+										},
+										"estimatedDuration": {
+											"type": "string",
+											"nullable": true
+										},
+										"scheduledFor": {
+											"type": "string",
+											"format": "date-time",
+											"nullable": true,
+											"description": "Not allowed for INSPECTION visits"
+										},
+										"stage": {
+											"type": "string",
+											"enum": [
+												"INITIATED",
+												"AT_LOCATION",
+												"AWAITING_CODE"
+											],
+											"nullable": true
+										},
+										"proposalId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"handymanId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"convertedFromVisitId": {
+											"type": "string",
+											"format": "uuid",
+											"nullable": true
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"handyman": {
+											"$ref": "#/components/schemas/Handyman"
+										},
+										"proposal": {
+											"type": "object",
+											"description": "Partial proposal (only present on visit endpoints, not when nested under Proposal.visits)",
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"title": {
+													"type": "string"
+												},
+												"status": {
+													"type": "string",
+													"enum": [
+														"WAITING_OFFERS",
+														"OFFERS_RECEIVED",
+														"ACCEPTED",
+														"IN_PROGRESS",
+														"AWAITING_COMPLETION",
+														"INSPECTION_COMPLETED",
+														"COMPLETED",
+														"CANCELLED"
+													]
+												},
+												"customerId": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"latitude": {
+													"type": "number",
+													"nullable": true
+												},
+												"longitude": {
+													"type": "number",
+													"nullable": true
+												},
+												"service": {
+													"type": "object",
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"name": {
+															"type": "object",
+															"properties": {
+																"ar": {
+																	"type": "string"
+																},
+																"en": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"ar",
+																"en"
+															]
+														}
+													},
+													"required": [
+														"id",
+														"name"
+													]
+												}
+											}
+										},
+										"review": {
+											"$ref": "#/components/schemas/Review",
+											"nullable": true
+										}
+									},
+									"required": [
+										"id",
+										"type",
+										"price",
+										"currency",
+										"status",
+										"completionCode",
+										"message",
+										"estimatedDuration",
+										"scheduledFor",
+										"stage",
+										"proposalId",
+										"handymanId",
+										"convertedFromVisitId",
+										"createdAt",
+										"updatedAt"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/visits/{id}/verify-code": {
+			"post": {
+				"summary": "Verify Code",
+				"deprecated": false,
+				"description": "Customers only. Marks the visit COMPLETED and, for WORK visits (or any priced visit), creates a RECEIVED transaction.",
+				"tags": [
+					"Visits"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"code": {
+										"type": "string",
+										"minLength": 6,
+										"maxLength": 6
+									}
+								},
+								"required": [
+									"code"
+								]
+							},
+							"examples": {}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"type": {
+											"type": "string",
+											"enum": [
+												"INSPECTION",
+												"WORK"
+											]
+										},
+										"price": {
+											"type": "number",
+											"nullable": true,
+											"description": "Required for WORK visits"
+										},
+										"currency": {
+											"type": "string",
+											"default": "EGP"
+										},
+										"status": {
+											"type": "string",
+											"default": "PENDING",
+											"enum": [
+												"PENDING",
+												"ACCEPTED",
+												"DECLINED",
+												"COMPLETED"
+											]
+										},
+										"completionCode": {
+											"type": "string",
+											"nullable": true,
+											"description": "Only included in the response once the visit's stage is AT_LOCATION or AWAITING_CODE"
+										},
+										"message": {
+											"type": "string",
+											"nullable": true
+										},
+										"estimatedDuration": {
+											"type": "string",
+											"nullable": true
+										},
+										"scheduledFor": {
+											"type": "string",
+											"format": "date-time",
+											"nullable": true,
+											"description": "Not allowed for INSPECTION visits"
+										},
+										"stage": {
+											"type": "string",
+											"enum": [
+												"INITIATED",
+												"AT_LOCATION",
+												"AWAITING_CODE"
+											],
+											"nullable": true
+										},
+										"proposalId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"handymanId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"convertedFromVisitId": {
+											"type": "string",
+											"format": "uuid",
+											"nullable": true
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"handyman": {
+											"$ref": "#/components/schemas/Handyman"
+										},
+										"proposal": {
+											"type": "object",
+											"description": "Partial proposal (only present on visit endpoints, not when nested under Proposal.visits)",
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"title": {
+													"type": "string"
+												},
+												"status": {
+													"type": "string",
+													"enum": [
+														"WAITING_OFFERS",
+														"OFFERS_RECEIVED",
+														"ACCEPTED",
+														"IN_PROGRESS",
+														"AWAITING_COMPLETION",
+														"INSPECTION_COMPLETED",
+														"COMPLETED",
+														"CANCELLED"
+													]
+												},
+												"customerId": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"latitude": {
+													"type": "number",
+													"nullable": true
+												},
+												"longitude": {
+													"type": "number",
+													"nullable": true
+												},
+												"service": {
+													"type": "object",
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"name": {
+															"type": "object",
+															"properties": {
+																"ar": {
+																	"type": "string"
+																},
+																"en": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"ar",
+																"en"
+															]
+														}
+													},
+													"required": [
+														"id",
+														"name"
+													]
+												}
+											}
+										},
+										"review": {
+											"$ref": "#/components/schemas/Review",
+											"nullable": true
+										}
+									},
+									"required": [
+										"id",
+										"type",
+										"price",
+										"currency",
+										"status",
+										"completionCode",
+										"message",
+										"estimatedDuration",
+										"scheduledFor",
+										"stage",
+										"proposalId",
+										"handymanId",
+										"convertedFromVisitId",
+										"createdAt",
+										"updatedAt"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/visits/{id}/convert-to-work": {
+			"post": {
+				"summary": "Convert To Work",
+				"deprecated": false,
+				"description": "Handymen only. Converts a COMPLETED INSPECTION visit (whose proposal is INSPECTION_COMPLETED) into a new WORK visit.",
+				"tags": [
+					"Visits"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"price": {
+										"type": "number",
+										"exclusiveMinimum": 0
+									},
+									"scheduledFor": {
+										"type": "string",
+										"format": "date-time",
+										"nullable": true
+									}
+								},
+								"required": [
+									"price",
+									"scheduledFor"
+								]
+							},
+							"examples": {}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"type": {
+											"type": "string",
+											"enum": [
+												"INSPECTION",
+												"WORK"
+											]
+										},
+										"price": {
+											"type": "number",
+											"nullable": true,
+											"description": "Required for WORK visits"
+										},
+										"currency": {
+											"type": "string",
+											"default": "EGP"
+										},
+										"status": {
+											"type": "string",
+											"default": "PENDING",
+											"enum": [
+												"PENDING",
+												"ACCEPTED",
+												"DECLINED",
+												"COMPLETED"
+											]
+										},
+										"completionCode": {
+											"type": "string",
+											"nullable": true,
+											"description": "Only included in the response once the visit's stage is AT_LOCATION or AWAITING_CODE"
+										},
+										"message": {
+											"type": "string",
+											"nullable": true
+										},
+										"estimatedDuration": {
+											"type": "string",
+											"nullable": true
+										},
+										"scheduledFor": {
+											"type": "string",
+											"format": "date-time",
+											"nullable": true,
+											"description": "Not allowed for INSPECTION visits"
+										},
+										"stage": {
+											"type": "string",
+											"enum": [
+												"INITIATED",
+												"AT_LOCATION",
+												"AWAITING_CODE"
+											],
+											"nullable": true
+										},
+										"proposalId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"handymanId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"convertedFromVisitId": {
+											"type": "string",
+											"format": "uuid",
+											"nullable": true
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"handyman": {
+											"$ref": "#/components/schemas/Handyman"
+										},
+										"proposal": {
+											"type": "object",
+											"description": "Partial proposal (only present on visit endpoints, not when nested under Proposal.visits)",
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"title": {
+													"type": "string"
+												},
+												"status": {
+													"type": "string",
+													"enum": [
+														"WAITING_OFFERS",
+														"OFFERS_RECEIVED",
+														"ACCEPTED",
+														"IN_PROGRESS",
+														"AWAITING_COMPLETION",
+														"INSPECTION_COMPLETED",
+														"COMPLETED",
+														"CANCELLED"
+													]
+												},
+												"customerId": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"latitude": {
+													"type": "number",
+													"nullable": true
+												},
+												"longitude": {
+													"type": "number",
+													"nullable": true
+												},
+												"service": {
+													"type": "object",
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"name": {
+															"type": "object",
+															"properties": {
+																"ar": {
+																	"type": "string"
+																},
+																"en": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"ar",
+																"en"
+															]
+														}
+													},
+													"required": [
+														"id",
+														"name"
+													]
+												}
+											}
+										},
+										"review": {
+											"$ref": "#/components/schemas/Review",
+											"nullable": true
+										}
+									},
+									"required": [
+										"id",
+										"type",
+										"price",
+										"currency",
+										"status",
+										"completionCode",
+										"message",
+										"estimatedDuration",
+										"scheduledFor",
+										"stage",
+										"proposalId",
+										"handymanId",
+										"convertedFromVisitId",
+										"createdAt",
+										"updatedAt"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/visits/{id}/review": {
+			"post": {
+				"summary": "Review",
+				"deprecated": false,
+				"description": "Customers only. The visit must be COMPLETED and not already reviewed.",
+				"tags": [
+					"Reviews"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"rating": {
+										"type": "number",
+										"minimum": 1,
+										"maximum": 5
+									},
+									"comment": {
+										"type": "string"
+									},
+									"tags": {
+										"type": "array",
+										"items": {
+											"type": "string",
+											"enum": [
+												"PROFESSIONAL",
+												"PUNCTUAL",
+												"GOOD_VALUE",
+												"HIGH_QUALITY_WORK",
+												"FRIENDLY",
+												"CLEAN_WORKSPACE",
+												"COMMUNICATIVE",
+												"RESPECTFUL",
+												"EXPERT_ADVICE",
+												"EFFICIENT",
+												"LATE",
+												"POOR_COMMUNICATION",
+												"OVERPRICED",
+												"MESSY_WORKSPACE"
+											]
+										}
+									}
+								},
+								"required": [
+									"rating"
+								]
+							},
+							"examples": {}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"201": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"visitId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"reviewerName": {
+											"type": "string"
+										},
+										"rating": {
+											"type": "number"
+										},
+										"comment": {
+											"type": "string",
+											"nullable": true
+										},
+										"tags": {
+											"type": "array",
+											"items": {
+												"type": "string",
+												"enum": [
+													"PROFESSIONAL",
+													"PUNCTUAL",
+													"GOOD_VALUE",
+													"HIGH_QUALITY_WORK",
+													"FRIENDLY",
+													"CLEAN_WORKSPACE",
+													"COMMUNICATIVE",
+													"RESPECTFUL",
+													"EXPERT_ADVICE",
+													"EFFICIENT",
+													"LATE",
+													"POOR_COMMUNICATION",
+													"OVERPRICED",
+													"MESSY_WORKSPACE"
+												]
+											}
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										}
+									},
+									"required": [
+										"id",
+										"visitId",
+										"reviewerName",
+										"rating",
+										"comment",
+										"tags",
+										"createdAt",
+										"updatedAt"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/visits/{visitId}/chat": {
+			"get": {
+				"summary": "List Messages",
+				"deprecated": false,
+				"description": "Must be a participant (the visit's handyman or the proposal's customer).",
+				"tags": [
+					"Chat"
+				],
+				"parameters": [
+					{
+						"name": "visitId",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"visitId": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"senderId": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"type": {
+												"type": "string",
+												"enum": [
+													"TEXT",
+													"IMAGE",
+													"RESCHEDULE"
+												]
+											},
+											"text": {
+												"type": "string",
+												"nullable": true
+											},
+											"imageUrl": {
+												"type": "string",
+												"format": "uri",
+												"nullable": true
+											},
+											"proposedDate": {
+												"type": "string",
+												"format": "date-time",
+												"nullable": true
+											},
+											"rescheduleStatus": {
+												"type": "string",
+												"enum": [
+													"PENDING",
+													"ACCEPTED",
+													"DECLINED"
+												],
+												"nullable": true
+											},
+											"createdAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"updatedAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"sender": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string",
+														"format": "uuid"
+													},
+													"name": {
+														"type": "string"
+													},
+													"role": {
+														"type": "string",
+														"enum": [
+															"ADMIN",
+															"HANDYMAN",
+															"CUSTOMER"
+														]
+													}
+												},
+												"required": [
+													"id",
+													"name",
+													"role"
+												]
+											}
+										},
+										"required": [
+											"id",
+											"visitId",
+											"senderId",
+											"type",
+											"text",
+											"imageUrl",
+											"proposedDate",
+											"rescheduleStatus",
+											"createdAt",
+											"updatedAt",
+											"sender"
+										]
+									}
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			},
+			"post": {
+				"summary": "Send Message",
+				"deprecated": false,
+				"description": "Must be a participant (the visit's handyman or the proposal's customer).",
+				"tags": [
+					"Chat"
+				],
+				"parameters": [
+					{
+						"name": "visitId",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"description": "text is required for TEXT messages; imageUrl is required for IMAGE messages",
+								"properties": {
+									"type": {
+										"type": "string",
+										"enum": [
+											"TEXT",
+											"IMAGE"
+										]
+									},
+									"text": {
+										"type": "string",
+										"nullable": true
+									},
+									"imageUrl": {
+										"type": "string",
+										"format": "uri",
+										"nullable": true
+									}
+								},
+								"required": [
+									"type",
+									"text",
+									"imageUrl"
+								]
+							},
+							"examples": {}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"201": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"visitId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"senderId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"type": {
+											"type": "string",
+											"enum": [
+												"TEXT",
+												"IMAGE",
+												"RESCHEDULE"
+											]
+										},
+										"text": {
+											"type": "string",
+											"nullable": true
+										},
+										"imageUrl": {
+											"type": "string",
+											"format": "uri",
+											"nullable": true
+										},
+										"proposedDate": {
+											"type": "string",
+											"format": "date-time",
+											"nullable": true
+										},
+										"rescheduleStatus": {
+											"type": "string",
+											"enum": [
+												"PENDING",
+												"ACCEPTED",
+												"DECLINED"
+											],
+											"nullable": true
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"sender": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"name": {
+													"type": "string"
+												},
+												"role": {
+													"type": "string",
+													"enum": [
+														"ADMIN",
+														"HANDYMAN",
+														"CUSTOMER"
+													]
+												}
+											},
+											"required": [
+												"id",
+												"name",
+												"role"
+											]
+										}
+									},
+									"required": [
+										"id",
+										"visitId",
+										"senderId",
+										"type",
+										"text",
+										"imageUrl",
+										"proposedDate",
+										"rescheduleStatus",
+										"createdAt",
+										"updatedAt",
+										"sender"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/visits/{visitId}/reschedule": {
+			"patch": {
+				"summary": "Reschedule",
+				"deprecated": false,
+				"description": "Must be a participant. Posts a RESCHEDULE chat message proposing a new date.",
+				"tags": [
+					"Chat"
+				],
+				"parameters": [
+					{
+						"name": "visitId",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"proposedDate": {
+										"type": "string",
+										"format": "date-time"
+									}
+								},
+								"required": [
+									"proposedDate"
+								]
+							},
+							"examples": {}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"visitId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"senderId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"type": {
+											"type": "string",
+											"enum": [
+												"TEXT",
+												"IMAGE",
+												"RESCHEDULE"
+											]
+										},
+										"text": {
+											"type": "string",
+											"nullable": true
+										},
+										"imageUrl": {
+											"type": "string",
+											"format": "uri",
+											"nullable": true
+										},
+										"proposedDate": {
+											"type": "string",
+											"format": "date-time",
+											"nullable": true
+										},
+										"rescheduleStatus": {
+											"type": "string",
+											"enum": [
+												"PENDING",
+												"ACCEPTED",
+												"DECLINED"
+											],
+											"nullable": true
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"sender": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"name": {
+													"type": "string"
+												},
+												"role": {
+													"type": "string",
+													"enum": [
+														"ADMIN",
+														"HANDYMAN",
+														"CUSTOMER"
+													]
+												}
+											},
+											"required": [
+												"id",
+												"name",
+												"role"
+											]
+										}
+									},
+									"required": [
+										"id",
+										"visitId",
+										"senderId",
+										"type",
+										"text",
+										"imageUrl",
+										"proposedDate",
+										"rescheduleStatus",
+										"createdAt",
+										"updatedAt",
+										"sender"
+									]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											]
+										}
+									},
+									"required": [
+										"error"
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Auth Initiate Payload": {
+				"type": "object",
+				"properties": {
+					"phone": {
+						"type": "string",
+						"pattern": "^\\+20(10|11|12|15)\\d{8}$"
+					}
+				},
+				"required": [
+					"phone"
+				]
+			},
+			"Auth Initiate Response": {
+				"type": "object",
+				"properties": {
+					"verificationId": {
+						"type": "string",
+						"format": "uuid"
+					}
+				},
+				"required": [
+					"verificationId"
+				]
+			},
+			"Auth Verify Payload": {
+				"type": "object",
+				"properties": {
+					"verificationId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"phone": {
+						"type": "string",
+						"pattern": "^\\+20(10|11|12|15)\\d{8}$"
+					},
+					"otp": {
+						"type": "string",
+						"minLength": 6,
+						"maxLength": 6
+					},
+					"role": {
+						"type": "string",
+						"enum": [
+							"ADMIN",
+							"HANDYMAN",
+							"CUSTOMER"
+						],
+						"description": "Required only when verifying for a brand-new user; ignored for existing users"
+					}
+				},
+				"required": [
+					"phone",
+					"verificationId",
+					"otp"
+				]
+			},
+			"Auth Verify Response": {
+				"type": "object",
+				"properties": {
+					"access": {
+						"type": "string"
+					},
+					"refresh": {
+						"type": "string"
+					},
+					"user": {
+						"$ref": "#/components/schemas/User"
+					}
+				},
+				"required": [
+					"access",
+					"refresh",
+					"user"
+				]
+			},
+			"User": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string",
+						"pattern": "^\\+20(10|11|12|15)\\d{8}$"
+					},
+					"role": {
+						"type": "string",
+						"enum": [
+							"ADMIN",
+							"HANDYMAN",
+							"CUSTOMER"
+						]
+					},
+					"avatar": {
+						"type": "string",
+						"format": "uri",
+						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"admin": {
+						"$ref": "#/components/schemas/Admin",
+						"nullable": true
+					},
+					"customer": {
+						"$ref": "#/components/schemas/Customer",
+						"nullable": true
+					},
+					"handyman": {
+						"$ref": "#/components/schemas/Handyman",
+						"nullable": true
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"phone",
+					"role",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Handyman": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"workDays": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"enum": [
+								"SUNDAY",
+								"MONDAY",
+								"TUESDAY",
+								"WEDNESDAY",
+								"THURSDAY",
+								"FRIDAY",
+								"SATURDAY"
+							]
+						}
+					},
+					"status": {
+						"type": "string",
+						"default": "PENDING",
+						"enum": [
+							"PENDING",
+							"REJECTED",
+							"BLOCKED",
+							"ACCEPTED"
+						]
+					},
+					"birthdate": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"userId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"user": {
+						"$ref": "#/components/schemas/User",
+						"description": "Present whenever the handyman is fetched through HandymanService (list/find/update/delete/block)"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"workDays",
+					"status",
+					"birthdate",
+					"userId",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Handyman Update Payload": {
+				"type": "object",
+				"description": "At least one field must be provided.",
+				"properties": {
+					"regions": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"format": "uuid"
+						}
+					},
+					"workDays": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"enum": [
+								"SUNDAY",
+								"MONDAY",
+								"TUESDAY",
+								"WEDNESDAY",
+								"THURSDAY",
+								"FRIDAY",
+								"SATURDAY"
+							]
+						},
+						"description": "An empty array resets to the default (all seven days)"
+					}
+				}
+			},
+			"Admin": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"userId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"userId",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Customer": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"userId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"userId",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Application": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"nationalIdFront": {
+						"type": "string",
+						"format": "uri"
+					},
+					"nationalIdBack": {
+						"type": "string",
+						"format": "uri"
+					},
+					"selfie": {
+						"type": "string",
+						"format": "uri"
+					},
+					"birthdate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"handymanId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"status": {
+						"type": "string",
+						"default": "PENDING",
+						"enum": [
+							"PENDING",
+							"REJECTED",
+							"EXPIRED",
+							"ACCEPTED"
+						]
+					},
+					"expiresAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"notes": {
+						"type": "string",
+						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"regions": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string",
+									"format": "uuid"
+								},
+								"name": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"id",
+								"name"
+							]
+						}
+					},
+					"services": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string",
+									"format": "uuid"
+								},
+								"name": {
+									"type": "object",
+									"properties": {
+										"ar": {
+											"type": "string"
+										},
+										"en": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"ar",
+										"en"
+									]
+								}
+							},
+							"required": [
+								"id",
+								"name"
+							]
+						}
+					}
+				},
+				"required": [
+					"id",
+					"firstName",
+					"lastName",
+					"nationalIdFront",
+					"nationalIdBack",
+					"selfie",
+					"birthdate",
+					"handymanId",
+					"status",
+					"expiresAt",
+					"createdAt",
+					"updatedAt",
+					"regions",
+					"services"
+				]
+			},
+			"Application Reject Payload": {
+				"type": "object",
+				"properties": {
+					"notes": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"notes"
+				]
+			},
+			"Region": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string"
+					},
+					"parentRegionId": {
+						"type": "string",
+						"format": "uuid",
+						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"parentRegionId",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Category": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "object",
+						"properties": {
+							"ar": {
+								"type": "string"
+							},
+							"en": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"ar",
+							"en"
+						]
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"services": {
+						"type": "array",
+						"description": "Only present on Find (GET /categories/{id})",
+						"items": {
+							"$ref": "#/components/schemas/Service"
+						}
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Service": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "object",
+						"properties": {
+							"ar": {
+								"type": "string"
+							},
+							"en": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"ar",
+							"en"
+						]
+					},
+					"categoryId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"categoryId",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Proposal": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string",
+						"default": "WAITING_OFFERS",
+						"enum": [
+							"WAITING_OFFERS",
+							"OFFERS_RECEIVED",
+							"ACCEPTED",
+							"IN_PROGRESS",
+							"AWAITING_COMPLETION",
+							"INSPECTION_COMPLETED",
+							"COMPLETED",
+							"CANCELLED"
+						]
+					},
+					"dueDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"latitude": {
+						"type": "number",
+						"nullable": true
+					},
+					"longitude": {
+						"type": "number",
+						"nullable": true
+					},
+					"serviceId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"customerId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"service": {
+						"$ref": "#/components/schemas/Service"
+					},
+					"visits": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Visit"
+						}
+					}
+				},
+				"required": [
+					"id",
+					"title",
+					"description",
+					"address",
+					"status",
+					"dueDate",
+					"serviceId",
+					"customerId",
+					"createdAt",
+					"updatedAt",
+					"service",
+					"visits"
+				]
+			},
+			"Proposal Create Payload": {
+				"type": "object",
+				"properties": {
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"dueDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"latitude": {
+						"type": "number",
+						"nullable": true
+					},
+					"longitude": {
+						"type": "number",
+						"nullable": true
+					},
+					"serviceId": {
+						"type": "string",
+						"format": "uuid"
+					}
+				},
+				"required": [
+					"title",
+					"description",
+					"address",
+					"dueDate",
+					"serviceId"
+				]
+			},
+			"Accept Visit Payload": {
+				"type": "object",
+				"properties": {
+					"visitId": {
+						"type": "string",
+						"format": "uuid"
+					}
+				},
+				"required": [
+					"visitId"
+				]
+			},
+			"Visit": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"INSPECTION",
+							"WORK"
+						]
+					},
+					"price": {
+						"type": "number",
+						"nullable": true,
+						"description": "Required for WORK visits"
+					},
+					"currency": {
+						"type": "string",
+						"default": "EGP"
+					},
+					"status": {
+						"type": "string",
+						"default": "PENDING",
+						"enum": [
+							"PENDING",
+							"ACCEPTED",
+							"DECLINED",
+							"COMPLETED"
+						]
+					},
+					"completionCode": {
+						"type": "string",
+						"nullable": true,
+						"description": "Only included in the response once the visit's stage is AT_LOCATION or AWAITING_CODE"
+					},
+					"message": {
+						"type": "string",
+						"nullable": true
+					},
+					"estimatedDuration": {
+						"type": "string",
+						"nullable": true
+					},
+					"scheduledFor": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true,
+						"description": "Not allowed for INSPECTION visits"
+					},
+					"stage": {
+						"type": "string",
+						"enum": [
+							"INITIATED",
+							"AT_LOCATION",
+							"AWAITING_CODE"
+						],
+						"nullable": true
+					},
+					"proposalId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"handymanId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"convertedFromVisitId": {
+						"type": "string",
+						"format": "uuid",
+						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"handyman": {
+						"$ref": "#/components/schemas/Handyman"
+					},
+					"proposal": {
+						"type": "object",
+						"description": "Partial proposal (only present on visit endpoints, not when nested under Proposal.visits)",
+						"properties": {
+							"id": {
+								"type": "string",
+								"format": "uuid"
+							},
+							"title": {
+								"type": "string"
+							},
+							"status": {
+								"type": "string",
+								"enum": [
+									"WAITING_OFFERS",
+									"OFFERS_RECEIVED",
+									"ACCEPTED",
+									"IN_PROGRESS",
+									"AWAITING_COMPLETION",
+									"INSPECTION_COMPLETED",
+									"COMPLETED",
+									"CANCELLED"
+								]
+							},
+							"customerId": {
+								"type": "string",
+								"format": "uuid"
+							},
+							"latitude": {
+								"type": "number",
+								"nullable": true
+							},
+							"longitude": {
+								"type": "number",
+								"nullable": true
+							},
+							"service": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "string",
+										"format": "uuid"
+									},
+									"name": {
+										"type": "object",
+										"properties": {
+											"ar": {
+												"type": "string"
+											},
+											"en": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"ar",
+											"en"
+										]
+									}
+								},
+								"required": [
+									"id",
+									"name"
+								]
+							}
+						}
+					},
+					"review": {
+						"$ref": "#/components/schemas/Review",
+						"nullable": true
+					}
+				},
+				"required": [
+					"id",
+					"type",
+					"price",
+					"currency",
+					"status",
+					"completionCode",
+					"message",
+					"estimatedDuration",
+					"scheduledFor",
+					"stage",
+					"proposalId",
+					"handymanId",
+					"convertedFromVisitId",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Visit Create Payload": {
+				"type": "object",
+				"properties": {
+					"proposalId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"INSPECTION",
+							"WORK"
+						]
+					},
+					"price": {
+						"type": "number",
+						"nullable": true,
+						"description": "Required (non-null) when type is WORK"
+					},
+					"currency": {
+						"type": "string"
+					},
+					"estimatedDuration": {
+						"type": "string",
+						"nullable": true
+					},
+					"message": {
+						"type": "string",
+						"nullable": true
+					},
+					"scheduledFor": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true,
+						"description": "Must be null when type is INSPECTION"
+					}
+				},
+				"required": [
+					"proposalId",
+					"type",
+					"price",
+					"currency",
+					"estimatedDuration",
+					"message",
+					"scheduledFor"
+				]
+			},
+			"Advance Stage Payload": {
+				"type": "object",
+				"properties": {
+					"stage": {
+						"type": "string",
+						"enum": [
+							"AT_LOCATION",
+							"AWAITING_CODE"
+						]
+					},
+					"latitude": {
+						"type": "number",
+						"description": "Required when stage is AT_LOCATION"
+					},
+					"longitude": {
+						"type": "number",
+						"description": "Required when stage is AT_LOCATION"
+					}
+				},
+				"required": [
+					"stage"
+				]
+			},
+			"Verify Code Payload": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "string",
+						"minLength": 6,
+						"maxLength": 6
+					}
+				},
+				"required": [
+					"code"
+				]
+			},
+			"Convert To Work Payload": {
+				"type": "object",
+				"properties": {
+					"price": {
+						"type": "number",
+						"exclusiveMinimum": 0
+					},
+					"scheduledFor": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					}
+				},
+				"required": [
+					"price",
+					"scheduledFor"
+				]
+			},
+			"Review": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"visitId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"reviewerName": {
+						"type": "string"
+					},
+					"rating": {
+						"type": "number"
+					},
+					"comment": {
+						"type": "string",
+						"nullable": true
+					},
+					"tags": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"enum": [
+								"PROFESSIONAL",
+								"PUNCTUAL",
+								"GOOD_VALUE",
+								"HIGH_QUALITY_WORK",
+								"FRIENDLY",
+								"CLEAN_WORKSPACE",
+								"COMMUNICATIVE",
+								"RESPECTFUL",
+								"EXPERT_ADVICE",
+								"EFFICIENT",
+								"LATE",
+								"POOR_COMMUNICATION",
+								"OVERPRICED",
+								"MESSY_WORKSPACE"
+							]
+						}
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"visitId",
+					"reviewerName",
+					"rating",
+					"comment",
+					"tags",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Review Create Payload": {
+				"type": "object",
+				"properties": {
+					"rating": {
+						"type": "number",
+						"minimum": 1,
+						"maximum": 5
+					},
+					"comment": {
+						"type": "string"
+					},
+					"tags": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"enum": [
+								"PROFESSIONAL",
+								"PUNCTUAL",
+								"GOOD_VALUE",
+								"HIGH_QUALITY_WORK",
+								"FRIENDLY",
+								"CLEAN_WORKSPACE",
+								"COMMUNICATIVE",
+								"RESPECTFUL",
+								"EXPERT_ADVICE",
+								"EFFICIENT",
+								"LATE",
+								"POOR_COMMUNICATION",
+								"OVERPRICED",
+								"MESSY_WORKSPACE"
+							]
+						}
+					}
+				},
+				"required": [
+					"rating"
+				]
+			},
+			"ChatMessage": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"visitId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"senderId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"TEXT",
+							"IMAGE",
+							"RESCHEDULE"
+						]
+					},
+					"text": {
+						"type": "string",
+						"nullable": true
+					},
+					"imageUrl": {
+						"type": "string",
+						"format": "uri",
+						"nullable": true
+					},
+					"proposedDate": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"rescheduleStatus": {
+						"type": "string",
+						"enum": [
+							"PENDING",
+							"ACCEPTED",
+							"DECLINED"
+						],
+						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"sender": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "string",
+								"format": "uuid"
+							},
+							"name": {
+								"type": "string"
+							},
+							"role": {
+								"type": "string",
+								"enum": [
+									"ADMIN",
+									"HANDYMAN",
+									"CUSTOMER"
+								]
+							}
+						},
+						"required": [
+							"id",
+							"name",
+							"role"
+						]
+					}
+				},
+				"required": [
+					"id",
+					"visitId",
+					"senderId",
+					"type",
+					"text",
+					"imageUrl",
+					"proposedDate",
+					"rescheduleStatus",
+					"createdAt",
+					"updatedAt",
+					"sender"
+				]
+			},
+			"Send Message Payload": {
+				"type": "object",
+				"description": "text is required for TEXT messages; imageUrl is required for IMAGE messages",
+				"properties": {
+					"type": {
+						"type": "string",
+						"enum": [
+							"TEXT",
+							"IMAGE"
+						]
+					},
+					"text": {
+						"type": "string",
+						"nullable": true
+					},
+					"imageUrl": {
+						"type": "string",
+						"format": "uri",
+						"nullable": true
+					}
+				},
+				"required": [
+					"type",
+					"text",
+					"imageUrl"
+				]
+			},
+			"Reschedule Payload": {
+				"type": "object",
+				"properties": {
+					"proposedDate": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"proposedDate"
+				]
+			},
+			"Financial Transaction Item": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"serviceName": {
+						"type": "object",
+						"properties": {
+							"ar": {
+								"type": "string"
+							},
+							"en": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"ar",
+							"en"
+						]
+					},
+					"clientName": {
+						"type": "string"
+					},
+					"amount": {
+						"type": "number"
+					},
+					"currency": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string",
+						"enum": [
+							"RECEIVED",
+							"PENDING",
+							"REFUNDED"
+						]
+					},
+					"date": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"serviceName",
+					"clientName",
+					"amount",
+					"currency",
+					"status",
+					"date"
+				]
+			},
+			"Financial Summary": {
+				"type": "object",
+				"properties": {
+					"totalEarned": {
+						"type": "number",
+						"description": "Sum of RECEIVED transaction amounts"
+					},
+					"thisMonth": {
+						"type": "number"
+					},
+					"pending": {
+						"type": "number",
+						"description": "Sum of PENDING transaction amounts"
+					},
+					"completedJobs": {
+						"type": "integer",
+						"description": "Count of visits with status COMPLETED"
+					},
+					"growthPercent": {
+						"type": "number",
+						"nullable": true,
+						"description": "null when last month had no earnings"
+					},
+					"monthlyData": {
+						"type": "array",
+						"description": "Last 6 months, oldest first",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"monthLabel": {
+									"type": "string"
+								},
+								"amount": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"id",
+								"monthLabel",
+								"amount"
+							]
+						}
+					},
+					"recentTransactions": {
+						"type": "array",
+						"description": "Most recent 5 transactions",
+						"items": {
+							"$ref": "#/components/schemas/Financial Transaction Item"
+						}
+					}
+				},
+				"required": [
+					"totalEarned",
+					"thisMonth",
+					"pending",
+					"completedJobs",
+					"growthPercent",
+					"monthlyData",
+					"recentTransactions"
+				]
+			},
+			"Financial Transactions": {
+				"type": "object",
+				"properties": {
+					"total": {
+						"type": "integer"
+					},
+					"page": {
+						"type": "integer"
+					},
+					"limit": {
+						"type": "integer"
+					},
+					"items": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Financial Transaction Item"
+						}
+					}
+				},
+				"required": [
+					"total",
+					"page",
+					"limit",
+					"items"
+				]
+			}
+		},
+		"responses": {
+			"Paginated Response": {
+				"description": "",
+				"content": {
+					"application/json": {
+						"schema": {
+							"title": "",
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {}
+									}
+								},
+								"count": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"data",
+								"count"
+							]
+						}
+					}
+				}
+			},
+			"Error Response": {
+				"description": "",
+				"content": {
+					"application/json": {
+						"schema": {
+							"title": "",
+							"type": "object",
+							"properties": {
+								"error": {
+									"type": "object",
+									"properties": {
+										"details": {
+											"type": "string",
+											"nullable": true
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									]
+								}
+							},
+							"required": [
+								"error"
+							]
+						}
+					}
+				}
+			}
+		},
+		"securitySchemes": {
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			},
+			"bearer": {
+				"type": "http",
+				"scheme": "bearer"
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "http://api.mokhtasr.app:3000",
+			"description": "Development"
+		},
+		{
+			"url": "https://mokhtasr-api.urax.dev",
+			"description": "Staging"
+		}
+	],
+	"security": [
+		{
+			"bearer": []
+		}
+	]
+}

@@ -1,0 +1,1591 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"title": "Default module",
+		"description": "",
+		"version": "1.0.0"
+	},
+	"tags": [
+		{
+			"name": "Applications",
+			"description": "Handyman KYC/onboarding applications — review, accept, reject."
+		},
+		{
+			"name": "Auth",
+			"description": "Phone/OTP authentication — initiate, verify, refresh."
+		},
+		{
+			"name": "Categories",
+			"description": "Top-level service categories."
+		},
+		{
+			"name": "Chat",
+			"description": "In-visit chat messages and reschedule proposals."
+		},
+		{
+			"name": "Financials",
+			"description": "Handyman earnings summary and transaction history."
+		},
+		{
+			"name": "Handymen",
+			"description": "Handyman profile updates and admin moderation (block)."
+		},
+		{
+			"name": "Jobs",
+			"description": "Handyman-facing feed of open proposals to bid on."
+		},
+		{
+			"name": "Proposals",
+			"description": "Customer job proposals and their lifecycle."
+		},
+		{
+			"name": "Regions",
+			"description": "Service regions."
+		},
+		{
+			"name": "Register",
+			"description": "Completes registration for a given role after auth."
+		},
+		{
+			"name": "Reviews",
+			"description": "Customer reviews of completed visits."
+		},
+		{
+			"name": "Services",
+			"description": "Services offered within a category."
+		},
+		{
+			"name": "Users",
+			"description": "The authenticated user's own profile."
+		},
+		{
+			"name": "Visits",
+			"description": "Handyman inspection/work visits and their lifecycle."
+		}
+	],
+	"paths": {
+		"/applications": {
+			"$ref": "paths/applications.json#/Applications List"
+		},
+		"/applications/{id}": {
+			"$ref": "paths/applications.json#/Applications Find"
+		},
+		"/applications/{id}/status": {
+			"$ref": "paths/applications.json#/Applications Status"
+		},
+		"/applications/{id}/accept": {
+			"$ref": "paths/applications.json#/Applications Accept"
+		},
+		"/applications/{id}/reject": {
+			"$ref": "paths/applications.json#/Applications Reject"
+		},
+		"/auth/initiate": {
+			"$ref": "paths/auth.json#/Auth Initiate"
+		},
+		"/auth/verify": {
+			"$ref": "paths/auth.json#/Auth Verify"
+		},
+		"/auth/refresh": {
+			"$ref": "paths/auth.json#/Auth Refresh"
+		},
+		"/categories": {
+			"$ref": "paths/categories.json#/Categories List"
+		},
+		"/categories/{id}": {
+			"$ref": "paths/categories.json#/Categories Find"
+		},
+		"/financials/summary": {
+			"$ref": "paths/financials.json#/Financials Summary"
+		},
+		"/financials/transactions": {
+			"$ref": "paths/financials.json#/Financials Transactions"
+		},
+		"/handymen": {
+			"$ref": "paths/handymen.json#/Handymen Update"
+		},
+		"/handymen/{id}/block": {
+			"$ref": "paths/handymen.json#/Handymen Block"
+		},
+		"/handymen/{id}/reviews": {
+			"$ref": "paths/reviews.json#/Reviews List For Handyman"
+		},
+		"/jobs": {
+			"$ref": "paths/jobs.json#/Jobs List"
+		},
+		"/proposals": {
+			"$ref": "paths/proposals.json#/Proposals Collection"
+		},
+		"/proposals/{id}": {
+			"$ref": "paths/proposals.json#/Proposals Find"
+		},
+		"/proposals/{id}/accept-visit": {
+			"$ref": "paths/proposals.json#/Proposals Accept Visit"
+		},
+		"/proposals/{id}/cancel": {
+			"$ref": "paths/proposals.json#/Proposals Cancel"
+		},
+		"/proposals/{id}/reopen": {
+			"$ref": "paths/proposals.json#/Proposals Reopen"
+		},
+		"/regions": {
+			"$ref": "paths/regions.json#/Regions List"
+		},
+		"/regions/{id}": {
+			"$ref": "paths/regions.json#/Regions Find"
+		},
+		"/register/handyman/{userId}": {
+			"$ref": "paths/register.json#/Register Handyman"
+		},
+		"/register/customer/{userId}": {
+			"$ref": "paths/register.json#/Register Customer"
+		},
+		"/register/admin/{userId}": {
+			"$ref": "paths/register.json#/Register Admin"
+		},
+		"/services": {
+			"$ref": "paths/services.json#/Services List"
+		},
+		"/services/{id}": {
+			"$ref": "paths/services.json#/Services Find"
+		},
+		"/users": {
+			"$ref": "paths/users.json#/Users Collection"
+		},
+		"/visits": {
+			"$ref": "paths/visits.json#/Visits Collection"
+		},
+		"/visits/{id}": {
+			"$ref": "paths/visits.json#/Visits Find"
+		},
+		"/visits/{id}/stage": {
+			"$ref": "paths/visits.json#/Visits Advance Stage"
+		},
+		"/visits/{id}/verify-code": {
+			"$ref": "paths/visits.json#/Visits Verify Code"
+		},
+		"/visits/{id}/convert-to-work": {
+			"$ref": "paths/visits.json#/Visits Convert To Work"
+		},
+		"/visits/{id}/review": {
+			"$ref": "paths/reviews.json#/Reviews Create"
+		},
+		"/visits/{visitId}/chat": {
+			"$ref": "paths/chat.json#/Chat Messages"
+		},
+		"/visits/{visitId}/reschedule": {
+			"$ref": "paths/chat.json#/Chat Reschedule"
+		}
+	},
+	"components": {
+		"schemas": {
+			"Auth Initiate Payload": {
+				"type": "object",
+				"properties": {
+					"phone": {
+						"type": "string",
+						"pattern": "^\\+20(10|11|12|15)\\d{8}$"
+					}
+				},
+				"required": [
+					"phone"
+				]
+			},
+			"Auth Initiate Response": {
+				"type": "object",
+				"properties": {
+					"verificationId": {
+						"type": "string",
+						"format": "uuid"
+					}
+				},
+				"required": [
+					"verificationId"
+				]
+			},
+			"Auth Verify Payload": {
+				"type": "object",
+				"properties": {
+					"verificationId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"phone": {
+						"type": "string",
+						"pattern": "^\\+20(10|11|12|15)\\d{8}$"
+					},
+					"otp": {
+						"type": "string",
+						"minLength": 6,
+						"maxLength": 6
+					},
+					"role": {
+						"type": "string",
+						"enum": [
+							"ADMIN",
+							"HANDYMAN",
+							"CUSTOMER"
+						],
+						"description": "Required only when verifying for a brand-new user; ignored for existing users"
+					}
+				},
+				"required": [
+					"phone",
+					"verificationId",
+					"otp"
+				]
+			},
+			"Auth Verify Response": {
+				"type": "object",
+				"properties": {
+					"access": {
+						"type": "string"
+					},
+					"refresh": {
+						"type": "string"
+					},
+					"user": {
+						"$ref": "#/components/schemas/User"
+					}
+				},
+				"required": [
+					"access",
+					"refresh",
+					"user"
+				]
+			},
+			"User": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string",
+						"pattern": "^\\+20(10|11|12|15)\\d{8}$"
+					},
+					"role": {
+						"type": "string",
+						"enum": [
+							"ADMIN",
+							"HANDYMAN",
+							"CUSTOMER"
+						]
+					},
+					"avatar": {
+						"type": "string",
+						"format": "uri",
+						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"admin": {
+						"$ref": "#/components/schemas/Admin",
+						"nullable": true
+					},
+					"customer": {
+						"$ref": "#/components/schemas/Customer",
+						"nullable": true
+					},
+					"handyman": {
+						"$ref": "#/components/schemas/Handyman",
+						"nullable": true
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"phone",
+					"role",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Handyman": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"workDays": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"enum": [
+								"SUNDAY",
+								"MONDAY",
+								"TUESDAY",
+								"WEDNESDAY",
+								"THURSDAY",
+								"FRIDAY",
+								"SATURDAY"
+							]
+						}
+					},
+					"status": {
+						"type": "string",
+						"default": "PENDING",
+						"enum": [
+							"PENDING",
+							"REJECTED",
+							"BLOCKED",
+							"ACCEPTED"
+						]
+					},
+					"birthdate": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"userId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"user": {
+						"$ref": "#/components/schemas/User",
+						"description": "Present whenever the handyman is fetched through HandymanService (list/find/update/delete/block)"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"workDays",
+					"status",
+					"birthdate",
+					"userId",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Handyman Update Payload": {
+				"type": "object",
+				"description": "At least one field must be provided.",
+				"properties": {
+					"regions": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"format": "uuid"
+						}
+					},
+					"workDays": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"enum": [
+								"SUNDAY",
+								"MONDAY",
+								"TUESDAY",
+								"WEDNESDAY",
+								"THURSDAY",
+								"FRIDAY",
+								"SATURDAY"
+							]
+						},
+						"description": "An empty array resets to the default (all seven days)"
+					}
+				}
+			},
+			"Admin": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"userId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"userId",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Customer": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"userId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"userId",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Application": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"nationalIdFront": {
+						"type": "string",
+						"format": "uri"
+					},
+					"nationalIdBack": {
+						"type": "string",
+						"format": "uri"
+					},
+					"selfie": {
+						"type": "string",
+						"format": "uri"
+					},
+					"birthdate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"handymanId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"status": {
+						"type": "string",
+						"default": "PENDING",
+						"enum": [
+							"PENDING",
+							"REJECTED",
+							"EXPIRED",
+							"ACCEPTED"
+						]
+					},
+					"expiresAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"notes": {
+						"type": "string",
+						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"regions": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string",
+									"format": "uuid"
+								},
+								"name": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"id",
+								"name"
+							]
+						}
+					},
+					"services": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string",
+									"format": "uuid"
+								},
+								"name": {
+									"type": "object",
+									"properties": {
+										"ar": {
+											"type": "string"
+										},
+										"en": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"ar",
+										"en"
+									]
+								}
+							},
+							"required": [
+								"id",
+								"name"
+							]
+						}
+					}
+				},
+				"required": [
+					"id",
+					"firstName",
+					"lastName",
+					"nationalIdFront",
+					"nationalIdBack",
+					"selfie",
+					"birthdate",
+					"handymanId",
+					"status",
+					"expiresAt",
+					"createdAt",
+					"updatedAt",
+					"regions",
+					"services"
+				]
+			},
+			"Application Reject Payload": {
+				"type": "object",
+				"properties": {
+					"notes": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"notes"
+				]
+			},
+			"Region": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string"
+					},
+					"parentRegionId": {
+						"type": "string",
+						"format": "uuid",
+						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"parentRegionId",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Category": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "object",
+						"properties": {
+							"ar": {
+								"type": "string"
+							},
+							"en": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"ar",
+							"en"
+						]
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"services": {
+						"type": "array",
+						"description": "Only present on Find (GET /categories/{id})",
+						"items": {
+							"$ref": "#/components/schemas/Service"
+						}
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Service": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "object",
+						"properties": {
+							"ar": {
+								"type": "string"
+							},
+							"en": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"ar",
+							"en"
+						]
+					},
+					"categoryId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"categoryId",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Proposal": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string",
+						"default": "WAITING_OFFERS",
+						"enum": [
+							"WAITING_OFFERS",
+							"OFFERS_RECEIVED",
+							"ACCEPTED",
+							"IN_PROGRESS",
+							"AWAITING_COMPLETION",
+							"INSPECTION_COMPLETED",
+							"COMPLETED",
+							"CANCELLED"
+						]
+					},
+					"dueDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"latitude": {
+						"type": "number",
+						"nullable": true
+					},
+					"longitude": {
+						"type": "number",
+						"nullable": true
+					},
+					"serviceId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"customerId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"service": {
+						"$ref": "#/components/schemas/Service"
+					},
+					"visits": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Visit"
+						}
+					}
+				},
+				"required": [
+					"id",
+					"title",
+					"description",
+					"address",
+					"status",
+					"dueDate",
+					"serviceId",
+					"customerId",
+					"createdAt",
+					"updatedAt",
+					"service",
+					"visits"
+				]
+			},
+			"Proposal Create Payload": {
+				"type": "object",
+				"properties": {
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"dueDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"latitude": {
+						"type": "number",
+						"nullable": true
+					},
+					"longitude": {
+						"type": "number",
+						"nullable": true
+					},
+					"serviceId": {
+						"type": "string",
+						"format": "uuid"
+					}
+				},
+				"required": [
+					"title",
+					"description",
+					"address",
+					"dueDate",
+					"serviceId"
+				]
+			},
+			"Accept Visit Payload": {
+				"type": "object",
+				"properties": {
+					"visitId": {
+						"type": "string",
+						"format": "uuid"
+					}
+				},
+				"required": [
+					"visitId"
+				]
+			},
+			"Visit": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"INSPECTION",
+							"WORK"
+						]
+					},
+					"price": {
+						"type": "number",
+						"nullable": true,
+						"description": "Required for WORK visits"
+					},
+					"currency": {
+						"type": "string",
+						"default": "EGP"
+					},
+					"status": {
+						"type": "string",
+						"default": "PENDING",
+						"enum": [
+							"PENDING",
+							"ACCEPTED",
+							"DECLINED",
+							"COMPLETED"
+						]
+					},
+					"completionCode": {
+						"type": "string",
+						"nullable": true,
+						"description": "Only included in the response once the visit's stage is AT_LOCATION or AWAITING_CODE"
+					},
+					"message": {
+						"type": "string",
+						"nullable": true
+					},
+					"estimatedDuration": {
+						"type": "string",
+						"nullable": true
+					},
+					"scheduledFor": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true,
+						"description": "Not allowed for INSPECTION visits"
+					},
+					"stage": {
+						"type": "string",
+						"enum": [
+							"INITIATED",
+							"AT_LOCATION",
+							"AWAITING_CODE"
+						],
+						"nullable": true
+					},
+					"proposalId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"handymanId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"convertedFromVisitId": {
+						"type": "string",
+						"format": "uuid",
+						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"handyman": {
+						"$ref": "#/components/schemas/Handyman"
+					},
+					"proposal": {
+						"type": "object",
+						"description": "Partial proposal (only present on visit endpoints, not when nested under Proposal.visits)",
+						"properties": {
+							"id": {
+								"type": "string",
+								"format": "uuid"
+							},
+							"title": {
+								"type": "string"
+							},
+							"status": {
+								"type": "string",
+								"enum": [
+									"WAITING_OFFERS",
+									"OFFERS_RECEIVED",
+									"ACCEPTED",
+									"IN_PROGRESS",
+									"AWAITING_COMPLETION",
+									"INSPECTION_COMPLETED",
+									"COMPLETED",
+									"CANCELLED"
+								]
+							},
+							"customerId": {
+								"type": "string",
+								"format": "uuid"
+							},
+							"latitude": {
+								"type": "number",
+								"nullable": true
+							},
+							"longitude": {
+								"type": "number",
+								"nullable": true
+							},
+							"service": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "string",
+										"format": "uuid"
+									},
+									"name": {
+										"type": "object",
+										"properties": {
+											"ar": {
+												"type": "string"
+											},
+											"en": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"ar",
+											"en"
+										]
+									}
+								},
+								"required": [
+									"id",
+									"name"
+								]
+							}
+						}
+					},
+					"review": {
+						"$ref": "#/components/schemas/Review",
+						"nullable": true
+					}
+				},
+				"required": [
+					"id",
+					"type",
+					"price",
+					"currency",
+					"status",
+					"completionCode",
+					"message",
+					"estimatedDuration",
+					"scheduledFor",
+					"stage",
+					"proposalId",
+					"handymanId",
+					"convertedFromVisitId",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Visit Create Payload": {
+				"type": "object",
+				"properties": {
+					"proposalId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"INSPECTION",
+							"WORK"
+						]
+					},
+					"price": {
+						"type": "number",
+						"nullable": true,
+						"description": "Required (non-null) when type is WORK"
+					},
+					"currency": {
+						"type": "string"
+					},
+					"estimatedDuration": {
+						"type": "string",
+						"nullable": true
+					},
+					"message": {
+						"type": "string",
+						"nullable": true
+					},
+					"scheduledFor": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true,
+						"description": "Must be null when type is INSPECTION"
+					}
+				},
+				"required": [
+					"proposalId",
+					"type",
+					"price",
+					"currency",
+					"estimatedDuration",
+					"message",
+					"scheduledFor"
+				]
+			},
+			"Advance Stage Payload": {
+				"type": "object",
+				"properties": {
+					"stage": {
+						"type": "string",
+						"enum": [
+							"AT_LOCATION",
+							"AWAITING_CODE"
+						]
+					},
+					"latitude": {
+						"type": "number",
+						"description": "Required when stage is AT_LOCATION"
+					},
+					"longitude": {
+						"type": "number",
+						"description": "Required when stage is AT_LOCATION"
+					}
+				},
+				"required": [
+					"stage"
+				]
+			},
+			"Verify Code Payload": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "string",
+						"minLength": 6,
+						"maxLength": 6
+					}
+				},
+				"required": [
+					"code"
+				]
+			},
+			"Convert To Work Payload": {
+				"type": "object",
+				"properties": {
+					"price": {
+						"type": "number",
+						"exclusiveMinimum": 0
+					},
+					"scheduledFor": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					}
+				},
+				"required": [
+					"price",
+					"scheduledFor"
+				]
+			},
+			"Review": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"visitId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"reviewerName": {
+						"type": "string"
+					},
+					"rating": {
+						"type": "number"
+					},
+					"comment": {
+						"type": "string",
+						"nullable": true
+					},
+					"tags": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"enum": [
+								"PROFESSIONAL",
+								"PUNCTUAL",
+								"GOOD_VALUE",
+								"HIGH_QUALITY_WORK",
+								"FRIENDLY",
+								"CLEAN_WORKSPACE",
+								"COMMUNICATIVE",
+								"RESPECTFUL",
+								"EXPERT_ADVICE",
+								"EFFICIENT",
+								"LATE",
+								"POOR_COMMUNICATION",
+								"OVERPRICED",
+								"MESSY_WORKSPACE"
+							]
+						}
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"visitId",
+					"reviewerName",
+					"rating",
+					"comment",
+					"tags",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"Review Create Payload": {
+				"type": "object",
+				"properties": {
+					"rating": {
+						"type": "number",
+						"minimum": 1,
+						"maximum": 5
+					},
+					"comment": {
+						"type": "string"
+					},
+					"tags": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"enum": [
+								"PROFESSIONAL",
+								"PUNCTUAL",
+								"GOOD_VALUE",
+								"HIGH_QUALITY_WORK",
+								"FRIENDLY",
+								"CLEAN_WORKSPACE",
+								"COMMUNICATIVE",
+								"RESPECTFUL",
+								"EXPERT_ADVICE",
+								"EFFICIENT",
+								"LATE",
+								"POOR_COMMUNICATION",
+								"OVERPRICED",
+								"MESSY_WORKSPACE"
+							]
+						}
+					}
+				},
+				"required": [
+					"rating"
+				]
+			},
+			"ChatMessage": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"visitId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"senderId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"TEXT",
+							"IMAGE",
+							"RESCHEDULE"
+						]
+					},
+					"text": {
+						"type": "string",
+						"nullable": true
+					},
+					"imageUrl": {
+						"type": "string",
+						"format": "uri",
+						"nullable": true
+					},
+					"proposedDate": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"rescheduleStatus": {
+						"type": "string",
+						"enum": [
+							"PENDING",
+							"ACCEPTED",
+							"DECLINED"
+						],
+						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"sender": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "string",
+								"format": "uuid"
+							},
+							"name": {
+								"type": "string"
+							},
+							"role": {
+								"type": "string",
+								"enum": [
+									"ADMIN",
+									"HANDYMAN",
+									"CUSTOMER"
+								]
+							}
+						},
+						"required": [
+							"id",
+							"name",
+							"role"
+						]
+					}
+				},
+				"required": [
+					"id",
+					"visitId",
+					"senderId",
+					"type",
+					"text",
+					"imageUrl",
+					"proposedDate",
+					"rescheduleStatus",
+					"createdAt",
+					"updatedAt",
+					"sender"
+				]
+			},
+			"Send Message Payload": {
+				"type": "object",
+				"description": "text is required for TEXT messages; imageUrl is required for IMAGE messages",
+				"properties": {
+					"type": {
+						"type": "string",
+						"enum": [
+							"TEXT",
+							"IMAGE"
+						]
+					},
+					"text": {
+						"type": "string",
+						"nullable": true
+					},
+					"imageUrl": {
+						"type": "string",
+						"format": "uri",
+						"nullable": true
+					}
+				},
+				"required": [
+					"type",
+					"text",
+					"imageUrl"
+				]
+			},
+			"Reschedule Payload": {
+				"type": "object",
+				"properties": {
+					"proposedDate": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"proposedDate"
+				]
+			},
+			"Financial Transaction Item": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"serviceName": {
+						"type": "object",
+						"properties": {
+							"ar": {
+								"type": "string"
+							},
+							"en": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"ar",
+							"en"
+						]
+					},
+					"clientName": {
+						"type": "string"
+					},
+					"amount": {
+						"type": "number"
+					},
+					"currency": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string",
+						"enum": [
+							"RECEIVED",
+							"PENDING",
+							"REFUNDED"
+						]
+					},
+					"date": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"serviceName",
+					"clientName",
+					"amount",
+					"currency",
+					"status",
+					"date"
+				]
+			},
+			"Financial Summary": {
+				"type": "object",
+				"properties": {
+					"totalEarned": {
+						"type": "number",
+						"description": "Sum of RECEIVED transaction amounts"
+					},
+					"thisMonth": {
+						"type": "number"
+					},
+					"pending": {
+						"type": "number",
+						"description": "Sum of PENDING transaction amounts"
+					},
+					"completedJobs": {
+						"type": "integer",
+						"description": "Count of visits with status COMPLETED"
+					},
+					"growthPercent": {
+						"type": "number",
+						"nullable": true,
+						"description": "null when last month had no earnings"
+					},
+					"monthlyData": {
+						"type": "array",
+						"description": "Last 6 months, oldest first",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"monthLabel": {
+									"type": "string"
+								},
+								"amount": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"id",
+								"monthLabel",
+								"amount"
+							]
+						}
+					},
+					"recentTransactions": {
+						"type": "array",
+						"description": "Most recent 5 transactions",
+						"items": {
+							"$ref": "#/components/schemas/Financial Transaction Item"
+						}
+					}
+				},
+				"required": [
+					"totalEarned",
+					"thisMonth",
+					"pending",
+					"completedJobs",
+					"growthPercent",
+					"monthlyData",
+					"recentTransactions"
+				]
+			},
+			"Financial Transactions": {
+				"type": "object",
+				"properties": {
+					"total": {
+						"type": "integer"
+					},
+					"page": {
+						"type": "integer"
+					},
+					"limit": {
+						"type": "integer"
+					},
+					"items": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Financial Transaction Item"
+						}
+					}
+				},
+				"required": [
+					"total",
+					"page",
+					"limit",
+					"items"
+				]
+			}
+		},
+		"responses": {
+			"Paginated Response": {
+				"description": "",
+				"content": {
+					"application/json": {
+						"schema": {
+							"title": "",
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {}
+									}
+								},
+								"count": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"data",
+								"count"
+							]
+						}
+					}
+				}
+			},
+			"Error Response": {
+				"description": "",
+				"content": {
+					"application/json": {
+						"schema": {
+							"title": "",
+							"type": "object",
+							"properties": {
+								"error": {
+									"type": "object",
+									"properties": {
+										"details": {
+											"type": "string",
+											"nullable": true
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									]
+								}
+							},
+							"required": [
+								"error"
+							]
+						}
+					}
+				}
+			}
+		},
+		"securitySchemes": {
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			},
+			"bearer": {
+				"type": "http",
+				"scheme": "bearer"
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "http://api.mokhtasr.app:3000",
+			"description": "Development"
+		},
+		{
+			"url": "https://mokhtasr-api.urax.dev",
+			"description": "Staging"
+		}
+	],
+	"security": [
+		{
+			"bearer": []
+		}
+	]
+}
