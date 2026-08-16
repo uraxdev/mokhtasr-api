@@ -81,6 +81,23 @@ enum RescheduleStatus {
   DECLINED
 }
 
+enum ReviewTag {
+  PROFESSIONAL
+  PUNCTUAL
+  GOOD_VALUE
+  HIGH_QUALITY_WORK
+  FRIENDLY
+  CLEAN_WORKSPACE
+  COMMUNICATIVE
+  RESPECTFUL
+  EXPERT_ADVICE
+  EFFICIENT
+  LATE
+  POOR_COMMUNICATION
+  OVERPRICED
+  MESSY_WORKSPACE
+}
+
 // ─── Models ───────────────────────────────────────────────────────────────────
 
 model Region {
@@ -339,10 +356,11 @@ model Review {
   id String @id @default(uuid()) @map("id")
 
   // Own fields
-  offerId      String  @unique @map("offer_id")
-  reviewerName String  @map("reviewer_name")
-  rating       Float   @map("rating")
-  comment      String? @map("comment")
+  offerId      String      @unique @map("offer_id")
+  reviewerName String      @map("reviewer_name")
+  rating       Float       @map("rating")
+  comment      String?     @map("comment")
+  tags         ReviewTag[] @default([]) @map("tags")
 
   // Relation fields
   offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)

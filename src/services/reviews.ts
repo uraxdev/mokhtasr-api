@@ -22,7 +22,8 @@ export class ReviewService {
 				offer: { connect: { id: offerId } },
 				reviewerName: customer.user.name,
 				rating: payload.rating,
-				comment: payload.comment ?? null
+				comment: payload.comment ?? null,
+				tags: payload.tags ?? []
 			}
 		});
 	}
