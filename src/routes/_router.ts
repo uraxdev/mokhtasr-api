@@ -4,6 +4,7 @@ import applications from './applications';
 import auth from './auth';
 import categories from './categories';
 import chat from './chat';
+import docs from './docs';
 import financials from './financials';
 import handymen from './handymen';
 import jobs from './jobs';
@@ -18,6 +19,7 @@ import visits from './visits';
 const router = Router();
 
 export default (): Router => {
+	docs(router);
 	applications(router);
 	auth(router);
 	categories(router);

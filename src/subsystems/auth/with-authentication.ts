@@ -7,7 +7,9 @@ import { NextFunction, Request, Response } from 'express';
 const publicRequests: { method: string; path: RegExp }[] = [
 	{ method: 'POST', path: /^\/auth\/initiate$/ },
 	{ method: 'POST', path: /^\/auth\/verify$/ },
-	{ method: 'POST', path: /^\/auth\/refresh$/ }
+	{ method: 'POST', path: /^\/auth\/refresh$/ },
+	{ method: 'GET', path: /^\/$/ },
+	{ method: 'GET', path: /^\/openapi\.json$/ }
 ];
 
 function isPublicRequest(method: string, path: string) {

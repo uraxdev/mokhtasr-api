@@ -28,7 +28,7 @@ There is no test suite in this repo. There is no `check-single-file` equivalent 
 
 ## Architecture
 
-**Request flow:** `src/index.ts` wires global middleware in a fixed order — CORS → JSON body parsing → request logging → **authentication** → `multer.upload.any()` → the router → error boundary. Because `withAuthentication` runs before route registration, every route is authenticated by default; only requests matching the `publicRequests` allowlist in `src/subsystems/auth/with-authentication.ts` (`POST /auth/initiate`, `/auth/verify`, `/auth/refresh`) skip it. In non-production, the header `Authorization: Bearer PA$$` also bypasses auth (see `withAuthentication`) — do not remove this without checking for local/dev tooling dependent on it.
+**Request flow:** `src/index.ts` wires global middleware in a fixed order — CORS → JSON body parsing → request logging → **authentication** → `multer.upload.any()` → the router → error boundary. Because `withAuthentication` runs before route registration, every route is authenticated by default; only requests matching the `publicRequests` allowlist in `src/subsystems/auth/with-authentication.ts` (`POST /auth/initiate`, `/auth/verify`, `/auth/refresh`, and `GET /` / `GET /openapi.json` for the API docs) skip it. In non-production, the header `Authorization: Bearer PA$$` also bypasses auth (see `withAuthentication`) — do not remove this without checking for local/dev tooling dependent on it.
 
 **Layering — routes → services → repositories/database:**
 
