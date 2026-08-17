@@ -4,9 +4,7 @@
 			"summary": "List",
 			"deprecated": false,
 			"description": "Admins only.",
-			"tags": [
-				"Applications"
-			],
+			"tags": ["Applications"],
 			"parameters": [],
 			"responses": {
 				"200": {
@@ -40,9 +38,7 @@
 			"summary": "Find",
 			"deprecated": false,
 			"description": "",
-			"tags": [
-				"Applications"
-			],
+			"tags": ["Applications"],
 			"parameters": [
 				{
 					"name": "id",
@@ -84,9 +80,7 @@
 			"summary": "Status",
 			"deprecated": false,
 			"description": "Handymen only.",
-			"tags": [
-				"Applications"
-			],
+			"tags": ["Applications"],
 			"parameters": [
 				{
 					"name": "id",
@@ -110,17 +104,10 @@
 									"status": {
 										"type": "string",
 										"description": "status",
-										"enum": [
-											"PENDING",
-											"REJECTED",
-											"EXPIRED",
-											"ACCEPTED"
-										]
+										"enum": ["PENDING", "REJECTED", "EXPIRED", "ACCEPTED"]
 									}
 								},
-								"required": [
-									"status"
-								]
+								"required": ["status"]
 							}
 						}
 					},
@@ -143,9 +130,7 @@
 			"summary": "Accept",
 			"deprecated": false,
 			"description": "Admins only.",
-			"tags": [
-				"Applications"
-			],
+			"tags": ["Applications"],
 			"parameters": [
 				{
 					"name": "id",
@@ -172,9 +157,7 @@
 										"format": "uuid"
 									}
 								},
-								"required": [
-									"id"
-								]
+								"required": ["id"]
 							}
 						}
 					},
@@ -197,9 +180,7 @@
 			"summary": "Reject",
 			"deprecated": false,
 			"description": "Admins only.",
-			"tags": [
-				"Applications"
-			],
+			"tags": ["Applications"],
 			"parameters": [
 				{
 					"name": "id",
@@ -237,9 +218,7 @@
 										"format": "uuid"
 									}
 								},
-								"required": [
-									"id"
-								]
+								"required": ["id"]
 							}
 						}
 					},

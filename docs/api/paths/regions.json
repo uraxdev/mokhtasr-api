@@ -4,9 +4,7 @@
 			"summary": "List",
 			"deprecated": false,
 			"description": "",
-			"tags": [
-				"Regions"
-			],
+			"tags": ["Regions"],
 			"parameters": [
 				{
 					"name": "name",
@@ -50,9 +48,7 @@
 			"summary": "Find",
 			"deprecated": false,
 			"description": "",
-			"tags": [
-				"Regions"
-			],
+			"tags": ["Regions"],
 			"parameters": [
 				{
 					"name": "id",

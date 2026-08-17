@@ -4,9 +4,7 @@
 			"summary": "List Messages",
 			"deprecated": false,
 			"description": "Must be a participant (the visit's handyman or the proposal's customer).",
-			"tags": [
-				"Chat"
-			],
+			"tags": ["Chat"],
 			"parameters": [
 				{
 					"name": "visitId",
@@ -49,9 +47,7 @@
 			"summary": "Send Message",
 			"deprecated": false,
 			"description": "Must be a participant (the visit's handyman or the proposal's customer).",
-			"tags": [
-				"Chat"
-			],
+			"tags": ["Chat"],
 			"parameters": [
 				{
 					"name": "visitId",
@@ -104,9 +100,7 @@
 			"summary": "Reschedule",
 			"deprecated": false,
 			"description": "Must be a participant. Posts a RESCHEDULE chat message proposing a new date.",
-			"tags": [
-				"Chat"
-			],
+			"tags": ["Chat"],
 			"parameters": [
 				{
 					"name": "visitId",

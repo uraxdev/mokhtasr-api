@@ -4,9 +4,7 @@
 			"summary": "Reviews",
 			"deprecated": false,
 			"description": "",
-			"tags": [
-				"Reviews"
-			],
+			"tags": ["Reviews"],
 			"parameters": [
 				{
 					"name": "id",
@@ -40,11 +38,7 @@
 										}
 									}
 								},
-								"required": [
-									"average",
-									"count",
-									"reviews"
-								]
+								"required": ["average", "count", "reviews"]
 							}
 						}
 					},
@@ -67,9 +61,7 @@
 			"summary": "Review",
 			"deprecated": false,
 			"description": "Customers only. The visit must be COMPLETED and not already reviewed.",
-			"tags": [
-				"Reviews"
-			],
+			"tags": ["Reviews"],
 			"parameters": [
 				{
 					"name": "id",

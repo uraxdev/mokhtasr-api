@@ -4,9 +4,7 @@
 			"summary": "List",
 			"deprecated": false,
 			"description": "Handymen only. Browse feed of proposals open for offers.",
-			"tags": [
-				"Jobs"
-			],
+			"tags": ["Jobs"],
 			"parameters": [
 				{
 					"name": "service",
@@ -25,11 +23,7 @@
 					"required": false,
 					"schema": {
 						"type": "string",
-						"enum": [
-							"TODAY",
-							"TOMORROW",
-							"THIS_WEEK"
-						]
+						"enum": ["TODAY", "TOMORROW", "THIS_WEEK"]
 					}
 				},
 				{
@@ -76,10 +70,7 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"ar",
-												"en"
-											]
+											"required": ["ar", "en"]
 										},
 										"title": {
 											"type": "string"
@@ -134,29 +125,17 @@
 																		"nullable": true
 																	}
 																},
-																"required": [
-																	"id",
-																	"name",
-																	"avatar"
-																]
+																"required": ["id", "name", "avatar"]
 															}
 														},
-														"required": [
-															"id",
-															"user"
-														]
+														"required": ["id", "user"]
 													},
 													"createdAt": {
 														"type": "string",
 														"format": "date-time"
 													}
 												},
-												"required": [
-													"id",
-													"price",
-													"handyman",
-													"createdAt"
-												]
+												"required": ["id", "price", "handyman", "createdAt"]
 											}
 										},
 										"submittedAt": {
@@ -164,17 +143,7 @@
 											"format": "date-time"
 										}
 									},
-									"required": [
-										"id",
-										"service",
-										"title",
-										"description",
-										"address",
-										"distanceKm",
-										"dueDate",
-										"visits",
-										"submittedAt"
-									]
+									"required": ["id", "service", "title", "description", "address", "distanceKm", "dueDate", "visits", "submittedAt"]
 								}
 							}
 						}

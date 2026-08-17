@@ -4,9 +4,7 @@
 			"summary": "Summary",
 			"deprecated": false,
 			"description": "Handymen only.",
-			"tags": [
-				"Financials"
-			],
+			"tags": ["Financials"],
 			"parameters": [],
 			"responses": {
 				"200": {
@@ -37,9 +35,7 @@
 			"summary": "Transactions",
 			"deprecated": false,
 			"description": "Handymen only.",
-			"tags": [
-				"Financials"
-			],
+			"tags": ["Financials"],
 			"parameters": [
 				{
 					"name": "page",

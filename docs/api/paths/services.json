@@ -4,9 +4,7 @@
 			"summary": "List",
 			"deprecated": false,
 			"description": "",
-			"tags": [
-				"Services"
-			],
+			"tags": ["Services"],
 			"parameters": [
 				{
 					"name": "name",
@@ -60,9 +58,7 @@
 			"summary": "Find",
 			"deprecated": false,
 			"description": "",
-			"tags": [
-				"Services"
-			],
+			"tags": ["Services"],
 			"parameters": [
 				{
 					"name": "id",

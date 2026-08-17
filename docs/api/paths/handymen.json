@@ -4,9 +4,7 @@
 			"summary": "Update",
 			"deprecated": false,
 			"description": "Handymen only.",
-			"tags": [
-				"Handymen"
-			],
+			"tags": ["Handymen"],
 			"parameters": [],
 			"requestBody": {
 				"content": {
@@ -48,9 +46,7 @@
 			"summary": "Block",
 			"deprecated": false,
 			"description": "Admins only. Rejects a pending application (if any) and declines all of the handyman's visits.",
-			"tags": [
-				"Handymen"
-			],
+			"tags": ["Handymen"],
 			"parameters": [
 				{
 					"name": "id",

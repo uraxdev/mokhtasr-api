@@ -2,7 +2,7 @@ import { client } from '@/database/lib/client';
 import type { Router } from 'express';
 
 export default (router: Router) => {
-	router.post('/admin/clear', async (_req, res, next) => {
+	router.post('/admins/clear', async (_req, res, next) => {
 		const promises = [client.application.deleteMany(), client.chatMessage.deleteMany(), client.handyman.deleteMany(), client.proposal.deleteMany(), client.review.deleteMany(), client.visit.deleteMany()];
 
 		try {

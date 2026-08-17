@@ -4,9 +4,7 @@
 			"summary": "Find",
 			"deprecated": false,
 			"description": "Returns the authenticated user.",
-			"tags": [
-				"Users"
-			],
+			"tags": ["Users"],
 			"parameters": [],
 			"responses": {
 				"200": {
@@ -35,9 +33,7 @@
 			"summary": "Update",
 			"deprecated": false,
 			"description": "Updates the authenticated user.",
-			"tags": [
-				"Users"
-			],
+			"tags": ["Users"],
 			"parameters": [],
 			"requestBody": {
 				"content": {
@@ -85,9 +81,7 @@
 			"summary": "Delete",
 			"deprecated": false,
 			"description": "Deletes the authenticated user.",
-			"tags": [
-				"Users"
-			],
+			"tags": ["Users"],
 			"parameters": [],
 			"responses": {
 				"200": {
@@ -102,9 +96,7 @@
 										"format": "uuid"
 									}
 								},
-								"required": [
-									"id"
-								]
+								"required": ["id"]
 							}
 						}
 					},

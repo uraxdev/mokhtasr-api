@@ -1,0 +1,13 @@
+{
+	"Clear": {
+		"post": {
+			"summary": "Clear",
+			"deprecated": false,
+			"description": "Environments: development | staging — clears applications, chat messages, handymen, proposals, reviews, and visits",
+			"tags": ["Admins"],
+			"parameters": [],
+			"responses": {},
+			"security": []
+		}
+	}
+}

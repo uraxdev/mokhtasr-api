@@ -5,9 +5,7 @@
 			"deprecated": false,
 			"description": "Customers only.",
 			"operationId": "createProposal",
-			"tags": [
-				"Proposals"
-			],
+			"tags": ["Proposals"],
 			"parameters": [],
 			"requestBody": {
 				"content": {
@@ -48,9 +46,7 @@
 			"deprecated": false,
 			"description": "Customers see their own proposals; other roles receive every proposal.",
 			"operationId": "listProposals",
-			"tags": [
-				"Proposals"
-			],
+			"tags": ["Proposals"],
 			"parameters": [],
 			"responses": {
 				"200": {
@@ -85,9 +81,7 @@
 			"deprecated": false,
 			"description": "Customers only; must own the proposal.",
 			"operationId": "getProposal",
-			"tags": [
-				"Proposals"
-			],
+			"tags": ["Proposals"],
 			"parameters": [
 				{
 					"name": "id",
@@ -130,9 +124,7 @@
 			"deprecated": false,
 			"description": "Customers only. Accepts the chosen visit and declines all other pending visits on the proposal.",
 			"operationId": "acceptVisit",
-			"tags": [
-				"Proposals"
-			],
+			"tags": ["Proposals"],
 			"parameters": [
 				{
 					"name": "id",
@@ -186,9 +178,7 @@
 			"deprecated": false,
 			"description": "Customers only.",
 			"operationId": "cancelProposal",
-			"tags": [
-				"Proposals"
-			],
+			"tags": ["Proposals"],
 			"parameters": [
 				{
 					"name": "id",
@@ -231,9 +221,7 @@
 			"deprecated": false,
 			"description": "Customers only. Only valid when the proposal status is INSPECTION_COMPLETED; moves it back to WAITING_OFFERS.",
 			"operationId": "reopenProposal",
-			"tags": [
-				"Proposals"
-			],
+			"tags": ["Proposals"],
 			"parameters": [
 				{
 					"name": "id",

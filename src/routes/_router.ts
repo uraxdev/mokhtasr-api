@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import admin from './admin';
+import admins from './admins';
 import applications from './applications';
 import auth from './auth';
 import categories from './categories';
@@ -20,7 +20,7 @@ import visits from './visits';
 const router = Router();
 
 export default (): Router => {
-	admin(router);
+	admins(router);
 	docs(router);
 	applications(router);
 	auth(router);

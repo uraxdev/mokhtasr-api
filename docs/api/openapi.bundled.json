@@ -7,6 +7,10 @@
 	},
 	"tags": [
 		{
+			"name": "Admins",
+			"description": "Internal administrative operations"
+		},
+		{
 			"name": "Applications",
 			"description": "Handyman KYC/onboarding applications — review, accept, reject."
 		},
@@ -64,6 +68,19 @@
 		}
 	],
 	"paths": {
+		"/admins/clear": {
+			"post": {
+				"summary": "Clear",
+				"deprecated": false,
+				"description": "Environments: development | staging — clears applications, chat messages, handymen, proposals, reviews, and visits",
+				"tags": [
+					"Admins"
+				],
+				"parameters": [],
+				"responses": {},
+				"security": []
+			}
+		},
 		"/applications": {
 			"get": {
 				"summary": "List",
@@ -8104,7 +8121,7 @@
 	},
 	"servers": [
 		{
-			"url": "http://api.mokhtasr.app:3000",
+			"url": "http://localhost:3000",
 			"description": "Development"
 		},
 		{

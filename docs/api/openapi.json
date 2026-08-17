@@ -7,6 +7,10 @@
 	},
 	"tags": [
 		{
+			"name": "Admins",
+			"description": "Internal administrative operations"
+		},
+		{
 			"name": "Applications",
 			"description": "Handyman KYC/onboarding applications — review, accept, reject."
 		},
@@ -64,6 +68,9 @@
 		}
 	],
 	"paths": {
+		"/admins/clear": {
+			"$ref": "paths/admins.json#/Clear"
+		},
 		"/applications": {
 			"$ref": "paths/applications.json#/Applications List"
 		},
@@ -186,9 +193,7 @@
 						"pattern": "^\\+20(10|11|12|15)\\d{8}$"
 					}
 				},
-				"required": [
-					"phone"
-				]
+				"required": ["phone"]
 			},
 			"Auth Initiate Response": {
 				"type": "object",
@@ -198,9 +203,7 @@
 						"format": "uuid"
 					}
 				},
-				"required": [
-					"verificationId"
-				]
+				"required": ["verificationId"]
 			},
 			"Auth Verify Payload": {
 				"type": "object",
@@ -220,19 +223,11 @@
 					},
 					"role": {
 						"type": "string",
-						"enum": [
-							"ADMIN",
-							"HANDYMAN",
-							"CUSTOMER"
-						],
+						"enum": ["ADMIN", "HANDYMAN", "CUSTOMER"],
 						"description": "Required only when verifying for a brand-new user; ignored for existing users"
 					}
 				},
-				"required": [
-					"phone",
-					"verificationId",
-					"otp"
-				]
+				"required": ["phone", "verificationId", "otp"]
 			},
 			"Auth Verify Response": {
 				"type": "object",
@@ -247,11 +242,7 @@
 						"$ref": "#/components/schemas/User"
 					}
 				},
-				"required": [
-					"access",
-					"refresh",
-					"user"
-				]
+				"required": ["access", "refresh", "user"]
 			},
 			"User": {
 				"type": "object",
@@ -269,11 +260,7 @@
 					},
 					"role": {
 						"type": "string",
-						"enum": [
-							"ADMIN",
-							"HANDYMAN",
-							"CUSTOMER"
-						]
+						"enum": ["ADMIN", "HANDYMAN", "CUSTOMER"]
 					},
 					"avatar": {
 						"type": "string",
@@ -301,14 +288,7 @@
 						"nullable": true
 					}
 				},
-				"required": [
-					"id",
-					"name",
-					"phone",
-					"role",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "name", "phone", "role", "createdAt", "updatedAt"]
 			},
 			"Handyman": {
 				"type": "object",
@@ -321,26 +301,13 @@
 						"type": "array",
 						"items": {
 							"type": "string",
-							"enum": [
-								"SUNDAY",
-								"MONDAY",
-								"TUESDAY",
-								"WEDNESDAY",
-								"THURSDAY",
-								"FRIDAY",
-								"SATURDAY"
-							]
+							"enum": ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
 						}
 					},
 					"status": {
 						"type": "string",
 						"default": "PENDING",
-						"enum": [
-							"PENDING",
-							"REJECTED",
-							"BLOCKED",
-							"ACCEPTED"
-						]
+						"enum": ["PENDING", "REJECTED", "BLOCKED", "ACCEPTED"]
 					},
 					"birthdate": {
 						"type": "string",
@@ -364,15 +331,7 @@
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"id",
-					"workDays",
-					"status",
-					"birthdate",
-					"userId",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "workDays", "status", "birthdate", "userId", "createdAt", "updatedAt"]
 			},
 			"Handyman Update Payload": {
 				"type": "object",
@@ -389,15 +348,7 @@
 						"type": "array",
 						"items": {
 							"type": "string",
-							"enum": [
-								"SUNDAY",
-								"MONDAY",
-								"TUESDAY",
-								"WEDNESDAY",
-								"THURSDAY",
-								"FRIDAY",
-								"SATURDAY"
-							]
+							"enum": ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
 						},
 						"description": "An empty array resets to the default (all seven days)"
 					}
@@ -423,12 +374,7 @@
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"id",
-					"userId",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "userId", "createdAt", "updatedAt"]
 			},
 			"Customer": {
 				"type": "object",
@@ -450,12 +396,7 @@
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"id",
-					"userId",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "userId", "createdAt", "updatedAt"]
 			},
 			"Application": {
 				"type": "object",
@@ -493,12 +434,7 @@
 					"status": {
 						"type": "string",
 						"default": "PENDING",
-						"enum": [
-							"PENDING",
-							"REJECTED",
-							"EXPIRED",
-							"ACCEPTED"
-						]
+						"enum": ["PENDING", "REJECTED", "EXPIRED", "ACCEPTED"]
 					},
 					"expiresAt": {
 						"type": "string",
@@ -529,10 +465,7 @@
 									"type": "string"
 								}
 							},
-							"required": [
-								"id",
-								"name"
-							]
+							"required": ["id", "name"]
 						}
 					},
 					"services": {
@@ -554,35 +487,14 @@
 											"type": "string"
 										}
 									},
-									"required": [
-										"ar",
-										"en"
-									]
+									"required": ["ar", "en"]
 								}
 							},
-							"required": [
-								"id",
-								"name"
-							]
+							"required": ["id", "name"]
 						}
 					}
 				},
-				"required": [
-					"id",
-					"firstName",
-					"lastName",
-					"nationalIdFront",
-					"nationalIdBack",
-					"selfie",
-					"birthdate",
-					"handymanId",
-					"status",
-					"expiresAt",
-					"createdAt",
-					"updatedAt",
-					"regions",
-					"services"
-				]
+				"required": ["id", "firstName", "lastName", "nationalIdFront", "nationalIdBack", "selfie", "birthdate", "handymanId", "status", "expiresAt", "createdAt", "updatedAt", "regions", "services"]
 			},
 			"Application Reject Payload": {
 				"type": "object",
@@ -591,9 +503,7 @@
 						"type": "string"
 					}
 				},
-				"required": [
-					"notes"
-				]
+				"required": ["notes"]
 			},
 			"Region": {
 				"type": "object",
@@ -619,13 +529,7 @@
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"id",
-					"name",
-					"parentRegionId",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "name", "parentRegionId", "createdAt", "updatedAt"]
 			},
 			"Category": {
 				"type": "object",
@@ -644,10 +548,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"ar",
-							"en"
-						]
+						"required": ["ar", "en"]
 					},
 					"createdAt": {
 						"type": "string",
@@ -665,12 +566,7 @@
 						}
 					}
 				},
-				"required": [
-					"id",
-					"name",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "name", "createdAt", "updatedAt"]
 			},
 			"Service": {
 				"type": "object",
@@ -689,10 +585,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"ar",
-							"en"
-						]
+						"required": ["ar", "en"]
 					},
 					"categoryId": {
 						"type": "string",
@@ -707,13 +600,7 @@
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"id",
-					"name",
-					"categoryId",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "name", "categoryId", "createdAt", "updatedAt"]
 			},
 			"Proposal": {
 				"type": "object",
@@ -734,16 +621,7 @@
 					"status": {
 						"type": "string",
 						"default": "WAITING_OFFERS",
-						"enum": [
-							"WAITING_OFFERS",
-							"OFFERS_RECEIVED",
-							"ACCEPTED",
-							"IN_PROGRESS",
-							"AWAITING_COMPLETION",
-							"INSPECTION_COMPLETED",
-							"COMPLETED",
-							"CANCELLED"
-						]
+						"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 					},
 					"dueDate": {
 						"type": "string",
@@ -783,20 +661,7 @@
 						}
 					}
 				},
-				"required": [
-					"id",
-					"title",
-					"description",
-					"address",
-					"status",
-					"dueDate",
-					"serviceId",
-					"customerId",
-					"createdAt",
-					"updatedAt",
-					"service",
-					"visits"
-				]
+				"required": ["id", "title", "description", "address", "status", "dueDate", "serviceId", "customerId", "createdAt", "updatedAt", "service", "visits"]
 			},
 			"Proposal Create Payload": {
 				"type": "object",
@@ -827,13 +692,7 @@
 						"format": "uuid"
 					}
 				},
-				"required": [
-					"title",
-					"description",
-					"address",
-					"dueDate",
-					"serviceId"
-				]
+				"required": ["title", "description", "address", "dueDate", "serviceId"]
 			},
 			"Accept Visit Payload": {
 				"type": "object",
@@ -843,9 +702,7 @@
 						"format": "uuid"
 					}
 				},
-				"required": [
-					"visitId"
-				]
+				"required": ["visitId"]
 			},
 			"Visit": {
 				"type": "object",
@@ -856,10 +713,7 @@
 					},
 					"type": {
 						"type": "string",
-						"enum": [
-							"INSPECTION",
-							"WORK"
-						]
+						"enum": ["INSPECTION", "WORK"]
 					},
 					"price": {
 						"type": "number",
@@ -873,12 +727,7 @@
 					"status": {
 						"type": "string",
 						"default": "PENDING",
-						"enum": [
-							"PENDING",
-							"ACCEPTED",
-							"DECLINED",
-							"COMPLETED"
-						]
+						"enum": ["PENDING", "ACCEPTED", "DECLINED", "COMPLETED"]
 					},
 					"completionCode": {
 						"type": "string",
@@ -901,11 +750,7 @@
 					},
 					"stage": {
 						"type": "string",
-						"enum": [
-							"INITIATED",
-							"AT_LOCATION",
-							"AWAITING_CODE"
-						],
+						"enum": ["INITIATED", "AT_LOCATION", "AWAITING_CODE"],
 						"nullable": true
 					},
 					"proposalId": {
@@ -945,16 +790,7 @@
 							},
 							"status": {
 								"type": "string",
-								"enum": [
-									"WAITING_OFFERS",
-									"OFFERS_RECEIVED",
-									"ACCEPTED",
-									"IN_PROGRESS",
-									"AWAITING_COMPLETION",
-									"INSPECTION_COMPLETED",
-									"COMPLETED",
-									"CANCELLED"
-								]
+								"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 							},
 							"customerId": {
 								"type": "string",
@@ -985,16 +821,10 @@
 												"type": "string"
 											}
 										},
-										"required": [
-											"ar",
-											"en"
-										]
+										"required": ["ar", "en"]
 									}
 								},
-								"required": [
-									"id",
-									"name"
-								]
+								"required": ["id", "name"]
 							}
 						}
 					},
@@ -1003,23 +833,7 @@
 						"nullable": true
 					}
 				},
-				"required": [
-					"id",
-					"type",
-					"price",
-					"currency",
-					"status",
-					"completionCode",
-					"message",
-					"estimatedDuration",
-					"scheduledFor",
-					"stage",
-					"proposalId",
-					"handymanId",
-					"convertedFromVisitId",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "type", "price", "currency", "status", "completionCode", "message", "estimatedDuration", "scheduledFor", "stage", "proposalId", "handymanId", "convertedFromVisitId", "createdAt", "updatedAt"]
 			},
 			"Visit Create Payload": {
 				"type": "object",
@@ -1030,10 +844,7 @@
 					},
 					"type": {
 						"type": "string",
-						"enum": [
-							"INSPECTION",
-							"WORK"
-						]
+						"enum": ["INSPECTION", "WORK"]
 					},
 					"price": {
 						"type": "number",
@@ -1058,25 +869,14 @@
 						"description": "Must be null when type is INSPECTION"
 					}
 				},
-				"required": [
-					"proposalId",
-					"type",
-					"price",
-					"currency",
-					"estimatedDuration",
-					"message",
-					"scheduledFor"
-				]
+				"required": ["proposalId", "type", "price", "currency", "estimatedDuration", "message", "scheduledFor"]
 			},
 			"Advance Stage Payload": {
 				"type": "object",
 				"properties": {
 					"stage": {
 						"type": "string",
-						"enum": [
-							"AT_LOCATION",
-							"AWAITING_CODE"
-						]
+						"enum": ["AT_LOCATION", "AWAITING_CODE"]
 					},
 					"latitude": {
 						"type": "number",
@@ -1087,9 +887,7 @@
 						"description": "Required when stage is AT_LOCATION"
 					}
 				},
-				"required": [
-					"stage"
-				]
+				"required": ["stage"]
 			},
 			"Verify Code Payload": {
 				"type": "object",
@@ -1100,9 +898,7 @@
 						"maxLength": 6
 					}
 				},
-				"required": [
-					"code"
-				]
+				"required": ["code"]
 			},
 			"Convert To Work Payload": {
 				"type": "object",
@@ -1117,10 +913,7 @@
 						"nullable": true
 					}
 				},
-				"required": [
-					"price",
-					"scheduledFor"
-				]
+				"required": ["price", "scheduledFor"]
 			},
 			"Review": {
 				"type": "object",
@@ -1147,22 +940,7 @@
 						"type": "array",
 						"items": {
 							"type": "string",
-							"enum": [
-								"PROFESSIONAL",
-								"PUNCTUAL",
-								"GOOD_VALUE",
-								"HIGH_QUALITY_WORK",
-								"FRIENDLY",
-								"CLEAN_WORKSPACE",
-								"COMMUNICATIVE",
-								"RESPECTFUL",
-								"EXPERT_ADVICE",
-								"EFFICIENT",
-								"LATE",
-								"POOR_COMMUNICATION",
-								"OVERPRICED",
-								"MESSY_WORKSPACE"
-							]
+							"enum": ["PROFESSIONAL", "PUNCTUAL", "GOOD_VALUE", "HIGH_QUALITY_WORK", "FRIENDLY", "CLEAN_WORKSPACE", "COMMUNICATIVE", "RESPECTFUL", "EXPERT_ADVICE", "EFFICIENT", "LATE", "POOR_COMMUNICATION", "OVERPRICED", "MESSY_WORKSPACE"]
 						}
 					},
 					"createdAt": {
@@ -1174,16 +952,7 @@
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"id",
-					"visitId",
-					"reviewerName",
-					"rating",
-					"comment",
-					"tags",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "visitId", "reviewerName", "rating", "comment", "tags", "createdAt", "updatedAt"]
 			},
 			"Review Create Payload": {
 				"type": "object",
@@ -1200,28 +969,11 @@
 						"type": "array",
 						"items": {
 							"type": "string",
-							"enum": [
-								"PROFESSIONAL",
-								"PUNCTUAL",
-								"GOOD_VALUE",
-								"HIGH_QUALITY_WORK",
-								"FRIENDLY",
-								"CLEAN_WORKSPACE",
-								"COMMUNICATIVE",
-								"RESPECTFUL",
-								"EXPERT_ADVICE",
-								"EFFICIENT",
-								"LATE",
-								"POOR_COMMUNICATION",
-								"OVERPRICED",
-								"MESSY_WORKSPACE"
-							]
+							"enum": ["PROFESSIONAL", "PUNCTUAL", "GOOD_VALUE", "HIGH_QUALITY_WORK", "FRIENDLY", "CLEAN_WORKSPACE", "COMMUNICATIVE", "RESPECTFUL", "EXPERT_ADVICE", "EFFICIENT", "LATE", "POOR_COMMUNICATION", "OVERPRICED", "MESSY_WORKSPACE"]
 						}
 					}
 				},
-				"required": [
-					"rating"
-				]
+				"required": ["rating"]
 			},
 			"ChatMessage": {
 				"type": "object",
@@ -1240,11 +992,7 @@
 					},
 					"type": {
 						"type": "string",
-						"enum": [
-							"TEXT",
-							"IMAGE",
-							"RESCHEDULE"
-						]
+						"enum": ["TEXT", "IMAGE", "RESCHEDULE"]
 					},
 					"text": {
 						"type": "string",
@@ -1262,11 +1010,7 @@
 					},
 					"rescheduleStatus": {
 						"type": "string",
-						"enum": [
-							"PENDING",
-							"ACCEPTED",
-							"DECLINED"
-						],
+						"enum": ["PENDING", "ACCEPTED", "DECLINED"],
 						"nullable": true
 					},
 					"createdAt": {
@@ -1289,33 +1033,13 @@
 							},
 							"role": {
 								"type": "string",
-								"enum": [
-									"ADMIN",
-									"HANDYMAN",
-									"CUSTOMER"
-								]
+								"enum": ["ADMIN", "HANDYMAN", "CUSTOMER"]
 							}
 						},
-						"required": [
-							"id",
-							"name",
-							"role"
-						]
+						"required": ["id", "name", "role"]
 					}
 				},
-				"required": [
-					"id",
-					"visitId",
-					"senderId",
-					"type",
-					"text",
-					"imageUrl",
-					"proposedDate",
-					"rescheduleStatus",
-					"createdAt",
-					"updatedAt",
-					"sender"
-				]
+				"required": ["id", "visitId", "senderId", "type", "text", "imageUrl", "proposedDate", "rescheduleStatus", "createdAt", "updatedAt", "sender"]
 			},
 			"Send Message Payload": {
 				"type": "object",
@@ -1323,10 +1047,7 @@
 				"properties": {
 					"type": {
 						"type": "string",
-						"enum": [
-							"TEXT",
-							"IMAGE"
-						]
+						"enum": ["TEXT", "IMAGE"]
 					},
 					"text": {
 						"type": "string",
@@ -1338,11 +1059,7 @@
 						"nullable": true
 					}
 				},
-				"required": [
-					"type",
-					"text",
-					"imageUrl"
-				]
+				"required": ["type", "text", "imageUrl"]
 			},
 			"Reschedule Payload": {
 				"type": "object",
@@ -1352,9 +1069,7 @@
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"proposedDate"
-				]
+				"required": ["proposedDate"]
 			},
 			"Financial Transaction Item": {
 				"type": "object",
@@ -1373,10 +1088,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"ar",
-							"en"
-						]
+						"required": ["ar", "en"]
 					},
 					"clientName": {
 						"type": "string"
@@ -1389,26 +1101,14 @@
 					},
 					"status": {
 						"type": "string",
-						"enum": [
-							"RECEIVED",
-							"PENDING",
-							"REFUNDED"
-						]
+						"enum": ["RECEIVED", "PENDING", "REFUNDED"]
 					},
 					"date": {
 						"type": "string",
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"id",
-					"serviceName",
-					"clientName",
-					"amount",
-					"currency",
-					"status",
-					"date"
-				]
+				"required": ["id", "serviceName", "clientName", "amount", "currency", "status", "date"]
 			},
 			"Financial Summary": {
 				"type": "object",
@@ -1449,11 +1149,7 @@
 									"type": "number"
 								}
 							},
-							"required": [
-								"id",
-								"monthLabel",
-								"amount"
-							]
+							"required": ["id", "monthLabel", "amount"]
 						}
 					},
 					"recentTransactions": {
@@ -1464,15 +1160,7 @@
 						}
 					}
 				},
-				"required": [
-					"totalEarned",
-					"thisMonth",
-					"pending",
-					"completedJobs",
-					"growthPercent",
-					"monthlyData",
-					"recentTransactions"
-				]
+				"required": ["totalEarned", "thisMonth", "pending", "completedJobs", "growthPercent", "monthlyData", "recentTransactions"]
 			},
 			"Financial Transactions": {
 				"type": "object",
@@ -1493,12 +1181,7 @@
 						}
 					}
 				},
-				"required": [
-					"total",
-					"page",
-					"limit",
-					"items"
-				]
+				"required": ["total", "page", "limit", "items"]
 			}
 		},
 		"responses": {
@@ -1521,10 +1204,7 @@
 									"type": "number"
 								}
 							},
-							"required": [
-								"data",
-								"count"
-							]
+							"required": ["data", "count"]
 						}
 					}
 				}
@@ -1548,14 +1228,10 @@
 											"type": "string"
 										}
 									},
-									"required": [
-										"message"
-									]
+									"required": ["message"]
 								}
 							},
-							"required": [
-								"error"
-							]
+							"required": ["error"]
 						}
 					}
 				}
@@ -1575,7 +1251,7 @@
 	},
 	"servers": [
 		{
-			"url": "http://api.mokhtasr.app:3000",
+			"url": "http://localhost:3000",
 			"description": "Development"
 		},
 		{

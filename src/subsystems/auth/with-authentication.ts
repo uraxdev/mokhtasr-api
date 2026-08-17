@@ -5,7 +5,7 @@ import { UserService } from '@/services/users';
 import { NextFunction, Request, Response } from 'express';
 
 const publicRequests: { method: string; path: RegExp }[] = [
-	{ method: 'POST', path: /^\/admin\/clear$/ },
+	{ method: 'POST', path: /^\/admins\/clear$/ },
 	{ method: 'POST', path: /^\/auth\/initiate$/ },
 	{ method: 'POST', path: /^\/auth\/verify$/ },
 	{ method: 'POST', path: /^\/auth\/refresh$/ },

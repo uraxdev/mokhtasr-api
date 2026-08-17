@@ -4,9 +4,7 @@
 			"summary": "Handyman",
 			"deprecated": false,
 			"description": "",
-			"tags": [
-				"Register"
-			],
+			"tags": ["Register"],
 			"parameters": [
 				{
 					"name": "userId",
@@ -57,10 +55,7 @@
 										"type": "string",
 										"format": "uuid"
 									},
-									"example": [
-										"13a1483c-0950-4666-bd1a-5ea00be0451d",
-										"7cfc85a0-5197-40c2-a112-d13cdda85b1c"
-									]
+									"example": ["13a1483c-0950-4666-bd1a-5ea00be0451d", "7cfc85a0-5197-40c2-a112-d13cdda85b1c"]
 								},
 								"services": {
 									"type": "array",
@@ -68,23 +63,10 @@
 										"type": "string",
 										"format": "uuid"
 									},
-									"example": [
-										"10c3cb25-7a22-4a76-8279-160b111254a9",
-										"514f1e88-8f64-4727-9490-a3867afe8fd7",
-										"0b93d2df-77bb-4e68-8e34-20c0056e078a"
-									]
+									"example": ["10c3cb25-7a22-4a76-8279-160b111254a9", "514f1e88-8f64-4727-9490-a3867afe8fd7", "0b93d2df-77bb-4e68-8e34-20c0056e078a"]
 								}
 							},
-							"required": [
-								"firstName",
-								"lastName",
-								"nationalIdFront",
-								"nationalIdBack",
-								"selfie",
-								"birthdate",
-								"regions",
-								"services"
-							]
+							"required": ["firstName", "lastName", "nationalIdFront", "nationalIdBack", "selfie", "birthdate", "regions", "services"]
 						}
 					}
 				},
@@ -105,10 +87,7 @@
 										"$ref": "../openapi.json#/components/schemas/Application"
 									}
 								},
-								"required": [
-									"handyman",
-									"application"
-								]
+								"required": ["handyman", "application"]
 							}
 						}
 					},
@@ -131,9 +110,7 @@
 			"summary": "Customer",
 			"deprecated": false,
 			"description": "",
-			"tags": [
-				"Register"
-			],
+			"tags": ["Register"],
 			"parameters": [
 				{
 					"name": "userId",
@@ -175,9 +152,7 @@
 			"summary": "Admin",
 			"deprecated": false,
 			"description": "",
-			"tags": [
-				"Register"
-			],
+			"tags": ["Register"],
 			"parameters": [
 				{
 					"name": "userId",

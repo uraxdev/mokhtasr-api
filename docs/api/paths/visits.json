@@ -4,9 +4,7 @@
 			"summary": "Create",
 			"deprecated": false,
 			"description": "Handymen only. Submits an inspection or work visit against a proposal that is still WAITING_OFFERS or OFFERS_RECEIVED.",
-			"tags": [
-				"Visits"
-			],
+			"tags": ["Visits"],
 			"parameters": [],
 			"requestBody": {
 				"content": {
@@ -46,9 +44,7 @@
 			"summary": "List",
 			"deprecated": false,
 			"description": "Handymen only. Lists the authenticated handyman's visits.",
-			"tags": [
-				"Visits"
-			],
+			"tags": ["Visits"],
 			"parameters": [],
 			"responses": {
 				"200": {
@@ -82,9 +78,7 @@
 			"summary": "Find",
 			"deprecated": false,
 			"description": "Handymen only.",
-			"tags": [
-				"Visits"
-			],
+			"tags": ["Visits"],
 			"parameters": [
 				{
 					"name": "id",
@@ -126,9 +120,7 @@
 			"summary": "Advance Stage",
 			"deprecated": false,
 			"description": "Handymen only. AT_LOCATION requires latitude/longitude within 200m of the proposal; AWAITING_CODE follows AT_LOCATION.",
-			"tags": [
-				"Visits"
-			],
+			"tags": ["Visits"],
 			"parameters": [
 				{
 					"name": "id",
@@ -181,9 +173,7 @@
 			"summary": "Verify Code",
 			"deprecated": false,
 			"description": "Customers only. Marks the visit COMPLETED and, for WORK visits (or any priced visit), creates a RECEIVED transaction.",
-			"tags": [
-				"Visits"
-			],
+			"tags": ["Visits"],
 			"parameters": [
 				{
 					"name": "id",
@@ -236,9 +226,7 @@
 			"summary": "Convert To Work",
 			"deprecated": false,
 			"description": "Handymen only. Converts a COMPLETED INSPECTION visit (whose proposal is INSPECTION_COMPLETED) into a new WORK visit.",
-			"tags": [
-				"Visits"
-			],
+			"tags": ["Visits"],
 			"parameters": [
 				{
 					"name": "id",
