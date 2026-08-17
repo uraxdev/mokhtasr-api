@@ -10,7 +10,8 @@ const config = {
 	title: 'Mokhtasr',
 	pageTitle: 'Mokhtasr API Reference',
 	theme: 'alternate',
-	defaultOpenFirstTag: false
+	defaultOpenFirstTag: false,
+	documentDownloadType: 'none'
 } as ApiReferenceConfiguration;
 
 export default (router: Router) => {

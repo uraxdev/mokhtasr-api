@@ -57,6 +57,9 @@ export class VisitService {
 			throw new Error(`Cannot submit a visit on a proposal with status ${proposal.status}`);
 		}
 
+		const existingVisit = await this.client.visit.findFirst({ where: { proposalId: payload.proposalId, handymanId } });
+		if (existingVisit) throw new Error('A visit already exists for this proposal from this handyman');
+
 		const data = {
 			type: payload.type,
 			price: payload.price,

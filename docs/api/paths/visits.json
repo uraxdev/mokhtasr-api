@@ -3,7 +3,7 @@
 		"post": {
 			"summary": "Create",
 			"deprecated": false,
-			"description": "Handymen only. Submits an inspection or work visit against a proposal that is still WAITING_OFFERS or OFFERS_RECEIVED.",
+			"description": "Handymen only. Submits an inspection or work visit against a proposal that is still WAITING_OFFERS or OFFERS_RECEIVED. A handyman may only submit one visit per proposal.",
 			"tags": ["Visits"],
 			"parameters": [],
 			"requestBody": {
@@ -30,6 +30,10 @@
 					"headers": {}
 				},
 				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				},
+				"409": {
 					"$ref": "../openapi.json#/components/responses/Error Response",
 					"description": ""
 				}
