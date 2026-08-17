@@ -10,5 +10,5 @@ export default (router: Router) => {
 		res.sendFile(specPath);
 	});
 
-	router.get('/', apiReference({ url: '/openapi.json' }));
+	router.get('/', apiReference({ url: '/openapi.json', pageTitle: 'Mokhtasr API Reference' }));
 };

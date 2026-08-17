@@ -6,7 +6,7 @@ export default (router: Router) => {
 	router.get('/jobs', async (req, res, next) => {
 		const handymanId = res.locals.entities.handyman;
 
-		if (!handymanId) return next(new Error('Forbidden: handymen only'));
+		if (!handymanId) throw new Error('Forbidden: handymen only');
 
 		const { service, dateRange, page, limit } = req.query as Record<string, string | undefined>;
 		const take = Math.min(Math.max(1, parseInt(limit ?? '20', 10) || 20), 100);

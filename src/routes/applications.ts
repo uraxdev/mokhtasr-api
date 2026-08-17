@@ -7,7 +7,7 @@ export default (router: Router) => {
 		const adminId = res.locals.entities.admin;
 
 		try {
-			if (!adminId) return next(new Error('Forbidden: admins only'));
+			if (!adminId) throw new Error('Forbidden: admins only');
 			return res.status(200).json(await new ApplicationService(client).list());
 		} catch (error) {
 			return next(error);
@@ -29,7 +29,7 @@ export default (router: Router) => {
 		const handymanId = res.locals.entities.handyman;
 
 		try {
-			if (!handymanId) return next(new Error('Forbidden: handymen only'));
+			if (!handymanId) throw new Error('Forbidden: handymen only');
 			return res.status(200).json(await new ApplicationService(client).status(id));
 		} catch (error) {
 			return next(error);
@@ -41,7 +41,7 @@ export default (router: Router) => {
 		const adminId = res.locals.entities.admin;
 
 		try {
-			if (!adminId) return next(new Error('Forbidden: admins only'));
+			if (!adminId) throw new Error('Forbidden: admins only');
 			return res.status(200).json(await new ApplicationService(client).accept(id));
 		} catch (error) {
 			return next(error);
@@ -54,7 +54,7 @@ export default (router: Router) => {
 		const adminId = res.locals.entities.admin;
 
 		try {
-			if (!adminId) return next(new Error('Forbidden: admins only'));
+			if (!adminId) throw new Error('Forbidden: admins only');
 			return res.status(200).json(await new ApplicationService(client).reject(id, payload));
 		} catch (error) {
 			return next(error);

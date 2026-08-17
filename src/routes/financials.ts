@@ -6,7 +6,7 @@ export default (router: Router) => {
 	router.get('/financials/summary', async (_req, res, next) => {
 		const handymanId = res.locals.entities.handyman;
 
-		if (!handymanId) return next(new Error('Forbidden: handymen only'));
+		if (!handymanId) throw new Error('Forbidden: handymen only');
 
 		try {
 			return res.status(200).json(await new FinancialService(client).summary(handymanId));
@@ -18,7 +18,7 @@ export default (router: Router) => {
 	router.get('/financials/transactions', async (req, res, next) => {
 		const handymanId = res.locals.entities.handyman;
 
-		if (!handymanId) return next(new Error('Forbidden: handymen only'));
+		if (!handymanId) throw new Error('Forbidden: handymen only');
 
 		const { page, limit } = req.query as Record<string, string | undefined>;
 
