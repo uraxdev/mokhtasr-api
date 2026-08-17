@@ -1,7 +1,7 @@
 {
 	"openapi": "3.0.1",
 	"info": {
-		"title": "Default module",
+		"title": "Mokhtasr",
 		"description": "",
 		"version": "1.0.0"
 	},
@@ -73,9 +73,7 @@
 				"summary": "Clear",
 				"deprecated": false,
 				"description": "Environments: development | staging — clears applications, chat messages, handymen, proposals, reviews, and visits",
-				"tags": [
-					"Admins"
-				],
+				"tags": ["Admins"],
 				"parameters": [],
 				"responses": {},
 				"security": []
@@ -86,9 +84,7 @@
 				"summary": "List",
 				"deprecated": false,
 				"description": "Admins only.",
-				"tags": [
-					"Applications"
-				],
+				"tags": ["Applications"],
 				"parameters": [],
 				"responses": {
 					"200": {
@@ -133,12 +129,7 @@
 											"status": {
 												"type": "string",
 												"default": "PENDING",
-												"enum": [
-													"PENDING",
-													"REJECTED",
-													"EXPIRED",
-													"ACCEPTED"
-												]
+												"enum": ["PENDING", "REJECTED", "EXPIRED", "ACCEPTED"]
 											},
 											"expiresAt": {
 												"type": "string",
@@ -169,10 +160,7 @@
 															"type": "string"
 														}
 													},
-													"required": [
-														"id",
-														"name"
-													]
+													"required": ["id", "name"]
 												}
 											},
 											"services": {
@@ -194,35 +182,14 @@
 																	"type": "string"
 																}
 															},
-															"required": [
-																"ar",
-																"en"
-															]
+															"required": ["ar", "en"]
 														}
 													},
-													"required": [
-														"id",
-														"name"
-													]
+													"required": ["id", "name"]
 												}
 											}
 										},
-										"required": [
-											"id",
-											"firstName",
-											"lastName",
-											"nationalIdFront",
-											"nationalIdBack",
-											"selfie",
-											"birthdate",
-											"handymanId",
-											"status",
-											"expiresAt",
-											"createdAt",
-											"updatedAt",
-											"regions",
-											"services"
-										]
+										"required": ["id", "firstName", "lastName", "nationalIdFront", "nationalIdBack", "selfie", "birthdate", "handymanId", "status", "expiresAt", "createdAt", "updatedAt", "regions", "services"]
 									}
 								}
 							}
@@ -248,14 +215,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -273,9 +236,7 @@
 				"summary": "Find",
 				"deprecated": false,
 				"description": "",
-				"tags": [
-					"Applications"
-				],
+				"tags": ["Applications"],
 				"parameters": [
 					{
 						"name": "id",
@@ -329,12 +290,7 @@
 										"status": {
 											"type": "string",
 											"default": "PENDING",
-											"enum": [
-												"PENDING",
-												"REJECTED",
-												"EXPIRED",
-												"ACCEPTED"
-											]
+											"enum": ["PENDING", "REJECTED", "EXPIRED", "ACCEPTED"]
 										},
 										"expiresAt": {
 											"type": "string",
@@ -365,10 +321,7 @@
 														"type": "string"
 													}
 												},
-												"required": [
-													"id",
-													"name"
-												]
+												"required": ["id", "name"]
 											}
 										},
 										"services": {
@@ -390,35 +343,14 @@
 																"type": "string"
 															}
 														},
-														"required": [
-															"ar",
-															"en"
-														]
+														"required": ["ar", "en"]
 													}
 												},
-												"required": [
-													"id",
-													"name"
-												]
+												"required": ["id", "name"]
 											}
 										}
 									},
-									"required": [
-										"id",
-										"firstName",
-										"lastName",
-										"nationalIdFront",
-										"nationalIdBack",
-										"selfie",
-										"birthdate",
-										"handymanId",
-										"status",
-										"expiresAt",
-										"createdAt",
-										"updatedAt",
-										"regions",
-										"services"
-									]
+									"required": ["id", "firstName", "lastName", "nationalIdFront", "nationalIdBack", "selfie", "birthdate", "handymanId", "status", "expiresAt", "createdAt", "updatedAt", "regions", "services"]
 								}
 							}
 						},
@@ -443,14 +375,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -468,9 +396,7 @@
 				"summary": "Status",
 				"deprecated": false,
 				"description": "Handymen only.",
-				"tags": [
-					"Applications"
-				],
+				"tags": ["Applications"],
 				"parameters": [
 					{
 						"name": "id",
@@ -494,17 +420,10 @@
 										"status": {
 											"type": "string",
 											"description": "status",
-											"enum": [
-												"PENDING",
-												"REJECTED",
-												"EXPIRED",
-												"ACCEPTED"
-											]
+											"enum": ["PENDING", "REJECTED", "EXPIRED", "ACCEPTED"]
 										}
 									},
-									"required": [
-										"status"
-									]
+									"required": ["status"]
 								}
 							}
 						},
@@ -529,14 +448,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -554,9 +469,7 @@
 				"summary": "Accept",
 				"deprecated": false,
 				"description": "Admins only.",
-				"tags": [
-					"Applications"
-				],
+				"tags": ["Applications"],
 				"parameters": [
 					{
 						"name": "id",
@@ -583,9 +496,7 @@
 											"format": "uuid"
 										}
 									},
-									"required": [
-										"id"
-									]
+									"required": ["id"]
 								}
 							}
 						},
@@ -610,14 +521,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -635,9 +542,7 @@
 				"summary": "Reject",
 				"deprecated": false,
 				"description": "Admins only.",
-				"tags": [
-					"Applications"
-				],
+				"tags": ["Applications"],
 				"parameters": [
 					{
 						"name": "id",
@@ -660,9 +565,7 @@
 										"type": "string"
 									}
 								},
-								"required": [
-									"notes"
-								]
+								"required": ["notes"]
 							},
 							"examples": {}
 						}
@@ -683,9 +586,7 @@
 											"format": "uuid"
 										}
 									},
-									"required": [
-										"id"
-									]
+									"required": ["id"]
 								}
 							}
 						},
@@ -710,14 +611,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -735,9 +632,7 @@
 				"summary": "Initiate",
 				"deprecated": false,
 				"description": "Public. Sends a WhatsApp OTP to the given phone number.",
-				"tags": [
-					"Auth"
-				],
+				"tags": ["Auth"],
 				"parameters": [],
 				"requestBody": {
 					"content": {
@@ -750,9 +645,7 @@
 										"pattern": "^\\+20(10|11|12|15)\\d{8}$"
 									}
 								},
-								"required": [
-									"phone"
-								]
+								"required": ["phone"]
 							},
 							"example": {
 								"phone": "+201558237511"
@@ -774,9 +667,7 @@
 											"format": "uuid"
 										}
 									},
-									"required": [
-										"verificationId"
-									]
+									"required": ["verificationId"]
 								}
 							}
 						},
@@ -801,14 +692,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -822,9 +709,7 @@
 				"summary": "Verify",
 				"deprecated": false,
 				"description": "Public. Verifies the OTP and returns access/refresh tokens.",
-				"tags": [
-					"Auth"
-				],
+				"tags": ["Auth"],
 				"parameters": [],
 				"requestBody": {
 					"content": {
@@ -847,19 +732,11 @@
 									},
 									"role": {
 										"type": "string",
-										"enum": [
-											"ADMIN",
-											"HANDYMAN",
-											"CUSTOMER"
-										],
+										"enum": ["ADMIN", "HANDYMAN", "CUSTOMER"],
 										"description": "Required only when verifying for a brand-new user; ignored for existing users"
 									}
 								},
-								"required": [
-									"phone",
-									"verificationId",
-									"otp"
-								]
+								"required": ["phone", "verificationId", "otp"]
 							},
 							"example": {
 								"verificationId": "1db06c9a-b7db-4b8d-b87f-fb34853c51b2",
@@ -889,11 +766,7 @@
 											"$ref": "#/components/schemas/User"
 										}
 									},
-									"required": [
-										"access",
-										"refresh",
-										"user"
-									]
+									"required": ["access", "refresh", "user"]
 								}
 							}
 						},
@@ -918,14 +791,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -939,9 +808,7 @@
 				"summary": "Refresh",
 				"deprecated": false,
 				"description": "Public.",
-				"tags": [
-					"Auth"
-				],
+				"tags": ["Auth"],
 				"parameters": [],
 				"requestBody": {
 					"content": {
@@ -953,9 +820,7 @@
 										"type": "string"
 									}
 								},
-								"required": [
-									"refresh"
-								]
+								"required": ["refresh"]
 							},
 							"examples": {}
 						}
@@ -974,9 +839,7 @@
 											"type": "string"
 										}
 									},
-									"required": [
-										"access"
-									]
+									"required": ["access"]
 								}
 							}
 						}
@@ -1000,14 +863,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -1021,9 +880,7 @@
 				"summary": "List",
 				"deprecated": false,
 				"description": "",
-				"tags": [
-					"Categories"
-				],
+				"tags": ["Categories"],
 				"parameters": [
 					{
 						"name": "name",
@@ -1059,10 +916,7 @@
 														"type": "string"
 													}
 												},
-												"required": [
-													"ar",
-													"en"
-												]
+												"required": ["ar", "en"]
 											},
 											"createdAt": {
 												"type": "string",
@@ -1080,12 +934,7 @@
 												}
 											}
 										},
-										"required": [
-											"id",
-											"name",
-											"createdAt",
-											"updatedAt"
-										]
+										"required": ["id", "name", "createdAt", "updatedAt"]
 									}
 								}
 							}
@@ -1111,14 +960,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -1136,9 +981,7 @@
 				"summary": "Find",
 				"deprecated": false,
 				"description": "",
-				"tags": [
-					"Categories"
-				],
+				"tags": ["Categories"],
 				"parameters": [
 					{
 						"name": "id",
@@ -1173,10 +1016,7 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"ar",
-												"en"
-											]
+											"required": ["ar", "en"]
 										},
 										"createdAt": {
 											"type": "string",
@@ -1194,12 +1034,7 @@
 											}
 										}
 									},
-									"required": [
-										"id",
-										"name",
-										"createdAt",
-										"updatedAt"
-									]
+									"required": ["id", "name", "createdAt", "updatedAt"]
 								}
 							}
 						},
@@ -1224,14 +1059,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -1249,9 +1080,7 @@
 				"summary": "Summary",
 				"deprecated": false,
 				"description": "Handymen only.",
-				"tags": [
-					"Financials"
-				],
+				"tags": ["Financials"],
 				"parameters": [],
 				"responses": {
 					"200": {
@@ -1297,11 +1126,7 @@
 														"type": "number"
 													}
 												},
-												"required": [
-													"id",
-													"monthLabel",
-													"amount"
-												]
+												"required": ["id", "monthLabel", "amount"]
 											}
 										},
 										"recentTransactions": {
@@ -1312,15 +1137,7 @@
 											}
 										}
 									},
-									"required": [
-										"totalEarned",
-										"thisMonth",
-										"pending",
-										"completedJobs",
-										"growthPercent",
-										"monthlyData",
-										"recentTransactions"
-									]
+									"required": ["totalEarned", "thisMonth", "pending", "completedJobs", "growthPercent", "monthlyData", "recentTransactions"]
 								}
 							}
 						},
@@ -1345,14 +1162,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -1370,9 +1183,7 @@
 				"summary": "Transactions",
 				"deprecated": false,
 				"description": "Handymen only.",
-				"tags": [
-					"Financials"
-				],
+				"tags": ["Financials"],
 				"parameters": [
 					{
 						"name": "page",
@@ -1417,12 +1228,7 @@
 											}
 										}
 									},
-									"required": [
-										"total",
-										"page",
-										"limit",
-										"items"
-									]
+									"required": ["total", "page", "limit", "items"]
 								}
 							}
 						},
@@ -1447,14 +1253,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -1472,9 +1274,7 @@
 				"summary": "Update",
 				"deprecated": false,
 				"description": "Handymen only.",
-				"tags": [
-					"Handymen"
-				],
+				"tags": ["Handymen"],
 				"parameters": [],
 				"requestBody": {
 					"content": {
@@ -1494,15 +1294,7 @@
 										"type": "array",
 										"items": {
 											"type": "string",
-											"enum": [
-												"SUNDAY",
-												"MONDAY",
-												"TUESDAY",
-												"WEDNESDAY",
-												"THURSDAY",
-												"FRIDAY",
-												"SATURDAY"
-											]
+											"enum": ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
 										},
 										"description": "An empty array resets to the default (all seven days)"
 									}
@@ -1529,26 +1321,13 @@
 											"type": "array",
 											"items": {
 												"type": "string",
-												"enum": [
-													"SUNDAY",
-													"MONDAY",
-													"TUESDAY",
-													"WEDNESDAY",
-													"THURSDAY",
-													"FRIDAY",
-													"SATURDAY"
-												]
+												"enum": ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
 											}
 										},
 										"status": {
 											"type": "string",
 											"default": "PENDING",
-											"enum": [
-												"PENDING",
-												"REJECTED",
-												"BLOCKED",
-												"ACCEPTED"
-											]
+											"enum": ["PENDING", "REJECTED", "BLOCKED", "ACCEPTED"]
 										},
 										"birthdate": {
 											"type": "string",
@@ -1572,15 +1351,7 @@
 											"format": "date-time"
 										}
 									},
-									"required": [
-										"id",
-										"workDays",
-										"status",
-										"birthdate",
-										"userId",
-										"createdAt",
-										"updatedAt"
-									]
+									"required": ["id", "workDays", "status", "birthdate", "userId", "createdAt", "updatedAt"]
 								}
 							}
 						},
@@ -1605,14 +1376,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -1630,9 +1397,7 @@
 				"summary": "Block",
 				"deprecated": false,
 				"description": "Admins only. Rejects a pending application (if any) and declines all of the handyman's visits.",
-				"tags": [
-					"Handymen"
-				],
+				"tags": ["Handymen"],
 				"parameters": [
 					{
 						"name": "id",
@@ -1662,26 +1427,13 @@
 											"type": "array",
 											"items": {
 												"type": "string",
-												"enum": [
-													"SUNDAY",
-													"MONDAY",
-													"TUESDAY",
-													"WEDNESDAY",
-													"THURSDAY",
-													"FRIDAY",
-													"SATURDAY"
-												]
+												"enum": ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
 											}
 										},
 										"status": {
 											"type": "string",
 											"default": "PENDING",
-											"enum": [
-												"PENDING",
-												"REJECTED",
-												"BLOCKED",
-												"ACCEPTED"
-											]
+											"enum": ["PENDING", "REJECTED", "BLOCKED", "ACCEPTED"]
 										},
 										"birthdate": {
 											"type": "string",
@@ -1705,15 +1457,7 @@
 											"format": "date-time"
 										}
 									},
-									"required": [
-										"id",
-										"workDays",
-										"status",
-										"birthdate",
-										"userId",
-										"createdAt",
-										"updatedAt"
-									]
+									"required": ["id", "workDays", "status", "birthdate", "userId", "createdAt", "updatedAt"]
 								}
 							}
 						},
@@ -1738,14 +1482,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -1763,9 +1503,7 @@
 				"summary": "Reviews",
 				"deprecated": false,
 				"description": "",
-				"tags": [
-					"Reviews"
-				],
+				"tags": ["Reviews"],
 				"parameters": [
 					{
 						"name": "id",
@@ -1846,24 +1584,11 @@
 														"format": "date-time"
 													}
 												},
-												"required": [
-													"id",
-													"visitId",
-													"reviewerName",
-													"rating",
-													"comment",
-													"tags",
-													"createdAt",
-													"updatedAt"
-												]
+												"required": ["id", "visitId", "reviewerName", "rating", "comment", "tags", "createdAt", "updatedAt"]
 											}
 										}
 									},
-									"required": [
-										"average",
-										"count",
-										"reviews"
-									]
+									"required": ["average", "count", "reviews"]
 								}
 							}
 						},
@@ -1888,14 +1613,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -1913,9 +1634,7 @@
 				"summary": "List",
 				"deprecated": false,
 				"description": "Handymen only. Browse feed of proposals open for offers.",
-				"tags": [
-					"Jobs"
-				],
+				"tags": ["Jobs"],
 				"parameters": [
 					{
 						"name": "service",
@@ -1934,11 +1653,7 @@
 						"required": false,
 						"schema": {
 							"type": "string",
-							"enum": [
-								"TODAY",
-								"TOMORROW",
-								"THIS_WEEK"
-							]
+							"enum": ["TODAY", "TOMORROW", "THIS_WEEK"]
 						}
 					},
 					{
@@ -1985,10 +1700,7 @@
 														"type": "string"
 													}
 												},
-												"required": [
-													"ar",
-													"en"
-												]
+												"required": ["ar", "en"]
 											},
 											"title": {
 												"type": "string"
@@ -2043,29 +1755,17 @@
 																			"nullable": true
 																		}
 																	},
-																	"required": [
-																		"id",
-																		"name",
-																		"avatar"
-																	]
+																	"required": ["id", "name", "avatar"]
 																}
 															},
-															"required": [
-																"id",
-																"user"
-															]
+															"required": ["id", "user"]
 														},
 														"createdAt": {
 															"type": "string",
 															"format": "date-time"
 														}
 													},
-													"required": [
-														"id",
-														"price",
-														"handyman",
-														"createdAt"
-													]
+													"required": ["id", "price", "handyman", "createdAt"]
 												}
 											},
 											"submittedAt": {
@@ -2073,17 +1773,7 @@
 												"format": "date-time"
 											}
 										},
-										"required": [
-											"id",
-											"service",
-											"title",
-											"description",
-											"address",
-											"distanceKm",
-											"dueDate",
-											"visits",
-											"submittedAt"
-										]
+										"required": ["id", "service", "title", "description", "address", "distanceKm", "dueDate", "visits", "submittedAt"]
 									}
 								}
 							}
@@ -2109,14 +1799,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -2135,9 +1821,7 @@
 				"deprecated": false,
 				"description": "Customers only.",
 				"operationId": "createProposal",
-				"tags": [
-					"Proposals"
-				],
+				"tags": ["Proposals"],
 				"parameters": [],
 				"requestBody": {
 					"content": {
@@ -2171,13 +1855,7 @@
 										"format": "uuid"
 									}
 								},
-								"required": [
-									"title",
-									"description",
-									"address",
-									"dueDate",
-									"serviceId"
-								]
+								"required": ["title", "description", "address", "dueDate", "serviceId"]
 							},
 							"examples": {}
 						}
@@ -2208,16 +1886,7 @@
 										"status": {
 											"type": "string",
 											"default": "WAITING_OFFERS",
-											"enum": [
-												"WAITING_OFFERS",
-												"OFFERS_RECEIVED",
-												"ACCEPTED",
-												"IN_PROGRESS",
-												"AWAITING_COMPLETION",
-												"INSPECTION_COMPLETED",
-												"COMPLETED",
-												"CANCELLED"
-											]
+											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 										},
 										"dueDate": {
 											"type": "string",
@@ -2257,20 +1926,7 @@
 											}
 										}
 									},
-									"required": [
-										"id",
-										"title",
-										"description",
-										"address",
-										"status",
-										"dueDate",
-										"serviceId",
-										"customerId",
-										"createdAt",
-										"updatedAt",
-										"service",
-										"visits"
-									]
+									"required": ["id", "title", "description", "address", "status", "dueDate", "serviceId", "customerId", "createdAt", "updatedAt", "service", "visits"]
 								}
 							}
 						},
@@ -2295,14 +1951,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -2319,9 +1971,7 @@
 				"deprecated": false,
 				"description": "Customers see their own proposals; other roles receive every proposal.",
 				"operationId": "listProposals",
-				"tags": [
-					"Proposals"
-				],
+				"tags": ["Proposals"],
 				"parameters": [],
 				"responses": {
 					"200": {
@@ -2349,16 +1999,7 @@
 											"status": {
 												"type": "string",
 												"default": "WAITING_OFFERS",
-												"enum": [
-													"WAITING_OFFERS",
-													"OFFERS_RECEIVED",
-													"ACCEPTED",
-													"IN_PROGRESS",
-													"AWAITING_COMPLETION",
-													"INSPECTION_COMPLETED",
-													"COMPLETED",
-													"CANCELLED"
-												]
+												"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 											},
 											"dueDate": {
 												"type": "string",
@@ -2398,20 +2039,7 @@
 												}
 											}
 										},
-										"required": [
-											"id",
-											"title",
-											"description",
-											"address",
-											"status",
-											"dueDate",
-											"serviceId",
-											"customerId",
-											"createdAt",
-											"updatedAt",
-											"service",
-											"visits"
-										]
+										"required": ["id", "title", "description", "address", "status", "dueDate", "serviceId", "customerId", "createdAt", "updatedAt", "service", "visits"]
 									}
 								}
 							}
@@ -2437,14 +2065,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -2463,9 +2087,7 @@
 				"deprecated": false,
 				"description": "Customers only; must own the proposal.",
 				"operationId": "getProposal",
-				"tags": [
-					"Proposals"
-				],
+				"tags": ["Proposals"],
 				"parameters": [
 					{
 						"name": "id",
@@ -2502,16 +2124,7 @@
 										"status": {
 											"type": "string",
 											"default": "WAITING_OFFERS",
-											"enum": [
-												"WAITING_OFFERS",
-												"OFFERS_RECEIVED",
-												"ACCEPTED",
-												"IN_PROGRESS",
-												"AWAITING_COMPLETION",
-												"INSPECTION_COMPLETED",
-												"COMPLETED",
-												"CANCELLED"
-											]
+											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 										},
 										"dueDate": {
 											"type": "string",
@@ -2551,20 +2164,7 @@
 											}
 										}
 									},
-									"required": [
-										"id",
-										"title",
-										"description",
-										"address",
-										"status",
-										"dueDate",
-										"serviceId",
-										"customerId",
-										"createdAt",
-										"updatedAt",
-										"service",
-										"visits"
-									]
+									"required": ["id", "title", "description", "address", "status", "dueDate", "serviceId", "customerId", "createdAt", "updatedAt", "service", "visits"]
 								}
 							}
 						},
@@ -2589,14 +2189,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -2615,9 +2211,7 @@
 				"deprecated": false,
 				"description": "Customers only. Accepts the chosen visit and declines all other pending visits on the proposal.",
 				"operationId": "acceptVisit",
-				"tags": [
-					"Proposals"
-				],
+				"tags": ["Proposals"],
 				"parameters": [
 					{
 						"name": "id",
@@ -2641,9 +2235,7 @@
 										"format": "uuid"
 									}
 								},
-								"required": [
-									"visitId"
-								]
+								"required": ["visitId"]
 							},
 							"examples": {}
 						}
@@ -2674,16 +2266,7 @@
 										"status": {
 											"type": "string",
 											"default": "WAITING_OFFERS",
-											"enum": [
-												"WAITING_OFFERS",
-												"OFFERS_RECEIVED",
-												"ACCEPTED",
-												"IN_PROGRESS",
-												"AWAITING_COMPLETION",
-												"INSPECTION_COMPLETED",
-												"COMPLETED",
-												"CANCELLED"
-											]
+											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 										},
 										"dueDate": {
 											"type": "string",
@@ -2723,20 +2306,7 @@
 											}
 										}
 									},
-									"required": [
-										"id",
-										"title",
-										"description",
-										"address",
-										"status",
-										"dueDate",
-										"serviceId",
-										"customerId",
-										"createdAt",
-										"updatedAt",
-										"service",
-										"visits"
-									]
+									"required": ["id", "title", "description", "address", "status", "dueDate", "serviceId", "customerId", "createdAt", "updatedAt", "service", "visits"]
 								}
 							}
 						},
@@ -2761,14 +2331,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -2787,9 +2353,7 @@
 				"deprecated": false,
 				"description": "Customers only.",
 				"operationId": "cancelProposal",
-				"tags": [
-					"Proposals"
-				],
+				"tags": ["Proposals"],
 				"parameters": [
 					{
 						"name": "id",
@@ -2826,16 +2390,7 @@
 										"status": {
 											"type": "string",
 											"default": "WAITING_OFFERS",
-											"enum": [
-												"WAITING_OFFERS",
-												"OFFERS_RECEIVED",
-												"ACCEPTED",
-												"IN_PROGRESS",
-												"AWAITING_COMPLETION",
-												"INSPECTION_COMPLETED",
-												"COMPLETED",
-												"CANCELLED"
-											]
+											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 										},
 										"dueDate": {
 											"type": "string",
@@ -2875,20 +2430,7 @@
 											}
 										}
 									},
-									"required": [
-										"id",
-										"title",
-										"description",
-										"address",
-										"status",
-										"dueDate",
-										"serviceId",
-										"customerId",
-										"createdAt",
-										"updatedAt",
-										"service",
-										"visits"
-									]
+									"required": ["id", "title", "description", "address", "status", "dueDate", "serviceId", "customerId", "createdAt", "updatedAt", "service", "visits"]
 								}
 							}
 						},
@@ -2913,14 +2455,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -2939,9 +2477,7 @@
 				"deprecated": false,
 				"description": "Customers only. Only valid when the proposal status is INSPECTION_COMPLETED; moves it back to WAITING_OFFERS.",
 				"operationId": "reopenProposal",
-				"tags": [
-					"Proposals"
-				],
+				"tags": ["Proposals"],
 				"parameters": [
 					{
 						"name": "id",
@@ -2978,16 +2514,7 @@
 										"status": {
 											"type": "string",
 											"default": "WAITING_OFFERS",
-											"enum": [
-												"WAITING_OFFERS",
-												"OFFERS_RECEIVED",
-												"ACCEPTED",
-												"IN_PROGRESS",
-												"AWAITING_COMPLETION",
-												"INSPECTION_COMPLETED",
-												"COMPLETED",
-												"CANCELLED"
-											]
+											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 										},
 										"dueDate": {
 											"type": "string",
@@ -3027,20 +2554,7 @@
 											}
 										}
 									},
-									"required": [
-										"id",
-										"title",
-										"description",
-										"address",
-										"status",
-										"dueDate",
-										"serviceId",
-										"customerId",
-										"createdAt",
-										"updatedAt",
-										"service",
-										"visits"
-									]
+									"required": ["id", "title", "description", "address", "status", "dueDate", "serviceId", "customerId", "createdAt", "updatedAt", "service", "visits"]
 								}
 							}
 						},
@@ -3065,14 +2579,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -3090,9 +2600,7 @@
 				"summary": "List",
 				"deprecated": false,
 				"description": "",
-				"tags": [
-					"Regions"
-				],
+				"tags": ["Regions"],
 				"parameters": [
 					{
 						"name": "name",
@@ -3135,13 +2643,7 @@
 												"format": "date-time"
 											}
 										},
-										"required": [
-											"id",
-											"name",
-											"parentRegionId",
-											"createdAt",
-											"updatedAt"
-										]
+										"required": ["id", "name", "parentRegionId", "createdAt", "updatedAt"]
 									}
 								}
 							}
@@ -3167,14 +2669,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -3192,9 +2690,7 @@
 				"summary": "Find",
 				"deprecated": false,
 				"description": "",
-				"tags": [
-					"Regions"
-				],
+				"tags": ["Regions"],
 				"parameters": [
 					{
 						"name": "id",
@@ -3238,13 +2734,7 @@
 													"format": "date-time"
 												}
 											},
-											"required": [
-												"id",
-												"name",
-												"parentRegionId",
-												"createdAt",
-												"updatedAt"
-											]
+											"required": ["id", "name", "parentRegionId", "createdAt", "updatedAt"]
 										},
 										{
 											"type": "object",
@@ -3275,13 +2765,7 @@
 																"format": "date-time"
 															}
 														},
-														"required": [
-															"id",
-															"name",
-															"parentRegionId",
-															"createdAt",
-															"updatedAt"
-														]
+														"required": ["id", "name", "parentRegionId", "createdAt", "updatedAt"]
 													}
 												},
 												"parentRegion": {
@@ -3308,13 +2792,7 @@
 															"format": "date-time"
 														}
 													},
-													"required": [
-														"id",
-														"name",
-														"parentRegionId",
-														"createdAt",
-														"updatedAt"
-													]
+													"required": ["id", "name", "parentRegionId", "createdAt", "updatedAt"]
 												}
 											}
 										}
@@ -3343,14 +2821,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -3368,9 +2842,7 @@
 				"summary": "Handyman",
 				"deprecated": false,
 				"description": "",
-				"tags": [
-					"Register"
-				],
+				"tags": ["Register"],
 				"parameters": [
 					{
 						"name": "userId",
@@ -3421,10 +2893,7 @@
 											"type": "string",
 											"format": "uuid"
 										},
-										"example": [
-											"13a1483c-0950-4666-bd1a-5ea00be0451d",
-											"7cfc85a0-5197-40c2-a112-d13cdda85b1c"
-										]
+										"example": ["13a1483c-0950-4666-bd1a-5ea00be0451d", "7cfc85a0-5197-40c2-a112-d13cdda85b1c"]
 									},
 									"services": {
 										"type": "array",
@@ -3432,23 +2901,10 @@
 											"type": "string",
 											"format": "uuid"
 										},
-										"example": [
-											"10c3cb25-7a22-4a76-8279-160b111254a9",
-											"514f1e88-8f64-4727-9490-a3867afe8fd7",
-											"0b93d2df-77bb-4e68-8e34-20c0056e078a"
-										]
+										"example": ["10c3cb25-7a22-4a76-8279-160b111254a9", "514f1e88-8f64-4727-9490-a3867afe8fd7", "0b93d2df-77bb-4e68-8e34-20c0056e078a"]
 									}
 								},
-								"required": [
-									"firstName",
-									"lastName",
-									"nationalIdFront",
-									"nationalIdBack",
-									"selfie",
-									"birthdate",
-									"regions",
-									"services"
-								]
+								"required": ["firstName", "lastName", "nationalIdFront", "nationalIdBack", "selfie", "birthdate", "regions", "services"]
 							}
 						}
 					},
@@ -3473,26 +2929,13 @@
 													"type": "array",
 													"items": {
 														"type": "string",
-														"enum": [
-															"SUNDAY",
-															"MONDAY",
-															"TUESDAY",
-															"WEDNESDAY",
-															"THURSDAY",
-															"FRIDAY",
-															"SATURDAY"
-														]
+														"enum": ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
 													}
 												},
 												"status": {
 													"type": "string",
 													"default": "PENDING",
-													"enum": [
-														"PENDING",
-														"REJECTED",
-														"BLOCKED",
-														"ACCEPTED"
-													]
+													"enum": ["PENDING", "REJECTED", "BLOCKED", "ACCEPTED"]
 												},
 												"birthdate": {
 													"type": "string",
@@ -3516,15 +2959,7 @@
 													"format": "date-time"
 												}
 											},
-											"required": [
-												"id",
-												"workDays",
-												"status",
-												"birthdate",
-												"userId",
-												"createdAt",
-												"updatedAt"
-											]
+											"required": ["id", "workDays", "status", "birthdate", "userId", "createdAt", "updatedAt"]
 										},
 										"application": {
 											"type": "object",
@@ -3562,12 +2997,7 @@
 												"status": {
 													"type": "string",
 													"default": "PENDING",
-													"enum": [
-														"PENDING",
-														"REJECTED",
-														"EXPIRED",
-														"ACCEPTED"
-													]
+													"enum": ["PENDING", "REJECTED", "EXPIRED", "ACCEPTED"]
 												},
 												"expiresAt": {
 													"type": "string",
@@ -3598,10 +3028,7 @@
 																"type": "string"
 															}
 														},
-														"required": [
-															"id",
-															"name"
-														]
+														"required": ["id", "name"]
 													}
 												},
 												"services": {
@@ -3623,41 +3050,17 @@
 																		"type": "string"
 																	}
 																},
-																"required": [
-																	"ar",
-																	"en"
-																]
+																"required": ["ar", "en"]
 															}
 														},
-														"required": [
-															"id",
-															"name"
-														]
+														"required": ["id", "name"]
 													}
 												}
 											},
-											"required": [
-												"id",
-												"firstName",
-												"lastName",
-												"nationalIdFront",
-												"nationalIdBack",
-												"selfie",
-												"birthdate",
-												"handymanId",
-												"status",
-												"expiresAt",
-												"createdAt",
-												"updatedAt",
-												"regions",
-												"services"
-											]
+											"required": ["id", "firstName", "lastName", "nationalIdFront", "nationalIdBack", "selfie", "birthdate", "handymanId", "status", "expiresAt", "createdAt", "updatedAt", "regions", "services"]
 										}
 									},
-									"required": [
-										"handyman",
-										"application"
-									]
+									"required": ["handyman", "application"]
 								}
 							}
 						},
@@ -3682,14 +3085,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -3707,9 +3106,7 @@
 				"summary": "Customer",
 				"deprecated": false,
 				"description": "",
-				"tags": [
-					"Register"
-				],
+				"tags": ["Register"],
 				"parameters": [
 					{
 						"name": "userId",
@@ -3747,12 +3144,7 @@
 											"format": "date-time"
 										}
 									},
-									"required": [
-										"id",
-										"userId",
-										"createdAt",
-										"updatedAt"
-									]
+									"required": ["id", "userId", "createdAt", "updatedAt"]
 								}
 							}
 						},
@@ -3777,14 +3169,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -3802,9 +3190,7 @@
 				"summary": "Admin",
 				"deprecated": false,
 				"description": "",
-				"tags": [
-					"Register"
-				],
+				"tags": ["Register"],
 				"parameters": [
 					{
 						"name": "userId",
@@ -3842,12 +3228,7 @@
 											"format": "date-time"
 										}
 									},
-									"required": [
-										"id",
-										"userId",
-										"createdAt",
-										"updatedAt"
-									]
+									"required": ["id", "userId", "createdAt", "updatedAt"]
 								}
 							}
 						},
@@ -3872,14 +3253,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -3897,9 +3274,7 @@
 				"summary": "List",
 				"deprecated": false,
 				"description": "",
-				"tags": [
-					"Services"
-				],
+				"tags": ["Services"],
 				"parameters": [
 					{
 						"name": "name",
@@ -3945,10 +3320,7 @@
 														"type": "string"
 													}
 												},
-												"required": [
-													"ar",
-													"en"
-												]
+												"required": ["ar", "en"]
 											},
 											"categoryId": {
 												"type": "string",
@@ -3963,13 +3335,7 @@
 												"format": "date-time"
 											}
 										},
-										"required": [
-											"id",
-											"name",
-											"categoryId",
-											"createdAt",
-											"updatedAt"
-										]
+										"required": ["id", "name", "categoryId", "createdAt", "updatedAt"]
 									}
 								}
 							}
@@ -3995,14 +3361,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -4020,9 +3382,7 @@
 				"summary": "Find",
 				"deprecated": false,
 				"description": "",
-				"tags": [
-					"Services"
-				],
+				"tags": ["Services"],
 				"parameters": [
 					{
 						"name": "id",
@@ -4057,10 +3417,7 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"ar",
-												"en"
-											]
+											"required": ["ar", "en"]
 										},
 										"categoryId": {
 											"type": "string",
@@ -4075,13 +3432,7 @@
 											"format": "date-time"
 										}
 									},
-									"required": [
-										"id",
-										"name",
-										"categoryId",
-										"createdAt",
-										"updatedAt"
-									]
+									"required": ["id", "name", "categoryId", "createdAt", "updatedAt"]
 								}
 							}
 						},
@@ -4106,14 +3457,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -4131,9 +3478,7 @@
 				"summary": "Find",
 				"deprecated": false,
 				"description": "Returns the authenticated user.",
-				"tags": [
-					"Users"
-				],
+				"tags": ["Users"],
 				"parameters": [],
 				"responses": {
 					"200": {
@@ -4156,11 +3501,7 @@
 										},
 										"role": {
 											"type": "string",
-											"enum": [
-												"ADMIN",
-												"HANDYMAN",
-												"CUSTOMER"
-											]
+											"enum": ["ADMIN", "HANDYMAN", "CUSTOMER"]
 										},
 										"avatar": {
 											"type": "string",
@@ -4188,14 +3529,7 @@
 											"nullable": true
 										}
 									},
-									"required": [
-										"id",
-										"name",
-										"phone",
-										"role",
-										"createdAt",
-										"updatedAt"
-									]
+									"required": ["id", "name", "phone", "role", "createdAt", "updatedAt"]
 								}
 							}
 						},
@@ -4220,14 +3554,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -4243,9 +3573,7 @@
 				"summary": "Update",
 				"deprecated": false,
 				"description": "Updates the authenticated user.",
-				"tags": [
-					"Users"
-				],
+				"tags": ["Users"],
 				"parameters": [],
 				"requestBody": {
 					"content": {
@@ -4287,11 +3615,7 @@
 										},
 										"role": {
 											"type": "string",
-											"enum": [
-												"ADMIN",
-												"HANDYMAN",
-												"CUSTOMER"
-											]
+											"enum": ["ADMIN", "HANDYMAN", "CUSTOMER"]
 										},
 										"avatar": {
 											"type": "string",
@@ -4319,14 +3643,7 @@
 											"nullable": true
 										}
 									},
-									"required": [
-										"id",
-										"name",
-										"phone",
-										"role",
-										"createdAt",
-										"updatedAt"
-									]
+									"required": ["id", "name", "phone", "role", "createdAt", "updatedAt"]
 								}
 							}
 						},
@@ -4351,14 +3668,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -4374,9 +3687,7 @@
 				"summary": "Delete",
 				"deprecated": false,
 				"description": "Deletes the authenticated user.",
-				"tags": [
-					"Users"
-				],
+				"tags": ["Users"],
 				"parameters": [],
 				"responses": {
 					"200": {
@@ -4391,9 +3702,7 @@
 											"format": "uuid"
 										}
 									},
-									"required": [
-										"id"
-									]
+									"required": ["id"]
 								}
 							}
 						},
@@ -4418,14 +3727,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -4443,9 +3748,7 @@
 				"summary": "Create",
 				"deprecated": false,
 				"description": "Handymen only. Submits an inspection or work visit against a proposal that is still WAITING_OFFERS or OFFERS_RECEIVED.",
-				"tags": [
-					"Visits"
-				],
+				"tags": ["Visits"],
 				"parameters": [],
 				"requestBody": {
 					"content": {
@@ -4459,10 +3762,7 @@
 									},
 									"type": {
 										"type": "string",
-										"enum": [
-											"INSPECTION",
-											"WORK"
-										]
+										"enum": ["INSPECTION", "WORK"]
 									},
 									"price": {
 										"type": "number",
@@ -4487,15 +3787,7 @@
 										"description": "Must be null when type is INSPECTION"
 									}
 								},
-								"required": [
-									"proposalId",
-									"type",
-									"price",
-									"currency",
-									"estimatedDuration",
-									"message",
-									"scheduledFor"
-								]
+								"required": ["proposalId", "type", "price", "currency", "estimatedDuration", "message", "scheduledFor"]
 							},
 							"examples": {}
 						}
@@ -4516,10 +3808,7 @@
 										},
 										"type": {
 											"type": "string",
-											"enum": [
-												"INSPECTION",
-												"WORK"
-											]
+											"enum": ["INSPECTION", "WORK"]
 										},
 										"price": {
 											"type": "number",
@@ -4533,12 +3822,7 @@
 										"status": {
 											"type": "string",
 											"default": "PENDING",
-											"enum": [
-												"PENDING",
-												"ACCEPTED",
-												"DECLINED",
-												"COMPLETED"
-											]
+											"enum": ["PENDING", "ACCEPTED", "DECLINED", "COMPLETED"]
 										},
 										"completionCode": {
 											"type": "string",
@@ -4561,11 +3845,7 @@
 										},
 										"stage": {
 											"type": "string",
-											"enum": [
-												"INITIATED",
-												"AT_LOCATION",
-												"AWAITING_CODE"
-											],
+											"enum": ["INITIATED", "AT_LOCATION", "AWAITING_CODE"],
 											"nullable": true
 										},
 										"proposalId": {
@@ -4605,16 +3885,7 @@
 												},
 												"status": {
 													"type": "string",
-													"enum": [
-														"WAITING_OFFERS",
-														"OFFERS_RECEIVED",
-														"ACCEPTED",
-														"IN_PROGRESS",
-														"AWAITING_COMPLETION",
-														"INSPECTION_COMPLETED",
-														"COMPLETED",
-														"CANCELLED"
-													]
+													"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 												},
 												"customerId": {
 													"type": "string",
@@ -4645,16 +3916,10 @@
 																	"type": "string"
 																}
 															},
-															"required": [
-																"ar",
-																"en"
-															]
+															"required": ["ar", "en"]
 														}
 													},
-													"required": [
-														"id",
-														"name"
-													]
+													"required": ["id", "name"]
 												}
 											}
 										},
@@ -4663,23 +3928,7 @@
 											"nullable": true
 										}
 									},
-									"required": [
-										"id",
-										"type",
-										"price",
-										"currency",
-										"status",
-										"completionCode",
-										"message",
-										"estimatedDuration",
-										"scheduledFor",
-										"stage",
-										"proposalId",
-										"handymanId",
-										"convertedFromVisitId",
-										"createdAt",
-										"updatedAt"
-									]
+									"required": ["id", "type", "price", "currency", "status", "completionCode", "message", "estimatedDuration", "scheduledFor", "stage", "proposalId", "handymanId", "convertedFromVisitId", "createdAt", "updatedAt"]
 								}
 							}
 						},
@@ -4704,14 +3953,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -4727,9 +3972,7 @@
 				"summary": "List",
 				"deprecated": false,
 				"description": "Handymen only. Lists the authenticated handyman's visits.",
-				"tags": [
-					"Visits"
-				],
+				"tags": ["Visits"],
 				"parameters": [],
 				"responses": {
 					"200": {
@@ -4747,10 +3990,7 @@
 											},
 											"type": {
 												"type": "string",
-												"enum": [
-													"INSPECTION",
-													"WORK"
-												]
+												"enum": ["INSPECTION", "WORK"]
 											},
 											"price": {
 												"type": "number",
@@ -4764,12 +4004,7 @@
 											"status": {
 												"type": "string",
 												"default": "PENDING",
-												"enum": [
-													"PENDING",
-													"ACCEPTED",
-													"DECLINED",
-													"COMPLETED"
-												]
+												"enum": ["PENDING", "ACCEPTED", "DECLINED", "COMPLETED"]
 											},
 											"completionCode": {
 												"type": "string",
@@ -4792,11 +4027,7 @@
 											},
 											"stage": {
 												"type": "string",
-												"enum": [
-													"INITIATED",
-													"AT_LOCATION",
-													"AWAITING_CODE"
-												],
+												"enum": ["INITIATED", "AT_LOCATION", "AWAITING_CODE"],
 												"nullable": true
 											},
 											"proposalId": {
@@ -4836,16 +4067,7 @@
 													},
 													"status": {
 														"type": "string",
-														"enum": [
-															"WAITING_OFFERS",
-															"OFFERS_RECEIVED",
-															"ACCEPTED",
-															"IN_PROGRESS",
-															"AWAITING_COMPLETION",
-															"INSPECTION_COMPLETED",
-															"COMPLETED",
-															"CANCELLED"
-														]
+														"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 													},
 													"customerId": {
 														"type": "string",
@@ -4876,16 +4098,10 @@
 																		"type": "string"
 																	}
 																},
-																"required": [
-																	"ar",
-																	"en"
-																]
+																"required": ["ar", "en"]
 															}
 														},
-														"required": [
-															"id",
-															"name"
-														]
+														"required": ["id", "name"]
 													}
 												}
 											},
@@ -4894,23 +4110,7 @@
 												"nullable": true
 											}
 										},
-										"required": [
-											"id",
-											"type",
-											"price",
-											"currency",
-											"status",
-											"completionCode",
-											"message",
-											"estimatedDuration",
-											"scheduledFor",
-											"stage",
-											"proposalId",
-											"handymanId",
-											"convertedFromVisitId",
-											"createdAt",
-											"updatedAt"
-										]
+										"required": ["id", "type", "price", "currency", "status", "completionCode", "message", "estimatedDuration", "scheduledFor", "stage", "proposalId", "handymanId", "convertedFromVisitId", "createdAt", "updatedAt"]
 									}
 								}
 							}
@@ -4936,14 +4136,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -4961,9 +4157,7 @@
 				"summary": "Find",
 				"deprecated": false,
 				"description": "Handymen only.",
-				"tags": [
-					"Visits"
-				],
+				"tags": ["Visits"],
 				"parameters": [
 					{
 						"name": "id",
@@ -4990,10 +4184,7 @@
 										},
 										"type": {
 											"type": "string",
-											"enum": [
-												"INSPECTION",
-												"WORK"
-											]
+											"enum": ["INSPECTION", "WORK"]
 										},
 										"price": {
 											"type": "number",
@@ -5007,12 +4198,7 @@
 										"status": {
 											"type": "string",
 											"default": "PENDING",
-											"enum": [
-												"PENDING",
-												"ACCEPTED",
-												"DECLINED",
-												"COMPLETED"
-											]
+											"enum": ["PENDING", "ACCEPTED", "DECLINED", "COMPLETED"]
 										},
 										"completionCode": {
 											"type": "string",
@@ -5035,11 +4221,7 @@
 										},
 										"stage": {
 											"type": "string",
-											"enum": [
-												"INITIATED",
-												"AT_LOCATION",
-												"AWAITING_CODE"
-											],
+											"enum": ["INITIATED", "AT_LOCATION", "AWAITING_CODE"],
 											"nullable": true
 										},
 										"proposalId": {
@@ -5079,16 +4261,7 @@
 												},
 												"status": {
 													"type": "string",
-													"enum": [
-														"WAITING_OFFERS",
-														"OFFERS_RECEIVED",
-														"ACCEPTED",
-														"IN_PROGRESS",
-														"AWAITING_COMPLETION",
-														"INSPECTION_COMPLETED",
-														"COMPLETED",
-														"CANCELLED"
-													]
+													"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 												},
 												"customerId": {
 													"type": "string",
@@ -5119,16 +4292,10 @@
 																	"type": "string"
 																}
 															},
-															"required": [
-																"ar",
-																"en"
-															]
+															"required": ["ar", "en"]
 														}
 													},
-													"required": [
-														"id",
-														"name"
-													]
+													"required": ["id", "name"]
 												}
 											}
 										},
@@ -5137,23 +4304,7 @@
 											"nullable": true
 										}
 									},
-									"required": [
-										"id",
-										"type",
-										"price",
-										"currency",
-										"status",
-										"completionCode",
-										"message",
-										"estimatedDuration",
-										"scheduledFor",
-										"stage",
-										"proposalId",
-										"handymanId",
-										"convertedFromVisitId",
-										"createdAt",
-										"updatedAt"
-									]
+									"required": ["id", "type", "price", "currency", "status", "completionCode", "message", "estimatedDuration", "scheduledFor", "stage", "proposalId", "handymanId", "convertedFromVisitId", "createdAt", "updatedAt"]
 								}
 							}
 						},
@@ -5178,14 +4329,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -5203,9 +4350,7 @@
 				"summary": "Advance Stage",
 				"deprecated": false,
 				"description": "Handymen only. AT_LOCATION requires latitude/longitude within 200m of the proposal; AWAITING_CODE follows AT_LOCATION.",
-				"tags": [
-					"Visits"
-				],
+				"tags": ["Visits"],
 				"parameters": [
 					{
 						"name": "id",
@@ -5226,10 +4371,7 @@
 								"properties": {
 									"stage": {
 										"type": "string",
-										"enum": [
-											"AT_LOCATION",
-											"AWAITING_CODE"
-										]
+										"enum": ["AT_LOCATION", "AWAITING_CODE"]
 									},
 									"latitude": {
 										"type": "number",
@@ -5240,9 +4382,7 @@
 										"description": "Required when stage is AT_LOCATION"
 									}
 								},
-								"required": [
-									"stage"
-								]
+								"required": ["stage"]
 							},
 							"examples": {}
 						}
@@ -5263,10 +4403,7 @@
 										},
 										"type": {
 											"type": "string",
-											"enum": [
-												"INSPECTION",
-												"WORK"
-											]
+											"enum": ["INSPECTION", "WORK"]
 										},
 										"price": {
 											"type": "number",
@@ -5280,12 +4417,7 @@
 										"status": {
 											"type": "string",
 											"default": "PENDING",
-											"enum": [
-												"PENDING",
-												"ACCEPTED",
-												"DECLINED",
-												"COMPLETED"
-											]
+											"enum": ["PENDING", "ACCEPTED", "DECLINED", "COMPLETED"]
 										},
 										"completionCode": {
 											"type": "string",
@@ -5308,11 +4440,7 @@
 										},
 										"stage": {
 											"type": "string",
-											"enum": [
-												"INITIATED",
-												"AT_LOCATION",
-												"AWAITING_CODE"
-											],
+											"enum": ["INITIATED", "AT_LOCATION", "AWAITING_CODE"],
 											"nullable": true
 										},
 										"proposalId": {
@@ -5352,16 +4480,7 @@
 												},
 												"status": {
 													"type": "string",
-													"enum": [
-														"WAITING_OFFERS",
-														"OFFERS_RECEIVED",
-														"ACCEPTED",
-														"IN_PROGRESS",
-														"AWAITING_COMPLETION",
-														"INSPECTION_COMPLETED",
-														"COMPLETED",
-														"CANCELLED"
-													]
+													"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 												},
 												"customerId": {
 													"type": "string",
@@ -5392,16 +4511,10 @@
 																	"type": "string"
 																}
 															},
-															"required": [
-																"ar",
-																"en"
-															]
+															"required": ["ar", "en"]
 														}
 													},
-													"required": [
-														"id",
-														"name"
-													]
+													"required": ["id", "name"]
 												}
 											}
 										},
@@ -5410,23 +4523,7 @@
 											"nullable": true
 										}
 									},
-									"required": [
-										"id",
-										"type",
-										"price",
-										"currency",
-										"status",
-										"completionCode",
-										"message",
-										"estimatedDuration",
-										"scheduledFor",
-										"stage",
-										"proposalId",
-										"handymanId",
-										"convertedFromVisitId",
-										"createdAt",
-										"updatedAt"
-									]
+									"required": ["id", "type", "price", "currency", "status", "completionCode", "message", "estimatedDuration", "scheduledFor", "stage", "proposalId", "handymanId", "convertedFromVisitId", "createdAt", "updatedAt"]
 								}
 							}
 						},
@@ -5451,14 +4548,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -5476,9 +4569,7 @@
 				"summary": "Verify Code",
 				"deprecated": false,
 				"description": "Customers only. Marks the visit COMPLETED and, for WORK visits (or any priced visit), creates a RECEIVED transaction.",
-				"tags": [
-					"Visits"
-				],
+				"tags": ["Visits"],
 				"parameters": [
 					{
 						"name": "id",
@@ -5503,9 +4594,7 @@
 										"maxLength": 6
 									}
 								},
-								"required": [
-									"code"
-								]
+								"required": ["code"]
 							},
 							"examples": {}
 						}
@@ -5526,10 +4615,7 @@
 										},
 										"type": {
 											"type": "string",
-											"enum": [
-												"INSPECTION",
-												"WORK"
-											]
+											"enum": ["INSPECTION", "WORK"]
 										},
 										"price": {
 											"type": "number",
@@ -5543,12 +4629,7 @@
 										"status": {
 											"type": "string",
 											"default": "PENDING",
-											"enum": [
-												"PENDING",
-												"ACCEPTED",
-												"DECLINED",
-												"COMPLETED"
-											]
+											"enum": ["PENDING", "ACCEPTED", "DECLINED", "COMPLETED"]
 										},
 										"completionCode": {
 											"type": "string",
@@ -5571,11 +4652,7 @@
 										},
 										"stage": {
 											"type": "string",
-											"enum": [
-												"INITIATED",
-												"AT_LOCATION",
-												"AWAITING_CODE"
-											],
+											"enum": ["INITIATED", "AT_LOCATION", "AWAITING_CODE"],
 											"nullable": true
 										},
 										"proposalId": {
@@ -5615,16 +4692,7 @@
 												},
 												"status": {
 													"type": "string",
-													"enum": [
-														"WAITING_OFFERS",
-														"OFFERS_RECEIVED",
-														"ACCEPTED",
-														"IN_PROGRESS",
-														"AWAITING_COMPLETION",
-														"INSPECTION_COMPLETED",
-														"COMPLETED",
-														"CANCELLED"
-													]
+													"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 												},
 												"customerId": {
 													"type": "string",
@@ -5655,16 +4723,10 @@
 																	"type": "string"
 																}
 															},
-															"required": [
-																"ar",
-																"en"
-															]
+															"required": ["ar", "en"]
 														}
 													},
-													"required": [
-														"id",
-														"name"
-													]
+													"required": ["id", "name"]
 												}
 											}
 										},
@@ -5673,23 +4735,7 @@
 											"nullable": true
 										}
 									},
-									"required": [
-										"id",
-										"type",
-										"price",
-										"currency",
-										"status",
-										"completionCode",
-										"message",
-										"estimatedDuration",
-										"scheduledFor",
-										"stage",
-										"proposalId",
-										"handymanId",
-										"convertedFromVisitId",
-										"createdAt",
-										"updatedAt"
-									]
+									"required": ["id", "type", "price", "currency", "status", "completionCode", "message", "estimatedDuration", "scheduledFor", "stage", "proposalId", "handymanId", "convertedFromVisitId", "createdAt", "updatedAt"]
 								}
 							}
 						},
@@ -5714,14 +4760,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -5739,9 +4781,7 @@
 				"summary": "Convert To Work",
 				"deprecated": false,
 				"description": "Handymen only. Converts a COMPLETED INSPECTION visit (whose proposal is INSPECTION_COMPLETED) into a new WORK visit.",
-				"tags": [
-					"Visits"
-				],
+				"tags": ["Visits"],
 				"parameters": [
 					{
 						"name": "id",
@@ -5770,10 +4810,7 @@
 										"nullable": true
 									}
 								},
-								"required": [
-									"price",
-									"scheduledFor"
-								]
+								"required": ["price", "scheduledFor"]
 							},
 							"examples": {}
 						}
@@ -5794,10 +4831,7 @@
 										},
 										"type": {
 											"type": "string",
-											"enum": [
-												"INSPECTION",
-												"WORK"
-											]
+											"enum": ["INSPECTION", "WORK"]
 										},
 										"price": {
 											"type": "number",
@@ -5811,12 +4845,7 @@
 										"status": {
 											"type": "string",
 											"default": "PENDING",
-											"enum": [
-												"PENDING",
-												"ACCEPTED",
-												"DECLINED",
-												"COMPLETED"
-											]
+											"enum": ["PENDING", "ACCEPTED", "DECLINED", "COMPLETED"]
 										},
 										"completionCode": {
 											"type": "string",
@@ -5839,11 +4868,7 @@
 										},
 										"stage": {
 											"type": "string",
-											"enum": [
-												"INITIATED",
-												"AT_LOCATION",
-												"AWAITING_CODE"
-											],
+											"enum": ["INITIATED", "AT_LOCATION", "AWAITING_CODE"],
 											"nullable": true
 										},
 										"proposalId": {
@@ -5883,16 +4908,7 @@
 												},
 												"status": {
 													"type": "string",
-													"enum": [
-														"WAITING_OFFERS",
-														"OFFERS_RECEIVED",
-														"ACCEPTED",
-														"IN_PROGRESS",
-														"AWAITING_COMPLETION",
-														"INSPECTION_COMPLETED",
-														"COMPLETED",
-														"CANCELLED"
-													]
+													"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 												},
 												"customerId": {
 													"type": "string",
@@ -5923,16 +4939,10 @@
 																	"type": "string"
 																}
 															},
-															"required": [
-																"ar",
-																"en"
-															]
+															"required": ["ar", "en"]
 														}
 													},
-													"required": [
-														"id",
-														"name"
-													]
+													"required": ["id", "name"]
 												}
 											}
 										},
@@ -5941,23 +4951,7 @@
 											"nullable": true
 										}
 									},
-									"required": [
-										"id",
-										"type",
-										"price",
-										"currency",
-										"status",
-										"completionCode",
-										"message",
-										"estimatedDuration",
-										"scheduledFor",
-										"stage",
-										"proposalId",
-										"handymanId",
-										"convertedFromVisitId",
-										"createdAt",
-										"updatedAt"
-									]
+									"required": ["id", "type", "price", "currency", "status", "completionCode", "message", "estimatedDuration", "scheduledFor", "stage", "proposalId", "handymanId", "convertedFromVisitId", "createdAt", "updatedAt"]
 								}
 							}
 						},
@@ -5982,14 +4976,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -6007,9 +4997,7 @@
 				"summary": "Review",
 				"deprecated": false,
 				"description": "Customers only. The visit must be COMPLETED and not already reviewed.",
-				"tags": [
-					"Reviews"
-				],
+				"tags": ["Reviews"],
 				"parameters": [
 					{
 						"name": "id",
@@ -6059,9 +5047,7 @@
 										}
 									}
 								},
-								"required": [
-									"rating"
-								]
+								"required": ["rating"]
 							},
 							"examples": {}
 						}
@@ -6125,16 +5111,7 @@
 											"format": "date-time"
 										}
 									},
-									"required": [
-										"id",
-										"visitId",
-										"reviewerName",
-										"rating",
-										"comment",
-										"tags",
-										"createdAt",
-										"updatedAt"
-									]
+									"required": ["id", "visitId", "reviewerName", "rating", "comment", "tags", "createdAt", "updatedAt"]
 								}
 							}
 						},
@@ -6159,14 +5136,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -6184,9 +5157,7 @@
 				"summary": "List Messages",
 				"deprecated": false,
 				"description": "Must be a participant (the visit's handyman or the proposal's customer).",
-				"tags": [
-					"Chat"
-				],
+				"tags": ["Chat"],
 				"parameters": [
 					{
 						"name": "visitId",
@@ -6223,11 +5194,7 @@
 											},
 											"type": {
 												"type": "string",
-												"enum": [
-													"TEXT",
-													"IMAGE",
-													"RESCHEDULE"
-												]
+												"enum": ["TEXT", "IMAGE", "RESCHEDULE"]
 											},
 											"text": {
 												"type": "string",
@@ -6245,11 +5212,7 @@
 											},
 											"rescheduleStatus": {
 												"type": "string",
-												"enum": [
-													"PENDING",
-													"ACCEPTED",
-													"DECLINED"
-												],
+												"enum": ["PENDING", "ACCEPTED", "DECLINED"],
 												"nullable": true
 											},
 											"createdAt": {
@@ -6272,33 +5235,13 @@
 													},
 													"role": {
 														"type": "string",
-														"enum": [
-															"ADMIN",
-															"HANDYMAN",
-															"CUSTOMER"
-														]
+														"enum": ["ADMIN", "HANDYMAN", "CUSTOMER"]
 													}
 												},
-												"required": [
-													"id",
-													"name",
-													"role"
-												]
+												"required": ["id", "name", "role"]
 											}
 										},
-										"required": [
-											"id",
-											"visitId",
-											"senderId",
-											"type",
-											"text",
-											"imageUrl",
-											"proposedDate",
-											"rescheduleStatus",
-											"createdAt",
-											"updatedAt",
-											"sender"
-										]
+										"required": ["id", "visitId", "senderId", "type", "text", "imageUrl", "proposedDate", "rescheduleStatus", "createdAt", "updatedAt", "sender"]
 									}
 								}
 							}
@@ -6324,14 +5267,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -6347,9 +5286,7 @@
 				"summary": "Send Message",
 				"deprecated": false,
 				"description": "Must be a participant (the visit's handyman or the proposal's customer).",
-				"tags": [
-					"Chat"
-				],
+				"tags": ["Chat"],
 				"parameters": [
 					{
 						"name": "visitId",
@@ -6371,10 +5308,7 @@
 								"properties": {
 									"type": {
 										"type": "string",
-										"enum": [
-											"TEXT",
-											"IMAGE"
-										]
+										"enum": ["TEXT", "IMAGE"]
 									},
 									"text": {
 										"type": "string",
@@ -6386,11 +5320,7 @@
 										"nullable": true
 									}
 								},
-								"required": [
-									"type",
-									"text",
-									"imageUrl"
-								]
+								"required": ["type", "text", "imageUrl"]
 							},
 							"examples": {}
 						}
@@ -6419,11 +5349,7 @@
 										},
 										"type": {
 											"type": "string",
-											"enum": [
-												"TEXT",
-												"IMAGE",
-												"RESCHEDULE"
-											]
+											"enum": ["TEXT", "IMAGE", "RESCHEDULE"]
 										},
 										"text": {
 											"type": "string",
@@ -6441,11 +5367,7 @@
 										},
 										"rescheduleStatus": {
 											"type": "string",
-											"enum": [
-												"PENDING",
-												"ACCEPTED",
-												"DECLINED"
-											],
+											"enum": ["PENDING", "ACCEPTED", "DECLINED"],
 											"nullable": true
 										},
 										"createdAt": {
@@ -6468,33 +5390,13 @@
 												},
 												"role": {
 													"type": "string",
-													"enum": [
-														"ADMIN",
-														"HANDYMAN",
-														"CUSTOMER"
-													]
+													"enum": ["ADMIN", "HANDYMAN", "CUSTOMER"]
 												}
 											},
-											"required": [
-												"id",
-												"name",
-												"role"
-											]
+											"required": ["id", "name", "role"]
 										}
 									},
-									"required": [
-										"id",
-										"visitId",
-										"senderId",
-										"type",
-										"text",
-										"imageUrl",
-										"proposedDate",
-										"rescheduleStatus",
-										"createdAt",
-										"updatedAt",
-										"sender"
-									]
+									"required": ["id", "visitId", "senderId", "type", "text", "imageUrl", "proposedDate", "rescheduleStatus", "createdAt", "updatedAt", "sender"]
 								}
 							}
 						},
@@ -6519,14 +5421,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -6544,9 +5442,7 @@
 				"summary": "Reschedule",
 				"deprecated": false,
 				"description": "Must be a participant. Posts a RESCHEDULE chat message proposing a new date.",
-				"tags": [
-					"Chat"
-				],
+				"tags": ["Chat"],
 				"parameters": [
 					{
 						"name": "visitId",
@@ -6570,9 +5466,7 @@
 										"format": "date-time"
 									}
 								},
-								"required": [
-									"proposedDate"
-								]
+								"required": ["proposedDate"]
 							},
 							"examples": {}
 						}
@@ -6601,11 +5495,7 @@
 										},
 										"type": {
 											"type": "string",
-											"enum": [
-												"TEXT",
-												"IMAGE",
-												"RESCHEDULE"
-											]
+											"enum": ["TEXT", "IMAGE", "RESCHEDULE"]
 										},
 										"text": {
 											"type": "string",
@@ -6623,11 +5513,7 @@
 										},
 										"rescheduleStatus": {
 											"type": "string",
-											"enum": [
-												"PENDING",
-												"ACCEPTED",
-												"DECLINED"
-											],
+											"enum": ["PENDING", "ACCEPTED", "DECLINED"],
 											"nullable": true
 										},
 										"createdAt": {
@@ -6650,33 +5536,13 @@
 												},
 												"role": {
 													"type": "string",
-													"enum": [
-														"ADMIN",
-														"HANDYMAN",
-														"CUSTOMER"
-													]
+													"enum": ["ADMIN", "HANDYMAN", "CUSTOMER"]
 												}
 											},
-											"required": [
-												"id",
-												"name",
-												"role"
-											]
+											"required": ["id", "name", "role"]
 										}
 									},
-									"required": [
-										"id",
-										"visitId",
-										"senderId",
-										"type",
-										"text",
-										"imageUrl",
-										"proposedDate",
-										"rescheduleStatus",
-										"createdAt",
-										"updatedAt",
-										"sender"
-									]
+									"required": ["id", "visitId", "senderId", "type", "text", "imageUrl", "proposedDate", "rescheduleStatus", "createdAt", "updatedAt", "sender"]
 								}
 							}
 						},
@@ -6701,14 +5567,10 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"message"
-											]
+											"required": ["message"]
 										}
 									},
-									"required": [
-										"error"
-									]
+									"required": ["error"]
 								}
 							}
 						}
@@ -6732,9 +5594,7 @@
 						"pattern": "^\\+20(10|11|12|15)\\d{8}$"
 					}
 				},
-				"required": [
-					"phone"
-				]
+				"required": ["phone"]
 			},
 			"Auth Initiate Response": {
 				"type": "object",
@@ -6744,9 +5604,7 @@
 						"format": "uuid"
 					}
 				},
-				"required": [
-					"verificationId"
-				]
+				"required": ["verificationId"]
 			},
 			"Auth Verify Payload": {
 				"type": "object",
@@ -6766,19 +5624,11 @@
 					},
 					"role": {
 						"type": "string",
-						"enum": [
-							"ADMIN",
-							"HANDYMAN",
-							"CUSTOMER"
-						],
+						"enum": ["ADMIN", "HANDYMAN", "CUSTOMER"],
 						"description": "Required only when verifying for a brand-new user; ignored for existing users"
 					}
 				},
-				"required": [
-					"phone",
-					"verificationId",
-					"otp"
-				]
+				"required": ["phone", "verificationId", "otp"]
 			},
 			"Auth Verify Response": {
 				"type": "object",
@@ -6793,11 +5643,7 @@
 						"$ref": "#/components/schemas/User"
 					}
 				},
-				"required": [
-					"access",
-					"refresh",
-					"user"
-				]
+				"required": ["access", "refresh", "user"]
 			},
 			"User": {
 				"type": "object",
@@ -6815,11 +5661,7 @@
 					},
 					"role": {
 						"type": "string",
-						"enum": [
-							"ADMIN",
-							"HANDYMAN",
-							"CUSTOMER"
-						]
+						"enum": ["ADMIN", "HANDYMAN", "CUSTOMER"]
 					},
 					"avatar": {
 						"type": "string",
@@ -6847,14 +5689,7 @@
 						"nullable": true
 					}
 				},
-				"required": [
-					"id",
-					"name",
-					"phone",
-					"role",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "name", "phone", "role", "createdAt", "updatedAt"]
 			},
 			"Handyman": {
 				"type": "object",
@@ -6867,26 +5702,13 @@
 						"type": "array",
 						"items": {
 							"type": "string",
-							"enum": [
-								"SUNDAY",
-								"MONDAY",
-								"TUESDAY",
-								"WEDNESDAY",
-								"THURSDAY",
-								"FRIDAY",
-								"SATURDAY"
-							]
+							"enum": ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
 						}
 					},
 					"status": {
 						"type": "string",
 						"default": "PENDING",
-						"enum": [
-							"PENDING",
-							"REJECTED",
-							"BLOCKED",
-							"ACCEPTED"
-						]
+						"enum": ["PENDING", "REJECTED", "BLOCKED", "ACCEPTED"]
 					},
 					"birthdate": {
 						"type": "string",
@@ -6910,15 +5732,7 @@
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"id",
-					"workDays",
-					"status",
-					"birthdate",
-					"userId",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "workDays", "status", "birthdate", "userId", "createdAt", "updatedAt"]
 			},
 			"Handyman Update Payload": {
 				"type": "object",
@@ -6935,15 +5749,7 @@
 						"type": "array",
 						"items": {
 							"type": "string",
-							"enum": [
-								"SUNDAY",
-								"MONDAY",
-								"TUESDAY",
-								"WEDNESDAY",
-								"THURSDAY",
-								"FRIDAY",
-								"SATURDAY"
-							]
+							"enum": ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
 						},
 						"description": "An empty array resets to the default (all seven days)"
 					}
@@ -6969,12 +5775,7 @@
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"id",
-					"userId",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "userId", "createdAt", "updatedAt"]
 			},
 			"Customer": {
 				"type": "object",
@@ -6996,12 +5797,7 @@
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"id",
-					"userId",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "userId", "createdAt", "updatedAt"]
 			},
 			"Application": {
 				"type": "object",
@@ -7039,12 +5835,7 @@
 					"status": {
 						"type": "string",
 						"default": "PENDING",
-						"enum": [
-							"PENDING",
-							"REJECTED",
-							"EXPIRED",
-							"ACCEPTED"
-						]
+						"enum": ["PENDING", "REJECTED", "EXPIRED", "ACCEPTED"]
 					},
 					"expiresAt": {
 						"type": "string",
@@ -7075,10 +5866,7 @@
 									"type": "string"
 								}
 							},
-							"required": [
-								"id",
-								"name"
-							]
+							"required": ["id", "name"]
 						}
 					},
 					"services": {
@@ -7100,35 +5888,14 @@
 											"type": "string"
 										}
 									},
-									"required": [
-										"ar",
-										"en"
-									]
+									"required": ["ar", "en"]
 								}
 							},
-							"required": [
-								"id",
-								"name"
-							]
+							"required": ["id", "name"]
 						}
 					}
 				},
-				"required": [
-					"id",
-					"firstName",
-					"lastName",
-					"nationalIdFront",
-					"nationalIdBack",
-					"selfie",
-					"birthdate",
-					"handymanId",
-					"status",
-					"expiresAt",
-					"createdAt",
-					"updatedAt",
-					"regions",
-					"services"
-				]
+				"required": ["id", "firstName", "lastName", "nationalIdFront", "nationalIdBack", "selfie", "birthdate", "handymanId", "status", "expiresAt", "createdAt", "updatedAt", "regions", "services"]
 			},
 			"Application Reject Payload": {
 				"type": "object",
@@ -7137,9 +5904,7 @@
 						"type": "string"
 					}
 				},
-				"required": [
-					"notes"
-				]
+				"required": ["notes"]
 			},
 			"Region": {
 				"type": "object",
@@ -7165,13 +5930,7 @@
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"id",
-					"name",
-					"parentRegionId",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "name", "parentRegionId", "createdAt", "updatedAt"]
 			},
 			"Category": {
 				"type": "object",
@@ -7190,10 +5949,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"ar",
-							"en"
-						]
+						"required": ["ar", "en"]
 					},
 					"createdAt": {
 						"type": "string",
@@ -7211,12 +5967,7 @@
 						}
 					}
 				},
-				"required": [
-					"id",
-					"name",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "name", "createdAt", "updatedAt"]
 			},
 			"Service": {
 				"type": "object",
@@ -7235,10 +5986,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"ar",
-							"en"
-						]
+						"required": ["ar", "en"]
 					},
 					"categoryId": {
 						"type": "string",
@@ -7253,13 +6001,7 @@
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"id",
-					"name",
-					"categoryId",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "name", "categoryId", "createdAt", "updatedAt"]
 			},
 			"Proposal": {
 				"type": "object",
@@ -7280,16 +6022,7 @@
 					"status": {
 						"type": "string",
 						"default": "WAITING_OFFERS",
-						"enum": [
-							"WAITING_OFFERS",
-							"OFFERS_RECEIVED",
-							"ACCEPTED",
-							"IN_PROGRESS",
-							"AWAITING_COMPLETION",
-							"INSPECTION_COMPLETED",
-							"COMPLETED",
-							"CANCELLED"
-						]
+						"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 					},
 					"dueDate": {
 						"type": "string",
@@ -7329,20 +6062,7 @@
 						}
 					}
 				},
-				"required": [
-					"id",
-					"title",
-					"description",
-					"address",
-					"status",
-					"dueDate",
-					"serviceId",
-					"customerId",
-					"createdAt",
-					"updatedAt",
-					"service",
-					"visits"
-				]
+				"required": ["id", "title", "description", "address", "status", "dueDate", "serviceId", "customerId", "createdAt", "updatedAt", "service", "visits"]
 			},
 			"Proposal Create Payload": {
 				"type": "object",
@@ -7373,13 +6093,7 @@
 						"format": "uuid"
 					}
 				},
-				"required": [
-					"title",
-					"description",
-					"address",
-					"dueDate",
-					"serviceId"
-				]
+				"required": ["title", "description", "address", "dueDate", "serviceId"]
 			},
 			"Accept Visit Payload": {
 				"type": "object",
@@ -7389,9 +6103,7 @@
 						"format": "uuid"
 					}
 				},
-				"required": [
-					"visitId"
-				]
+				"required": ["visitId"]
 			},
 			"Visit": {
 				"type": "object",
@@ -7402,10 +6114,7 @@
 					},
 					"type": {
 						"type": "string",
-						"enum": [
-							"INSPECTION",
-							"WORK"
-						]
+						"enum": ["INSPECTION", "WORK"]
 					},
 					"price": {
 						"type": "number",
@@ -7419,12 +6128,7 @@
 					"status": {
 						"type": "string",
 						"default": "PENDING",
-						"enum": [
-							"PENDING",
-							"ACCEPTED",
-							"DECLINED",
-							"COMPLETED"
-						]
+						"enum": ["PENDING", "ACCEPTED", "DECLINED", "COMPLETED"]
 					},
 					"completionCode": {
 						"type": "string",
@@ -7447,11 +6151,7 @@
 					},
 					"stage": {
 						"type": "string",
-						"enum": [
-							"INITIATED",
-							"AT_LOCATION",
-							"AWAITING_CODE"
-						],
+						"enum": ["INITIATED", "AT_LOCATION", "AWAITING_CODE"],
 						"nullable": true
 					},
 					"proposalId": {
@@ -7491,16 +6191,7 @@
 							},
 							"status": {
 								"type": "string",
-								"enum": [
-									"WAITING_OFFERS",
-									"OFFERS_RECEIVED",
-									"ACCEPTED",
-									"IN_PROGRESS",
-									"AWAITING_COMPLETION",
-									"INSPECTION_COMPLETED",
-									"COMPLETED",
-									"CANCELLED"
-								]
+								"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
 							},
 							"customerId": {
 								"type": "string",
@@ -7531,16 +6222,10 @@
 												"type": "string"
 											}
 										},
-										"required": [
-											"ar",
-											"en"
-										]
+										"required": ["ar", "en"]
 									}
 								},
-								"required": [
-									"id",
-									"name"
-								]
+								"required": ["id", "name"]
 							}
 						}
 					},
@@ -7549,23 +6234,7 @@
 						"nullable": true
 					}
 				},
-				"required": [
-					"id",
-					"type",
-					"price",
-					"currency",
-					"status",
-					"completionCode",
-					"message",
-					"estimatedDuration",
-					"scheduledFor",
-					"stage",
-					"proposalId",
-					"handymanId",
-					"convertedFromVisitId",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "type", "price", "currency", "status", "completionCode", "message", "estimatedDuration", "scheduledFor", "stage", "proposalId", "handymanId", "convertedFromVisitId", "createdAt", "updatedAt"]
 			},
 			"Visit Create Payload": {
 				"type": "object",
@@ -7576,10 +6245,7 @@
 					},
 					"type": {
 						"type": "string",
-						"enum": [
-							"INSPECTION",
-							"WORK"
-						]
+						"enum": ["INSPECTION", "WORK"]
 					},
 					"price": {
 						"type": "number",
@@ -7604,25 +6270,14 @@
 						"description": "Must be null when type is INSPECTION"
 					}
 				},
-				"required": [
-					"proposalId",
-					"type",
-					"price",
-					"currency",
-					"estimatedDuration",
-					"message",
-					"scheduledFor"
-				]
+				"required": ["proposalId", "type", "price", "currency", "estimatedDuration", "message", "scheduledFor"]
 			},
 			"Advance Stage Payload": {
 				"type": "object",
 				"properties": {
 					"stage": {
 						"type": "string",
-						"enum": [
-							"AT_LOCATION",
-							"AWAITING_CODE"
-						]
+						"enum": ["AT_LOCATION", "AWAITING_CODE"]
 					},
 					"latitude": {
 						"type": "number",
@@ -7633,9 +6288,7 @@
 						"description": "Required when stage is AT_LOCATION"
 					}
 				},
-				"required": [
-					"stage"
-				]
+				"required": ["stage"]
 			},
 			"Verify Code Payload": {
 				"type": "object",
@@ -7646,9 +6299,7 @@
 						"maxLength": 6
 					}
 				},
-				"required": [
-					"code"
-				]
+				"required": ["code"]
 			},
 			"Convert To Work Payload": {
 				"type": "object",
@@ -7663,10 +6314,7 @@
 						"nullable": true
 					}
 				},
-				"required": [
-					"price",
-					"scheduledFor"
-				]
+				"required": ["price", "scheduledFor"]
 			},
 			"Review": {
 				"type": "object",
@@ -7693,22 +6341,7 @@
 						"type": "array",
 						"items": {
 							"type": "string",
-							"enum": [
-								"PROFESSIONAL",
-								"PUNCTUAL",
-								"GOOD_VALUE",
-								"HIGH_QUALITY_WORK",
-								"FRIENDLY",
-								"CLEAN_WORKSPACE",
-								"COMMUNICATIVE",
-								"RESPECTFUL",
-								"EXPERT_ADVICE",
-								"EFFICIENT",
-								"LATE",
-								"POOR_COMMUNICATION",
-								"OVERPRICED",
-								"MESSY_WORKSPACE"
-							]
+							"enum": ["PROFESSIONAL", "PUNCTUAL", "GOOD_VALUE", "HIGH_QUALITY_WORK", "FRIENDLY", "CLEAN_WORKSPACE", "COMMUNICATIVE", "RESPECTFUL", "EXPERT_ADVICE", "EFFICIENT", "LATE", "POOR_COMMUNICATION", "OVERPRICED", "MESSY_WORKSPACE"]
 						}
 					},
 					"createdAt": {
@@ -7720,16 +6353,7 @@
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"id",
-					"visitId",
-					"reviewerName",
-					"rating",
-					"comment",
-					"tags",
-					"createdAt",
-					"updatedAt"
-				]
+				"required": ["id", "visitId", "reviewerName", "rating", "comment", "tags", "createdAt", "updatedAt"]
 			},
 			"Review Create Payload": {
 				"type": "object",
@@ -7746,28 +6370,11 @@
 						"type": "array",
 						"items": {
 							"type": "string",
-							"enum": [
-								"PROFESSIONAL",
-								"PUNCTUAL",
-								"GOOD_VALUE",
-								"HIGH_QUALITY_WORK",
-								"FRIENDLY",
-								"CLEAN_WORKSPACE",
-								"COMMUNICATIVE",
-								"RESPECTFUL",
-								"EXPERT_ADVICE",
-								"EFFICIENT",
-								"LATE",
-								"POOR_COMMUNICATION",
-								"OVERPRICED",
-								"MESSY_WORKSPACE"
-							]
+							"enum": ["PROFESSIONAL", "PUNCTUAL", "GOOD_VALUE", "HIGH_QUALITY_WORK", "FRIENDLY", "CLEAN_WORKSPACE", "COMMUNICATIVE", "RESPECTFUL", "EXPERT_ADVICE", "EFFICIENT", "LATE", "POOR_COMMUNICATION", "OVERPRICED", "MESSY_WORKSPACE"]
 						}
 					}
 				},
-				"required": [
-					"rating"
-				]
+				"required": ["rating"]
 			},
 			"ChatMessage": {
 				"type": "object",
@@ -7786,11 +6393,7 @@
 					},
 					"type": {
 						"type": "string",
-						"enum": [
-							"TEXT",
-							"IMAGE",
-							"RESCHEDULE"
-						]
+						"enum": ["TEXT", "IMAGE", "RESCHEDULE"]
 					},
 					"text": {
 						"type": "string",
@@ -7808,11 +6411,7 @@
 					},
 					"rescheduleStatus": {
 						"type": "string",
-						"enum": [
-							"PENDING",
-							"ACCEPTED",
-							"DECLINED"
-						],
+						"enum": ["PENDING", "ACCEPTED", "DECLINED"],
 						"nullable": true
 					},
 					"createdAt": {
@@ -7835,33 +6434,13 @@
 							},
 							"role": {
 								"type": "string",
-								"enum": [
-									"ADMIN",
-									"HANDYMAN",
-									"CUSTOMER"
-								]
+								"enum": ["ADMIN", "HANDYMAN", "CUSTOMER"]
 							}
 						},
-						"required": [
-							"id",
-							"name",
-							"role"
-						]
+						"required": ["id", "name", "role"]
 					}
 				},
-				"required": [
-					"id",
-					"visitId",
-					"senderId",
-					"type",
-					"text",
-					"imageUrl",
-					"proposedDate",
-					"rescheduleStatus",
-					"createdAt",
-					"updatedAt",
-					"sender"
-				]
+				"required": ["id", "visitId", "senderId", "type", "text", "imageUrl", "proposedDate", "rescheduleStatus", "createdAt", "updatedAt", "sender"]
 			},
 			"Send Message Payload": {
 				"type": "object",
@@ -7869,10 +6448,7 @@
 				"properties": {
 					"type": {
 						"type": "string",
-						"enum": [
-							"TEXT",
-							"IMAGE"
-						]
+						"enum": ["TEXT", "IMAGE"]
 					},
 					"text": {
 						"type": "string",
@@ -7884,11 +6460,7 @@
 						"nullable": true
 					}
 				},
-				"required": [
-					"type",
-					"text",
-					"imageUrl"
-				]
+				"required": ["type", "text", "imageUrl"]
 			},
 			"Reschedule Payload": {
 				"type": "object",
@@ -7898,9 +6470,7 @@
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"proposedDate"
-				]
+				"required": ["proposedDate"]
 			},
 			"Financial Transaction Item": {
 				"type": "object",
@@ -7919,10 +6489,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"ar",
-							"en"
-						]
+						"required": ["ar", "en"]
 					},
 					"clientName": {
 						"type": "string"
@@ -7935,26 +6502,14 @@
 					},
 					"status": {
 						"type": "string",
-						"enum": [
-							"RECEIVED",
-							"PENDING",
-							"REFUNDED"
-						]
+						"enum": ["RECEIVED", "PENDING", "REFUNDED"]
 					},
 					"date": {
 						"type": "string",
 						"format": "date-time"
 					}
 				},
-				"required": [
-					"id",
-					"serviceName",
-					"clientName",
-					"amount",
-					"currency",
-					"status",
-					"date"
-				]
+				"required": ["id", "serviceName", "clientName", "amount", "currency", "status", "date"]
 			},
 			"Financial Summary": {
 				"type": "object",
@@ -7995,11 +6550,7 @@
 									"type": "number"
 								}
 							},
-							"required": [
-								"id",
-								"monthLabel",
-								"amount"
-							]
+							"required": ["id", "monthLabel", "amount"]
 						}
 					},
 					"recentTransactions": {
@@ -8010,15 +6561,7 @@
 						}
 					}
 				},
-				"required": [
-					"totalEarned",
-					"thisMonth",
-					"pending",
-					"completedJobs",
-					"growthPercent",
-					"monthlyData",
-					"recentTransactions"
-				]
+				"required": ["totalEarned", "thisMonth", "pending", "completedJobs", "growthPercent", "monthlyData", "recentTransactions"]
 			},
 			"Financial Transactions": {
 				"type": "object",
@@ -8039,12 +6582,7 @@
 						}
 					}
 				},
-				"required": [
-					"total",
-					"page",
-					"limit",
-					"items"
-				]
+				"required": ["total", "page", "limit", "items"]
 			}
 		},
 		"responses": {
@@ -8067,10 +6605,7 @@
 									"type": "number"
 								}
 							},
-							"required": [
-								"data",
-								"count"
-							]
+							"required": ["data", "count"]
 						}
 					}
 				}
@@ -8094,14 +6629,10 @@
 											"type": "string"
 										}
 									},
-									"required": [
-										"message"
-									]
+									"required": ["message"]
 								}
 							},
-							"required": [
-								"error"
-							]
+							"required": ["error"]
 						}
 					}
 				}
