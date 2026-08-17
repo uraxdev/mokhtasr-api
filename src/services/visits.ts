@@ -51,11 +51,18 @@ export class VisitService {
 	async create(handymanId: string, payload: VisitCreatePayload) {
 		validateSchema(VisitRepository.create(), payload);
 
-		const proposal = await this.client.proposal.findUnique({ where: { id: payload.proposalId } });
+		const proposal = await this.client.proposal.findUnique({
+			where: { id: payload.proposalId },
+			include: { customer: { select: { userId: true } } }
+		});
 		if (!proposal) throw new Error('Proposal not found');
 		if (proposal.status !== 'WAITING_OFFERS' && proposal.status !== 'OFFERS_RECEIVED') {
 			throw new Error(`Cannot submit a visit on a proposal with status ${proposal.status}`);
 		}
+
+		const handyman = await this.client.handyman.findUnique({ where: { id: handymanId }, select: { userId: true } });
+		if (!handyman) throw new Error('Handyman not found');
+		if (handyman.userId === proposal.customer.userId) throw new Error('Forbidden: cannot submit a visit on your own proposal');
 
 		const existingVisit = await this.client.visit.findFirst({ where: { proposalId: payload.proposalId, handymanId } });
 		if (existingVisit) throw new Error('A visit already exists for this proposal from this handyman');

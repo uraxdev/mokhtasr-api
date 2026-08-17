@@ -3747,7 +3747,7 @@
 			"post": {
 				"summary": "Create",
 				"deprecated": false,
-				"description": "Handymen only. Submits an inspection or work visit against a proposal that is still WAITING_OFFERS or OFFERS_RECEIVED. A handyman may only submit one visit per proposal.",
+				"description": "Handymen only. Submits an inspection or work visit against a proposal that is still WAITING_OFFERS or OFFERS_RECEIVED. A handyman may only submit one visit per proposal, and cannot submit a visit on a proposal created by their own account (when the same user is also a customer).",
 				"tags": ["Visits"],
 				"parameters": [],
 				"requestBody": {
@@ -3935,6 +3935,33 @@
 						"headers": {}
 					},
 					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": ["message"]
+										}
+									},
+									"required": ["error"]
+								}
+							}
+						}
+					},
+					"403": {
 						"description": "",
 						"content": {
 							"application/json": {
