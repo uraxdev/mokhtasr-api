@@ -9,6 +9,7 @@ import docs from './docs';
 import financials from './financials';
 import handymen from './handymen';
 import jobs from './jobs';
+import notifications from './notifications';
 import proposals from './proposals';
 import regions from './regions';
 import register from './register';
@@ -28,6 +29,7 @@ export default (): Router => {
 	chat(router);
 	financials(router);
 	jobs(router);
+	notifications(router);
 	visits(router);
 	proposals(router);
 	handymen(router);

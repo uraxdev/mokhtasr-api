@@ -2,6 +2,7 @@ import { Prisma, PrismaClient } from '@/database/generated/client';
 import { Client } from '@/database/lib/types';
 import { AdvanceStagePayload, ConvertToWorkPayload, VerifyCodePayload, VisitCreatePayload, VisitRepository } from '@/database/repositories/visit';
 import { validateSchema } from '@/lib/utils';
+import { NotificationService } from '@/services/notifications';
 
 export class VisitService {
 	constructor(private readonly client: Client) {}
@@ -41,8 +42,10 @@ export class VisitService {
 
 		if (!visit) throw new Error('Visit not found');
 
+		const customer = await this.client.customer.findUnique({ where: { id: visit.proposal.customerId }, select: { userId: true } });
+
 		const isHandyman = visit.handyman.userId === userId;
-		const isCustomer = visit.proposal.customerId === userId;
+		const isCustomer = customer?.userId === userId;
 		if (!isHandyman && !isCustomer) throw new Error('Forbidden');
 
 		return this.maskCode(visit);
@@ -86,6 +89,17 @@ export class VisitService {
 				await tx.proposal.update({ where: { id: payload.proposalId }, data: { status: 'OFFERS_RECEIVED' } });
 			}
 
+			await new NotificationService(tx).create({
+				userId: proposal.customer.userId,
+				type: 'VISIT_RECEIVED',
+				title: { ar: 'عرض جديد', en: 'New offer received' },
+				body: {
+					ar: `تلقيت عرضًا جديدًا على مقترحك: ${proposal.title}`,
+					en: `You received a new offer on your proposal: ${proposal.title}`
+				},
+				data: { proposalId: payload.proposalId, visitId: visit.id }
+			});
+
 			return this.maskCode(visit);
 		});
 	}
@@ -93,7 +107,10 @@ export class VisitService {
 	async advanceStage(visitId: string, handymanId: string, payload: AdvanceStagePayload) {
 		validateSchema(VisitRepository.advanceStage(), payload);
 
-		const visit = await this.client.visit.findUnique({ where: { id: visitId }, include: { proposal: true } });
+		const visit = await this.client.visit.findUnique({
+			where: { id: visitId },
+			include: { proposal: { include: { customer: { select: { userId: true } } } } }
+		});
 
 		if (!visit) throw new Error('Visit not found');
 		if (visit.handymanId !== handymanId) throw new Error('Forbidden');
@@ -126,6 +143,17 @@ export class VisitService {
 
 			const proposalStatus = payload.stage === 'AT_LOCATION' ? 'IN_PROGRESS' : 'AWAITING_COMPLETION';
 			await tx.proposal.update({ where: { id: visit.proposalId }, data: { status: proposalStatus } });
+
+			await new NotificationService(tx).create({
+				userId: visit.proposal.customer.userId,
+				type: 'PROPOSAL_STATUS_CHANGED',
+				title: { ar: 'تحديث حالة المقترح', en: 'Proposal status updated' },
+				body: {
+					ar: `تغيرت حالة مقترحك "${visit.proposal.title}" إلى ${proposalStatus}`,
+					en: `Your proposal "${visit.proposal.title}" status changed to ${proposalStatus}`
+				},
+				data: { proposalId: visit.proposalId, visitId }
+			});
 
 			return this.maskCode(updated);
 		});
@@ -160,6 +188,17 @@ export class VisitService {
 				});
 			}
 
+			await new NotificationService(tx).create({
+				userId: completed.handyman.userId,
+				type: 'PROPOSAL_STATUS_CHANGED',
+				title: { ar: 'تم تأكيد إتمام الزيارة', en: 'Visit completion confirmed' },
+				body: {
+					ar: `أكد العميل رمز الإتمام لمقترح "${visit.proposal.title}"`,
+					en: `The customer confirmed the completion code for "${visit.proposal.title}"`
+				},
+				data: { proposalId: visit.proposalId, visitId }
+			});
+
 			return this.maskCode(completed);
 		});
 	}
@@ -167,7 +206,10 @@ export class VisitService {
 	async convertToWork(visitId: string, handymanId: string, payload: ConvertToWorkPayload) {
 		validateSchema(VisitRepository.convertToWork(), payload);
 
-		const visit = await this.client.visit.findUnique({ where: { id: visitId }, include: { proposal: true, convertedTo: true } });
+		const visit = await this.client.visit.findUnique({
+			where: { id: visitId },
+			include: { proposal: { include: { customer: { select: { userId: true } } } }, convertedTo: true }
+		});
 
 		if (!visit) throw new Error('Visit not found');
 		if (visit.handymanId !== handymanId) throw new Error('Forbidden');
@@ -199,6 +241,17 @@ export class VisitService {
 			});
 
 			await tx.proposal.update({ where: { id: visit.proposalId }, data: { status: 'ACCEPTED' } });
+
+			await new NotificationService(tx).create({
+				userId: visit.proposal.customer.userId,
+				type: 'PROPOSAL_STATUS_CHANGED',
+				title: { ar: 'تم تحويل الفحص إلى عمل', en: 'Inspection converted to work' },
+				body: {
+					ar: `قام الفني بتحويل الفحص إلى زيارة عمل لمقترح "${visit.proposal.title}"`,
+					en: `The handyman converted the inspection into a work visit for "${visit.proposal.title}"`
+				},
+				data: { proposalId: visit.proposalId, visitId: workVisit.id }
+			});
 
 			return this.maskCode(workVisit);
 		});

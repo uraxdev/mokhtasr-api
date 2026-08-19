@@ -2,6 +2,7 @@ import { Prisma, PrismaClient } from '@/database/generated/client';
 import { Client } from '@/database/lib/types';
 import { AcceptVisitPayload, ProposalCreatePayload, ProposalRepository } from '@/database/repositories/proposal';
 import { validateSchema } from '@/lib/utils';
+import { NotificationService } from '@/services/notifications';
 
 export class ProposalService {
 	constructor(private readonly client: Client) {}
@@ -61,7 +62,29 @@ export class ProposalService {
 			status: 'CANCELLED'
 		} satisfies Prisma.ProposalUpdateInput;
 
-		return await this.client.proposal.update({ where: { id }, data });
+		return await (this.client as PrismaClient).$transaction(async (tx) => {
+			const cancelled = await tx.proposal.update({ where: { id }, data });
+
+			const activeVisit = await tx.visit.findFirst({
+				where: { proposalId: id, status: 'ACCEPTED' },
+				select: { handyman: { select: { userId: true } } }
+			});
+
+			if (activeVisit) {
+				await new NotificationService(tx).create({
+					userId: activeVisit.handyman.userId,
+					type: 'PROPOSAL_STATUS_CHANGED',
+					title: { ar: 'تم إلغاء المقترح', en: 'Proposal cancelled' },
+					body: {
+						ar: `قام العميل بإلغاء المقترح: ${proposal.title}`,
+						en: `The customer cancelled the proposal: ${proposal.title}`
+					},
+					data: { proposalId: id }
+				});
+			}
+
+			return cancelled;
+		});
 	}
 
 	async acceptVisit(proposalId: string, customerId: string, payload: AcceptVisitPayload) {
@@ -89,15 +112,29 @@ export class ProposalService {
 				data: { status: 'DECLINED' }
 			});
 
-			await tx.visit.update({
+			const acceptedVisit = await tx.visit.update({
 				where: { id: payload.visitId },
-				data: { status: 'ACCEPTED', stage: 'INITIATED' }
+				data: { status: 'ACCEPTED', stage: 'INITIATED' },
+				include: { handyman: { select: { userId: true } } }
 			});
 
-			return await tx.proposal.update({
+			const updatedProposal = await tx.proposal.update({
 				where: { id: proposalId },
 				data: { status: 'ACCEPTED' }
 			});
+
+			await new NotificationService(tx).create({
+				userId: acceptedVisit.handyman.userId,
+				type: 'VISIT_ACCEPTED',
+				title: { ar: 'تم قبول عرضك', en: 'Your offer was accepted' },
+				body: {
+					ar: `وافق العميل على عرضك لمقترح: ${proposal.title}`,
+					en: `The customer accepted your offer on: ${proposal.title}`
+				},
+				data: { proposalId, visitId: payload.visitId }
+			});
+
+			return updatedProposal;
 		});
 	}
 
@@ -110,6 +147,28 @@ export class ProposalService {
 			throw new Error(`Cannot reopen a proposal with status ${proposal.status}`);
 		}
 
-		return await this.client.proposal.update({ where: { id }, data: { status: 'WAITING_OFFERS' } });
+		return await (this.client as PrismaClient).$transaction(async (tx) => {
+			const reopened = await tx.proposal.update({ where: { id }, data: { status: 'WAITING_OFFERS' } });
+
+			const inspectionVisit = await tx.visit.findFirst({
+				where: { proposalId: id, type: 'INSPECTION', status: 'COMPLETED' },
+				select: { handyman: { select: { userId: true } } }
+			});
+
+			if (inspectionVisit) {
+				await new NotificationService(tx).create({
+					userId: inspectionVisit.handyman.userId,
+					type: 'PROPOSAL_STATUS_CHANGED',
+					title: { ar: 'تم إعادة فتح المقترح', en: 'Proposal reopened' },
+					body: {
+						ar: `قام العميل بإعادة فتح المقترح لتلقي عروض عمل: ${proposal.title}`,
+						en: `The customer reopened the proposal for work offers: ${proposal.title}`
+					},
+					data: { proposalId: id }
+				});
+			}
+
+			return reopened;
+		});
 	}
 }

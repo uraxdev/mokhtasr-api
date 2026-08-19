@@ -46,6 +46,10 @@ export class UserService {
 			updateData.name = payload.name;
 		}
 
+		if (payload.locale) {
+			updateData.locale = payload.locale;
+		}
+
 		if (payload.avatar) {
 			const avatarUrl = await uploadToBucket(payload.avatar);
 			updateData.avatar = avatarUrl;

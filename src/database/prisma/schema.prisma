@@ -104,6 +104,23 @@ enum ReviewTag {
   MESSY_WORKSPACE
 }
 
+enum Locale {
+  AR
+  EN
+}
+
+enum NotificationType {
+  VISIT_RECEIVED
+  VISIT_ACCEPTED
+  PROPOSAL_STATUS_CHANGED
+  CHAT_MESSAGE
+}
+
+enum DevicePlatform {
+  IOS
+  ANDROID
+}
+
 // ─── Models ───────────────────────────────────────────────────────────────────
 
 model Region {
@@ -177,12 +194,15 @@ model User {
   phone  String   @unique @map("phone")
   role   UserRole @default(HANDYMAN) @map("role")
   avatar String?  @map("avatar")
+  locale Locale   @default(AR) @map("locale")
 
   // Relation fields
-  admin        Admin?
-  customer     Customer?
-  handyman     Handyman?
-  chatMessages ChatMessage[]
+  admin         Admin?
+  customer      Customer?
+  handyman      Handyman?
+  chatMessages  ChatMessage[]
+  notifications Notification[]
+  deviceTokens  DeviceToken[]
 
   // Timestamps
   createdAt DateTime @default(now()) @map("created_at")
@@ -428,4 +448,47 @@ model ChatMessage {
 
   // Attributes
   @@map("chat_messages")
+}
+
+model Notification {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  userId String           @map("user_id")
+  type   NotificationType @map("type")
+  title  Json             @map("title")
+  body   Json             @map("body")
+  data   Json?            @map("data")
+  readAt DateTime?        @map("read_at")
+
+  // Relation fields
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("notifications")
+}
+
+model DeviceToken {
+  // Primary key
+  id String @id @default(uuid()) @map("id")
+
+  // Own fields
+  userId   String         @map("user_id")
+  token    String         @unique @map("token")
+  platform DevicePlatform @map("platform")
+
+  // Relation fields
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Attributes
+  @@map("device_tokens")
 }

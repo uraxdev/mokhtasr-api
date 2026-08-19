@@ -6,6 +6,7 @@ import { HandymanRepository } from './handyman';
 
 export class UserRepository {
 	static role = z.enum(['ADMIN', 'HANDYMAN', 'CUSTOMER']);
+	static locale = z.enum(['AR', 'EN']);
 
 	static get() {
 		return z.object({
@@ -14,6 +15,7 @@ export class UserRepository {
 			phone: PhoneSchema,
 			role: UserRepository.role,
 			avatar: z.url().nullable(),
+			locale: UserRepository.locale,
 			createdAt: z.iso.datetime(),
 			updatedAt: z.iso.datetime(),
 			admin: AdminRepository.get().nullable(),
@@ -33,7 +35,8 @@ export class UserRepository {
 	static update() {
 		return z.object({
 			name: z.string().optional(),
-			avatar: z.any()
+			avatar: z.any(),
+			locale: UserRepository.locale.optional()
 		});
 	}
 }

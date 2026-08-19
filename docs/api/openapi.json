@@ -39,6 +39,10 @@
 			"description": "Handyman-facing feed of open proposals to bid on."
 		},
 		{
+			"name": "Notifications",
+			"description": "In-app notification inbox and push device token registration."
+		},
+		{
 			"name": "Proposals",
 			"description": "Customer job proposals and their lifecycle."
 		},
@@ -118,6 +122,21 @@
 		},
 		"/jobs": {
 			"$ref": "paths/jobs.json#/Jobs List"
+		},
+		"/notifications": {
+			"$ref": "paths/notifications.json#/Notifications List"
+		},
+		"/notifications/read-all": {
+			"$ref": "paths/notifications.json#/Notifications Mark All Read"
+		},
+		"/notifications/{id}/read": {
+			"$ref": "paths/notifications.json#/Notifications Mark Read"
+		},
+		"/notifications/device-tokens": {
+			"$ref": "paths/notifications.json#/Notifications Register Device"
+		},
+		"/notifications/device-tokens/{token}": {
+			"$ref": "paths/notifications.json#/Notifications Unregister Device"
 		},
 		"/proposals": {
 			"$ref": "paths/proposals.json#/Proposals Collection"
@@ -1182,6 +1201,57 @@
 					}
 				},
 				"required": ["total", "page", "limit", "items"]
+			},
+			"Notification": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string", "format": "uuid" },
+					"userId": { "type": "string", "format": "uuid" },
+					"type": {
+						"type": "string",
+						"enum": ["VISIT_RECEIVED", "VISIT_ACCEPTED", "PROPOSAL_STATUS_CHANGED", "CHAT_MESSAGE"]
+					},
+					"title": {
+						"type": "object",
+						"properties": { "ar": { "type": "string" }, "en": { "type": "string" } },
+						"required": ["ar", "en"]
+					},
+					"body": {
+						"type": "object",
+						"properties": { "ar": { "type": "string" }, "en": { "type": "string" } },
+						"required": ["ar", "en"]
+					},
+					"data": {
+						"type": "object",
+						"nullable": true,
+						"additionalProperties": { "type": "string" },
+						"description": "Deep-linking payload, e.g. { proposalId, visitId }"
+					},
+					"readAt": { "type": "string", "format": "date-time", "nullable": true },
+					"createdAt": { "type": "string", "format": "date-time" },
+					"updatedAt": { "type": "string", "format": "date-time" }
+				},
+				"required": ["id", "userId", "type", "title", "body", "data", "readAt", "createdAt", "updatedAt"]
+			},
+			"Device Token": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string", "format": "uuid" },
+					"userId": { "type": "string", "format": "uuid" },
+					"token": { "type": "string" },
+					"platform": { "type": "string", "enum": ["IOS", "ANDROID"] },
+					"createdAt": { "type": "string", "format": "date-time" },
+					"updatedAt": { "type": "string", "format": "date-time" }
+				},
+				"required": ["id", "userId", "token", "platform", "createdAt", "updatedAt"]
+			},
+			"Device Token Register Payload": {
+				"type": "object",
+				"properties": {
+					"token": { "type": "string" },
+					"platform": { "type": "string", "enum": ["IOS", "ANDROID"] }
+				},
+				"required": ["token", "platform"]
 			}
 		},
 		"responses": {

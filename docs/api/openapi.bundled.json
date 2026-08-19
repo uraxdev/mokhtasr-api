@@ -39,6 +39,10 @@
 			"description": "Handyman-facing feed of open proposals to bid on."
 		},
 		{
+			"name": "Notifications",
+			"description": "In-app notification inbox and push device token registration."
+		},
+		{
 			"name": "Proposals",
 			"description": "Customer job proposals and their lifecycle."
 		},
@@ -1806,6 +1810,436 @@
 								}
 							}
 						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/notifications": {
+			"get": {
+				"summary": "List",
+				"deprecated": false,
+				"description": "Lists the authenticated user's notifications, newest first.",
+				"tags": ["Notifications"],
+				"parameters": [
+					{
+						"name": "cursor",
+						"in": "query",
+						"description": "Notification id to page from, exclusive.",
+						"required": false,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"userId": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"type": {
+												"type": "string",
+												"enum": ["VISIT_RECEIVED", "VISIT_ACCEPTED", "PROPOSAL_STATUS_CHANGED", "CHAT_MESSAGE"]
+											},
+											"title": {
+												"type": "object",
+												"properties": {
+													"ar": {
+														"type": "string"
+													},
+													"en": {
+														"type": "string"
+													}
+												},
+												"required": ["ar", "en"]
+											},
+											"body": {
+												"type": "object",
+												"properties": {
+													"ar": {
+														"type": "string"
+													},
+													"en": {
+														"type": "string"
+													}
+												},
+												"required": ["ar", "en"]
+											},
+											"data": {
+												"type": "object",
+												"nullable": true,
+												"additionalProperties": {
+													"type": "string"
+												},
+												"description": "Deep-linking payload, e.g. { proposalId, visitId }"
+											},
+											"readAt": {
+												"type": "string",
+												"format": "date-time",
+												"nullable": true
+											},
+											"createdAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"updatedAt": {
+												"type": "string",
+												"format": "date-time"
+											}
+										},
+										"required": ["id", "userId", "type", "title", "body", "data", "readAt", "createdAt", "updatedAt"]
+									}
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/notifications/read-all": {
+			"patch": {
+				"summary": "Mark All Read",
+				"deprecated": false,
+				"description": "Marks all of the authenticated user's unread notifications as read.",
+				"tags": ["Notifications"],
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"success": {
+											"type": "boolean"
+										}
+									},
+									"required": ["success"]
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/notifications/{id}/read": {
+			"patch": {
+				"summary": "Mark Read",
+				"deprecated": false,
+				"description": "Marks a single notification belonging to the authenticated user as read.",
+				"tags": ["Notifications"],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"userId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"type": {
+											"type": "string",
+											"enum": ["VISIT_RECEIVED", "VISIT_ACCEPTED", "PROPOSAL_STATUS_CHANGED", "CHAT_MESSAGE"]
+										},
+										"title": {
+											"type": "object",
+											"properties": {
+												"ar": {
+													"type": "string"
+												},
+												"en": {
+													"type": "string"
+												}
+											},
+											"required": ["ar", "en"]
+										},
+										"body": {
+											"type": "object",
+											"properties": {
+												"ar": {
+													"type": "string"
+												},
+												"en": {
+													"type": "string"
+												}
+											},
+											"required": ["ar", "en"]
+										},
+										"data": {
+											"type": "object",
+											"nullable": true,
+											"additionalProperties": {
+												"type": "string"
+											},
+											"description": "Deep-linking payload, e.g. { proposalId, visitId }"
+										},
+										"readAt": {
+											"type": "string",
+											"format": "date-time",
+											"nullable": true
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										}
+									},
+									"required": ["id", "userId", "type", "title", "body", "data", "readAt", "createdAt", "updatedAt"]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"403": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": ["message"]
+										}
+									},
+									"required": ["error"]
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": ["message"]
+										}
+									},
+									"required": ["error"]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/notifications/device-tokens": {
+			"post": {
+				"summary": "Register Device",
+				"deprecated": false,
+				"description": "Upserts a push device token for the authenticated user, keyed by token. Call on login/app-start.",
+				"tags": ["Notifications"],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"token": {
+										"type": "string"
+									},
+									"platform": {
+										"type": "string",
+										"enum": ["IOS", "ANDROID"]
+									}
+								},
+								"required": ["token", "platform"]
+							},
+							"examples": {}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"201": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"userId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"token": {
+											"type": "string"
+										},
+										"platform": {
+											"type": "string",
+											"enum": ["IOS", "ANDROID"]
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										}
+									},
+									"required": ["id", "userId", "token", "platform", "createdAt", "updatedAt"]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": ["message"]
+										}
+									},
+									"required": ["error"]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
+		"/notifications/device-tokens/{token}": {
+			"delete": {
+				"summary": "Unregister Device",
+				"deprecated": false,
+				"description": "Deletes a push device token by its value. Call on logout.",
+				"tags": ["Notifications"],
+				"parameters": [
+					{
+						"name": "token",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"success": {
+											"type": "boolean"
+										}
+									},
+									"required": ["success"]
+								}
+							}
+						},
+						"headers": {}
 					}
 				},
 				"security": [
@@ -6637,6 +7071,111 @@
 					}
 				},
 				"required": ["total", "page", "limit", "items"]
+			},
+			"Notification": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"userId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"type": {
+						"type": "string",
+						"enum": ["VISIT_RECEIVED", "VISIT_ACCEPTED", "PROPOSAL_STATUS_CHANGED", "CHAT_MESSAGE"]
+					},
+					"title": {
+						"type": "object",
+						"properties": {
+							"ar": {
+								"type": "string"
+							},
+							"en": {
+								"type": "string"
+							}
+						},
+						"required": ["ar", "en"]
+					},
+					"body": {
+						"type": "object",
+						"properties": {
+							"ar": {
+								"type": "string"
+							},
+							"en": {
+								"type": "string"
+							}
+						},
+						"required": ["ar", "en"]
+					},
+					"data": {
+						"type": "object",
+						"nullable": true,
+						"additionalProperties": {
+							"type": "string"
+						},
+						"description": "Deep-linking payload, e.g. { proposalId, visitId }"
+					},
+					"readAt": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": ["id", "userId", "type", "title", "body", "data", "readAt", "createdAt", "updatedAt"]
+			},
+			"Device Token": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"userId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"token": {
+						"type": "string"
+					},
+					"platform": {
+						"type": "string",
+						"enum": ["IOS", "ANDROID"]
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": ["id", "userId", "token", "platform", "createdAt", "updatedAt"]
+			},
+			"Device Token Register Payload": {
+				"type": "object",
+				"properties": {
+					"token": {
+						"type": "string"
+					},
+					"platform": {
+						"type": "string",
+						"enum": ["IOS", "ANDROID"]
+					}
+				},
+				"required": ["token", "platform"]
 			}
 		},
 		"responses": {
