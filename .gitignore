@@ -36,4 +36,5 @@ next-env.d.ts
 # Agents & MCPs
 .playwright-mcp
 docs/superpowers
+.superpowers
 .prisma/

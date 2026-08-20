@@ -47,6 +47,10 @@
 			"description": "Customer job proposals and their lifecycle."
 		},
 		{
+			"name": "Realtime",
+			"description": "Live delivery over WebSocket — connection handshake, message envelope, and event types (notification:created, chat:message)."
+		},
+		{
 			"name": "Regions",
 			"description": "Service regions."
 		},
@@ -200,6 +204,9 @@
 		},
 		"/visits/{visitId}/reschedule": {
 			"$ref": "paths/chat.json#/Chat Reschedule"
+		},
+		"/ws": {
+			"$ref": "paths/websocket.json#/WebSocket"
 		}
 	},
 	"components": {

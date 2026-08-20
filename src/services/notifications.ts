@@ -5,6 +5,7 @@ import { Client } from '@/database/lib/types';
 import { DeviceTokenRegisterPayload, DeviceTokenRepository } from '@/database/repositories/device-token';
 import { validateSchema } from '@/lib/utils';
 import { sendPush } from '@/subsystems/push';
+import { broadcastToUser } from '@/subsystems/websockets';
 
 type LocalizedText = { ar: string; en: string };
 
@@ -29,6 +30,8 @@ export class NotificationService {
 				user: { connect: { id: input.userId } }
 			}
 		});
+
+		broadcastToUser(input.userId, { type: 'notification:created', payload: notification });
 
 		this.deliver(input.userId, input.title, input.body, input.data).catch((error) => {
 			console.error('Failed to deliver push notification:', error);

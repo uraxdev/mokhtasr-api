@@ -5,12 +5,13 @@ import { UserService } from '@/services/users';
 import { NextFunction, Request, Response } from 'express';
 
 const publicRequests: { method: string; path: RegExp }[] = [
+	{ method: 'GET', path: /^\/$/ },
+	{ method: 'GET', path: /^\/openapi\.json$/ },
+	{ method: 'GET', path: /^\/favicon\.ico$/ },
 	{ method: 'POST', path: /^\/admins\/clear$/ },
 	{ method: 'POST', path: /^\/auth\/initiate$/ },
 	{ method: 'POST', path: /^\/auth\/verify$/ },
-	{ method: 'POST', path: /^\/auth\/refresh$/ },
-	{ method: 'GET', path: /^\/$/ },
-	{ method: 'GET', path: /^\/openapi\.json$/ }
+	{ method: 'POST', path: /^\/auth\/refresh$/ }
 ];
 
 function isPublicRequest(method: string, path: string) {

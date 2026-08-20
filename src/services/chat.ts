@@ -3,6 +3,7 @@ import { Client } from '@/database/lib/types';
 import { ChatRepository } from '@/database/repositories/chat';
 import { validateSchema } from '@/lib/utils';
 import { NotificationService } from '@/services/notifications';
+import { broadcastToChannel } from '@/subsystems/websockets';
 
 export class ChatService {
 	constructor(private readonly client: Client) {}
@@ -46,6 +47,8 @@ export class ChatService {
 
 		const message = await this.client.chatMessage.create({ data, include: this.include });
 
+		broadcastToChannel(`chat:${visitId}`, { type: 'chat:message', payload: message });
+
 		await new NotificationService(this.client).create({
 			userId: this.otherParticipantUserId(visit, userId),
 			type: 'CHAT_MESSAGE',
@@ -73,6 +76,8 @@ export class ChatService {
 		} satisfies Prisma.ChatMessageCreateInput;
 
 		const message = await this.client.chatMessage.create({ data, include: this.include });
+
+		broadcastToChannel(`chat:${visitId}`, { type: 'chat:message', payload: message });
 
 		await new NotificationService(this.client).create({
 			userId: this.otherParticipantUserId(visit, userId),

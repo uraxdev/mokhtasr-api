@@ -1,3 +1,5 @@
+import { createServer } from 'http';
+
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
@@ -7,6 +9,7 @@ import { withRequestLogging } from '@/middlewares/with-request-logging';
 import router from '@/routes/_router';
 import { withAuthentication } from '@/subsystems/auth/with-authentication';
 import { upload } from '@/subsystems/multer';
+import { createWebSocketServer } from '@/subsystems/websockets';
 
 dotenv.config({ quiet: true });
 
@@ -22,4 +25,7 @@ app.use(withAuthentication);
 app.use('/', upload.any(), router());
 app.use(withErrorBoundary);
 
-app.listen(PORT, () => console.log(`🚀 Server is ready on port ${PORT}`));
+const server = createServer(app);
+createWebSocketServer(server);
+
+server.listen(PORT, () => console.log(`🚀 Server is ready on port ${PORT}`));

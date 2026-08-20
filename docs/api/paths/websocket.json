@@ -1,0 +1,28 @@
+{
+	"WebSocket": {
+		"get": {
+			"summary": "Connect",
+			"deprecated": false,
+			"description": "Not a regular HTTP request — this documents the WebSocket upgrade at `ws(s)://<host>/ws`. Authenticate by passing a valid access token as a query parameter: `/ws?token=<access token>`.\n\nOn success the server sends a `connection:established` message and the socket stays open; on failure it sends a `connection:error` message and closes with code `4001` (missing/invalid token, or the token's user no longer exists). A setup error after a successful auth handshake closes with code `4000`. A graceful server shutdown sends `connection:closing` and closes with code `1001`. This handshake never goes through the REST error boundary — auth failures are WS close codes, not HTTP error responses.\n\n### Message envelope\n\nEvery message (both directions) is JSON matching:\n```\n{ \"type\": string, \"correlationId\"?: string, \"timestamp\"?: number, \"payload\"?: object, \"error\"?: boolean, \"errorMessage\"?: string }\n```\n\n### Client → server message types\n\n- `subscribe` — `payload: { \"channel\": string }`. Subscribes this connection to a channel; responds with `subscription:success`.\n- `unsubscribe` — `payload: { \"channel\": string }`. Responds with `unsubscription:success`.\n- `ping` — `payload: { \"timestamp\"?: number }`. Responds with `pong`, echoing the timestamp plus `serverTime`.\n\n### Server → client message types\n\n- `connection:established` — sent once, right after a successful handshake. `payload: { \"connectionId\": string, \"userId\": string, \"role\": \"ADMIN\" | \"HANDYMAN\" | \"CUSTOMER\", \"serverTime\": number }`.\n- `notification:created` — pushed live whenever a `Notification` row is created for this user (see the Notifications tag for the full trigger list: new offers, proposal status changes, chat messages, etc.). `payload` is a `Notification` object.\n- `chat:message` — pushed to every connection subscribed to the sending visit's channel (`` chat:{visitId} ``) whenever a chat message or reschedule proposal is sent. `payload` is a `ChatMessage` object. Subscribe to a visit's channel while its chat screen is open to receive these instantly, in addition to the `notification:created` push the other participant gets regardless of subscription.\n- `message:error` — malformed inbound JSON, a schema-invalid payload, or an unknown message `type`. The connection stays open.\n- `connection:error` — handshake/auth failure; immediately followed by the socket closing.\n- `connection:closing` — sent to every connection just before a graceful server shutdown.\n\n### Channels\n\nCurrently one channel family is used: `` chat:{visitId} `` for live chat streaming on a specific visit. A client must be an active participant of that visit to meaningfully receive anything (the server does not enforce channel-level authorization beyond the connection's own auth — any authenticated connection may subscribe to any channel name, but only receives events actually broadcast to it).",
+			"tags": ["Realtime"],
+			"parameters": [
+				{
+					"name": "token",
+					"in": "query",
+					"description": "A valid access token (the same JWT returned from `/auth/verify` or `/auth/refresh`).",
+					"required": true,
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"responses": {
+				"101": {
+					"description": "Switching Protocols — the connection is upgraded to WebSocket. See the operation description for the message envelope and event types exchanged afterward. Auth failures do not return an HTTP error response; they close the socket with code 4001 (see description).",
+					"content": {}
+				}
+			},
+			"security": []
+		}
+	}
+}
