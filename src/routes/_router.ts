@@ -17,6 +17,7 @@ import reviews from './reviews';
 import services from './services';
 import users from './users';
 import visits from './visits';
+import websockets from './websockets';
 
 const router = Router();
 
@@ -38,6 +39,7 @@ export default (): Router => {
 	reviews(router);
 	services(router);
 	users(router);
+	websockets(router);
 
 	return router;
 };

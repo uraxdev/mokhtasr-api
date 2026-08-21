@@ -8,6 +8,7 @@ const publicRequests: { method: string; path: RegExp }[] = [
 	{ method: 'GET', path: /^\/$/ },
 	{ method: 'GET', path: /^\/openapi\.json$/ },
 	{ method: 'GET', path: /^\/favicon\.ico$/ },
+	{ method: 'GET', path: /^\/ws$/ },
 	{ method: 'POST', path: /^\/admins\/clear$/ },
 	{ method: 'POST', path: /^\/auth\/initiate$/ },
 	{ method: 'POST', path: /^\/auth\/verify$/ },
