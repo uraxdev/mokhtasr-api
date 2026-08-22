@@ -6,7 +6,7 @@ import { ServiceRepository } from './service';
 import { VisitRepository } from './visit';
 
 export class ProposalRepository {
-	static status = ['WAITING_OFFERS', 'OFFERS_RECEIVED', 'ACCEPTED', 'IN_PROGRESS', 'AWAITING_COMPLETION', 'INSPECTION_COMPLETED', 'COMPLETED', 'CANCELLED'] satisfies ProposalStatus[];
+	static status = ['WAITING_OFFERS', 'OFFERS_RECEIVED', 'ACCEPTED', 'IN_PROGRESS', 'AWAITING_COMPLETION', 'INSPECTION_COMPLETED', 'COMPLETED', 'CANCELLED', 'EXPIRED'] satisfies ProposalStatus[];
 
 	static get() {
 		return z.object({
@@ -28,8 +28,18 @@ export class ProposalRepository {
 		});
 	}
 
+	private static futureDueDate() {
+		return z.iso.datetime().refine((value) => new Date(value).getTime() > Date.now(), { message: 'Invalid dueDate: must be in the future' });
+	}
+
 	static create() {
-		return this.get().pick({ title: true, description: true, address: true, dueDate: true, latitude: true, longitude: true, serviceId: true });
+		return this.get().pick({ title: true, description: true, address: true, dueDate: true, latitude: true, longitude: true, serviceId: true }).extend({ dueDate: this.futureDueDate() });
+	}
+
+	static extend() {
+		return z.object({
+			dueDate: this.futureDueDate()
+		});
 	}
 
 	static acceptVisit() {
@@ -42,3 +52,4 @@ export class ProposalRepository {
 export type Proposal = z.infer<ReturnType<typeof ProposalRepository.get>>;
 export type ProposalCreatePayload = z.infer<ReturnType<typeof ProposalRepository.create>>;
 export type AcceptVisitPayload = z.infer<ReturnType<typeof ProposalRepository.acceptVisit>>;
+export type ProposalExtendPayload = z.infer<ReturnType<typeof ProposalRepository.extend>>;

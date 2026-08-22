@@ -215,6 +215,64 @@
 			]
 		}
 	},
+	"Proposals Extend": {
+		"patch": {
+			"summary": "Extend",
+			"deprecated": false,
+			"description": "Customers only. Only valid when the proposal status is EXPIRED; sets a new due date and moves it back to WAITING_OFFERS. Offers submitted before expiry were already declined and are not restored.",
+			"operationId": "extendProposal",
+			"tags": ["Proposals"],
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"description": "",
+					"required": true,
+					"schema": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			],
+			"requestBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "../openapi.json#/components/schemas/Proposal Extend Payload"
+						},
+						"examples": {}
+					}
+				},
+				"required": true
+			},
+			"responses": {
+				"200": {
+					"description": "Due date extended; proposal status updated to WAITING_OFFERS",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "../openapi.json#/components/schemas/Proposal"
+							}
+						}
+					},
+					"headers": {}
+				},
+				"400": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				},
+				"409": {
+					"$ref": "../openapi.json#/components/responses/Error Response",
+					"description": ""
+				}
+			},
+			"security": [
+				{
+					"bearer": []
+				}
+			]
+		}
+	},
 	"Proposals Reopen": {
 		"patch": {
 			"summary": "Reopen",

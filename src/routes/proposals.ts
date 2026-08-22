@@ -62,6 +62,19 @@ export default (router: Router) => {
 		}
 	});
 
+	router.patch('/proposals/:id/extend', async (req, res, next) => {
+		const id = req.params['id'];
+		const payload = req.body;
+		const customerId = res.locals.entities.customer;
+
+		try {
+			if (!customerId) throw new Error('Forbidden: customer only');
+			return res.status(200).json(await new ProposalService(client).extend(id, customerId, payload));
+		} catch (error) {
+			return next(error);
+		}
+	});
+
 	router.patch('/proposals/:id/reopen', async (req, res, next) => {
 		const id = req.params['id'];
 		const customerId = res.locals.entities.customer;

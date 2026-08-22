@@ -2278,7 +2278,8 @@
 									},
 									"dueDate": {
 										"type": "string",
-										"format": "date-time"
+										"format": "date-time",
+										"description": "Deadline for the work. Must be in the future."
 									},
 									"latitude": {
 										"type": "number",
@@ -2324,7 +2325,7 @@
 										"status": {
 											"type": "string",
 											"default": "WAITING_OFFERS",
-											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
+											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED", "EXPIRED"]
 										},
 										"dueDate": {
 											"type": "string",
@@ -2437,7 +2438,7 @@
 											"status": {
 												"type": "string",
 												"default": "WAITING_OFFERS",
-												"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
+												"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED", "EXPIRED"]
 											},
 											"dueDate": {
 												"type": "string",
@@ -2562,7 +2563,7 @@
 										"status": {
 											"type": "string",
 											"default": "WAITING_OFFERS",
-											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
+											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED", "EXPIRED"]
 										},
 										"dueDate": {
 											"type": "string",
@@ -2704,7 +2705,7 @@
 										"status": {
 											"type": "string",
 											"default": "WAITING_OFFERS",
-											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
+											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED", "EXPIRED"]
 										},
 										"dueDate": {
 											"type": "string",
@@ -2828,7 +2829,7 @@
 										"status": {
 											"type": "string",
 											"default": "WAITING_OFFERS",
-											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
+											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED", "EXPIRED"]
 										},
 										"dueDate": {
 											"type": "string",
@@ -2909,6 +2910,176 @@
 				]
 			}
 		},
+		"/proposals/{id}/extend": {
+			"patch": {
+				"summary": "Extend",
+				"deprecated": false,
+				"description": "Customers only. Only valid when the proposal status is EXPIRED; sets a new due date and moves it back to WAITING_OFFERS. Offers submitted before expiry were already declined and are not restored.",
+				"operationId": "extendProposal",
+				"tags": ["Proposals"],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"dueDate": {
+										"type": "string",
+										"format": "date-time",
+										"description": "New deadline for the work. Must be in the future."
+									}
+								},
+								"required": ["dueDate"]
+							},
+							"examples": {}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Due date extended; proposal status updated to WAITING_OFFERS",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"title": {
+											"type": "string"
+										},
+										"description": {
+											"type": "string"
+										},
+										"address": {
+											"type": "string"
+										},
+										"status": {
+											"type": "string",
+											"default": "WAITING_OFFERS",
+											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED", "EXPIRED"]
+										},
+										"dueDate": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"latitude": {
+											"type": "number",
+											"nullable": true
+										},
+										"longitude": {
+											"type": "number",
+											"nullable": true
+										},
+										"serviceId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"customerId": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"service": {
+											"$ref": "#/components/schemas/Service"
+										},
+										"visits": {
+											"type": "array",
+											"items": {
+												"$ref": "#/components/schemas/Visit"
+											}
+										}
+									},
+									"required": ["id", "title", "description", "address", "status", "dueDate", "serviceId", "customerId", "createdAt", "updatedAt", "service", "visits"]
+								}
+							}
+						},
+						"headers": {}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": ["message"]
+										}
+									},
+									"required": ["error"]
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "",
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "object",
+											"properties": {
+												"details": {
+													"type": "string",
+													"nullable": true
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": ["message"]
+										}
+									},
+									"required": ["error"]
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				]
+			}
+		},
 		"/proposals/{id}/reopen": {
 			"patch": {
 				"summary": "Reopen",
@@ -2952,7 +3123,7 @@
 										"status": {
 											"type": "string",
 											"default": "WAITING_OFFERS",
-											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
+											"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED", "EXPIRED"]
 										},
 										"dueDate": {
 											"type": "string",
@@ -6590,7 +6761,7 @@
 					"status": {
 						"type": "string",
 						"default": "WAITING_OFFERS",
-						"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
+						"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED", "EXPIRED"]
 					},
 					"dueDate": {
 						"type": "string",
@@ -6646,7 +6817,8 @@
 					},
 					"dueDate": {
 						"type": "string",
-						"format": "date-time"
+						"format": "date-time",
+						"description": "Deadline for the work. Must be in the future."
 					},
 					"latitude": {
 						"type": "number",
@@ -6662,6 +6834,17 @@
 					}
 				},
 				"required": ["title", "description", "address", "dueDate", "serviceId"]
+			},
+			"Proposal Extend Payload": {
+				"type": "object",
+				"properties": {
+					"dueDate": {
+						"type": "string",
+						"format": "date-time",
+						"description": "New deadline for the work. Must be in the future."
+					}
+				},
+				"required": ["dueDate"]
 			},
 			"Accept Visit Payload": {
 				"type": "object",

@@ -49,6 +49,7 @@ enum ProposalStatus {
   INSPECTION_COMPLETED
   COMPLETED
   CANCELLED
+  EXPIRED
 }
 
 enum VisitType {
@@ -344,6 +345,7 @@ model Proposal {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   // Attributes
+  @@index([status, dueDate])
   @@map("proposals")
 }
 

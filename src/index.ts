@@ -9,6 +9,7 @@ import { withRequestLogging } from '@/middlewares/with-request-logging';
 import router from '@/routes/_router';
 import { withAuthentication } from '@/subsystems/auth/with-authentication';
 import { upload } from '@/subsystems/multer';
+import { createScheduler } from '@/subsystems/scheduler';
 import { createWebSocketServer } from '@/subsystems/websockets';
 
 dotenv.config({ quiet: true });
@@ -27,5 +28,6 @@ app.use(withErrorBoundary);
 
 const server = createServer(app);
 createWebSocketServer(server);
+createScheduler();
 
 server.listen(PORT, () => console.log(`🚀 Server is ready on port ${PORT}`));

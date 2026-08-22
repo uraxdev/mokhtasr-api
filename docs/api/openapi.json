@@ -154,6 +154,9 @@
 		"/proposals/{id}/cancel": {
 			"$ref": "paths/proposals.json#/Proposals Cancel"
 		},
+		"/proposals/{id}/extend": {
+			"$ref": "paths/proposals.json#/Proposals Extend"
+		},
 		"/proposals/{id}/reopen": {
 			"$ref": "paths/proposals.json#/Proposals Reopen"
 		},
@@ -647,7 +650,7 @@
 					"status": {
 						"type": "string",
 						"default": "WAITING_OFFERS",
-						"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED"]
+						"enum": ["WAITING_OFFERS", "OFFERS_RECEIVED", "ACCEPTED", "IN_PROGRESS", "AWAITING_COMPLETION", "INSPECTION_COMPLETED", "COMPLETED", "CANCELLED", "EXPIRED"]
 					},
 					"dueDate": {
 						"type": "string",
@@ -703,7 +706,8 @@
 					},
 					"dueDate": {
 						"type": "string",
-						"format": "date-time"
+						"format": "date-time",
+						"description": "Deadline for the work. Must be in the future."
 					},
 					"latitude": {
 						"type": "number",
@@ -719,6 +723,17 @@
 					}
 				},
 				"required": ["title", "description", "address", "dueDate", "serviceId"]
+			},
+			"Proposal Extend Payload": {
+				"type": "object",
+				"properties": {
+					"dueDate": {
+						"type": "string",
+						"format": "date-time",
+						"description": "New deadline for the work. Must be in the future."
+					}
+				},
+				"required": ["dueDate"]
 			},
 			"Accept Visit Payload": {
 				"type": "object",
@@ -1212,51 +1227,105 @@
 			"Notification": {
 				"type": "object",
 				"properties": {
-					"id": { "type": "string", "format": "uuid" },
-					"userId": { "type": "string", "format": "uuid" },
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"userId": {
+						"type": "string",
+						"format": "uuid"
+					},
 					"type": {
 						"type": "string",
 						"enum": ["VISIT_RECEIVED", "VISIT_ACCEPTED", "PROPOSAL_STATUS_CHANGED", "CHAT_MESSAGE"]
 					},
 					"title": {
 						"type": "object",
-						"properties": { "ar": { "type": "string" }, "en": { "type": "string" } },
+						"properties": {
+							"ar": {
+								"type": "string"
+							},
+							"en": {
+								"type": "string"
+							}
+						},
 						"required": ["ar", "en"]
 					},
 					"body": {
 						"type": "object",
-						"properties": { "ar": { "type": "string" }, "en": { "type": "string" } },
+						"properties": {
+							"ar": {
+								"type": "string"
+							},
+							"en": {
+								"type": "string"
+							}
+						},
 						"required": ["ar", "en"]
 					},
 					"data": {
 						"type": "object",
 						"nullable": true,
-						"additionalProperties": { "type": "string" },
+						"additionalProperties": {
+							"type": "string"
+						},
 						"description": "Deep-linking payload, e.g. { proposalId, visitId }"
 					},
-					"readAt": { "type": "string", "format": "date-time", "nullable": true },
-					"createdAt": { "type": "string", "format": "date-time" },
-					"updatedAt": { "type": "string", "format": "date-time" }
+					"readAt": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
 				},
 				"required": ["id", "userId", "type", "title", "body", "data", "readAt", "createdAt", "updatedAt"]
 			},
 			"Device Token": {
 				"type": "object",
 				"properties": {
-					"id": { "type": "string", "format": "uuid" },
-					"userId": { "type": "string", "format": "uuid" },
-					"token": { "type": "string" },
-					"platform": { "type": "string", "enum": ["IOS", "ANDROID"] },
-					"createdAt": { "type": "string", "format": "date-time" },
-					"updatedAt": { "type": "string", "format": "date-time" }
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"userId": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"token": {
+						"type": "string"
+					},
+					"platform": {
+						"type": "string",
+						"enum": ["IOS", "ANDROID"]
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
 				},
 				"required": ["id", "userId", "token", "platform", "createdAt", "updatedAt"]
 			},
 			"Device Token Register Payload": {
 				"type": "object",
 				"properties": {
-					"token": { "type": "string" },
-					"platform": { "type": "string", "enum": ["IOS", "ANDROID"] }
+					"token": {
+						"type": "string"
+					},
+					"platform": {
+						"type": "string",
+						"enum": ["IOS", "ANDROID"]
+					}
 				},
 				"required": ["token", "platform"]
 			}

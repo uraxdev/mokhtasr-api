@@ -1,6 +1,6 @@
 import { Prisma, PrismaClient } from '@/database/generated/client';
 import { Client } from '@/database/lib/types';
-import { AcceptVisitPayload, ProposalCreatePayload, ProposalRepository } from '@/database/repositories/proposal';
+import { AcceptVisitPayload, ProposalCreatePayload, ProposalExtendPayload, ProposalRepository } from '@/database/repositories/proposal';
 import { validateSchema } from '@/lib/utils';
 import { NotificationService } from '@/services/notifications';
 
@@ -170,5 +170,78 @@ export class ProposalService {
 
 			return reopened;
 		});
+	}
+
+	async extend(id: string, customerId: string, payload: ProposalExtendPayload) {
+		validateSchema(ProposalRepository.extend(), payload);
+
+		const proposal = await this.client.proposal.findUnique({ where: { id } });
+
+		if (!proposal) throw new Error('Proposal not found');
+		if (proposal.customerId !== customerId) throw new Error('Forbidden');
+		if (proposal.status !== 'EXPIRED') throw new Error(`Conflict: cannot extend a proposal with status ${proposal.status}`);
+
+		const data = {
+			status: 'WAITING_OFFERS',
+			dueDate: new Date(payload.dueDate)
+		} satisfies Prisma.ProposalUpdateInput;
+
+		return await this.client.proposal.update({ where: { id }, data, include: { service: this.include.service } });
+	}
+
+	async expireOverdue(now: Date = new Date()) {
+		const overdue = await this.client.proposal.findMany({
+			where: { status: { in: ['WAITING_OFFERS', 'OFFERS_RECEIVED'] }, dueDate: { lt: now } },
+			select: {
+				id: true,
+				title: true,
+				customer: { select: { userId: true } },
+				visits: { where: { status: 'PENDING' }, select: { handyman: { select: { userId: true } } } }
+			}
+		});
+
+		let expired = 0;
+
+		// One transaction per proposal so a single bad row cannot roll back the whole sweep.
+		for (const proposal of overdue) {
+			try {
+				await (this.client as PrismaClient).$transaction(async (tx) => {
+					await tx.proposal.update({ where: { id: proposal.id }, data: { status: 'EXPIRED' } });
+					await tx.visit.updateMany({ where: { proposalId: proposal.id, status: 'PENDING' }, data: { status: 'DECLINED' } });
+
+					const notifications = new NotificationService(tx);
+
+					await notifications.create({
+						userId: proposal.customer.userId,
+						type: 'PROPOSAL_STATUS_CHANGED',
+						title: { ar: 'انتهت صلاحية المقترح', en: 'Proposal expired' },
+						body: {
+							ar: `انقضى الموعد النهائي للمقترح: ${proposal.title}. حدد موعدًا جديدًا لاستئناف تلقي العروض.`,
+							en: `The due date passed on your proposal: ${proposal.title}. Set a new due date to start receiving offers again.`
+						},
+						data: { proposalId: proposal.id }
+					});
+
+					for (const visit of proposal.visits) {
+						await notifications.create({
+							userId: visit.handyman.userId,
+							type: 'PROPOSAL_STATUS_CHANGED',
+							title: { ar: 'انتهت صلاحية المقترح', en: 'Proposal expired' },
+							body: {
+								ar: `انتهت صلاحية المقترح الذي قدمت عليه عرضًا: ${proposal.title}`,
+								en: `The proposal you submitted an offer on has expired: ${proposal.title}`
+							},
+							data: { proposalId: proposal.id }
+						});
+					}
+				});
+
+				expired += 1;
+			} catch (error) {
+				console.error(`Failed to expire proposal ${proposal.id}:`, error);
+			}
+		}
+
+		return { expired };
 	}
 }
