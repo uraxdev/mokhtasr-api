@@ -10,6 +10,8 @@ const publicRequests: { method: string; path: RegExp }[] = [
 	{ method: 'GET', path: /^\/favicon\.ico$/ },
 	{ method: 'GET', path: /^\/ws$/ },
 	{ method: 'POST', path: /^\/admins\/clear$/ },
+	{ method: 'GET', path: /^\/admins\/portal(\/.*)?$/ },
+	{ method: 'POST', path: /^\/admins\/portal(\/.*)?$/ },
 	{ method: 'POST', path: /^\/auth\/initiate$/ },
 	{ method: 'POST', path: /^\/auth\/verify$/ },
 	{ method: 'POST', path: /^\/auth\/refresh$/ }

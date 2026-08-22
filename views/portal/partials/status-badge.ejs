@@ -1,0 +1,2 @@
+<% const colors = { PENDING: 'bg-amber-100 text-amber-800', ACCEPTED: 'bg-emerald-100 text-emerald-800', REJECTED: 'bg-red-100 text-red-800', EXPIRED: 'bg-slate-200 text-slate-600' }; %>
+<span class="inline-block rounded-full px-3 py-1 text-xs font-medium <%= colors[status] || 'bg-slate-100 text-slate-700' %>"><%= status %></span>

@@ -1,5 +1,6 @@
 import { createServer } from 'http';
 
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
@@ -9,6 +10,7 @@ import { withRequestLogging } from '@/middlewares/with-request-logging';
 import router from '@/routes/_router';
 import { withAuthentication } from '@/subsystems/auth/with-authentication';
 import { upload } from '@/subsystems/multer';
+import { configurePortalViewEngine } from '@/subsystems/portal';
 import { createScheduler } from '@/subsystems/scheduler';
 import { createWebSocketServer } from '@/subsystems/websockets';
 
@@ -18,8 +20,12 @@ const PORT = process.env['PORT'] || 3000;
 
 const app = express();
 
+configurePortalViewEngine(app);
+
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use(withRequestLogging);
 app.use(withAuthentication);

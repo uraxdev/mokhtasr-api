@@ -7,7 +7,23 @@ import regions from './regions.json';
 const adapter = new PrismaPg({ connectionString: env('DATABASE_URL') });
 const client = new PrismaClient({ adapter });
 
+const admins = [
+	{ name: 'Seif Essam', phone: '+201558237511' },
+	{ name: 'Ziad Ahmed', phone: '+201092018843' }
+];
+
 async function main() {
+	for (const admin of admins) {
+		await client.user.create({
+			data: {
+				name: admin.name,
+				phone: admin.phone,
+				role: 'ADMIN',
+				admin: { create: {} }
+			}
+		});
+	}
+
 	for (const region of regions) {
 		await client.region.create({
 			data: {

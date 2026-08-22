@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title><%= title %> · Mokhtasr Admin</title>
+		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+	</head>
+	<body class="bg-slate-50 text-slate-900 min-h-screen">
+		<% if (typeof authenticated !== 'undefined' && authenticated) { %>
+		<nav class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
+			<a href="/admins/portal/applications" class="font-semibold text-lg">Mokhtasr Admin</a>
+			<form method="POST" action="/admins/portal/logout">
+				<button type="submit" class="text-sm text-slate-300 hover:text-white">Log out</button>
+			</form>
+		</nav>
+		<% } %>
+		<main class="max-w-5xl mx-auto px-6 py-10">

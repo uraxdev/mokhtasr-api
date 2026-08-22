@@ -1,0 +1,48 @@
+<%- include('../partials/header', { title: 'Applications', authenticated: true }) %>
+
+<h1 class="text-2xl font-semibold mb-6">Handyman applications</h1>
+
+<div class="flex gap-2 mb-6">
+	<% ['ALL', 'PENDING', 'ACCEPTED', 'REJECTED', 'EXPIRED'].forEach(function (tab) { %>
+	<a
+		href="<%= tab === 'ALL' ? '/admins/portal/applications' : '/admins/portal/applications?status=' + tab %>"
+		class="rounded px-3 py-1.5 text-sm font-medium <%= activeStatus === tab ? 'bg-slate-900 text-white' : 'bg-white text-slate-600 border border-slate-300' %>"
+	>
+		<%= tab %>
+	</a>
+	<% }) %>
+</div>
+
+<div class="bg-white rounded-lg shadow overflow-hidden">
+	<table class="w-full text-sm text-left">
+		<thead class="bg-slate-100 text-slate-500 uppercase text-xs">
+			<tr>
+				<th class="px-4 py-3">Name</th>
+				<th class="px-4 py-3">Status</th>
+				<th class="px-4 py-3">Submitted</th>
+				<th class="px-4 py-3">Expires</th>
+				<th class="px-4 py-3"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% if (applications.length === 0) { %>
+			<tr>
+				<td colspan="5" class="px-4 py-6 text-center text-slate-400">No applications found.</td>
+			</tr>
+			<% } %>
+			<% applications.forEach(function (application) { %>
+			<tr class="border-t border-slate-100">
+				<td class="px-4 py-3"><%= application.firstName %> <%= application.lastName %></td>
+				<td class="px-4 py-3"><%- include('../partials/status-badge', { status: application.status }) %></td>
+				<td class="px-4 py-3"><%= new Date(application.createdAt).toLocaleDateString() %></td>
+				<td class="px-4 py-3"><%= new Date(application.expiresAt).toLocaleDateString() %></td>
+				<td class="px-4 py-3 text-right">
+					<a href="/admins/portal/applications/<%= application.id %>" class="text-slate-600 hover:text-slate-900 font-medium">View &rarr;</a>
+				</td>
+			</tr>
+			<% }) %>
+		</tbody>
+	</table>
+</div>
+
+<%- include('../partials/footer') %>

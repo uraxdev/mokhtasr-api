@@ -12,8 +12,8 @@ export class ApplicationService {
 		services: { select: { id: true, name: true } }
 	} satisfies Prisma.ApplicationInclude;
 
-	async list() {
-		return await this.client.application.findMany({ orderBy: { createdAt: 'desc' }, include: this.include });
+	async list(where?: Prisma.ApplicationWhereInput) {
+		return await this.client.application.findMany({ where, orderBy: { createdAt: 'desc' }, include: this.include });
 	}
 
 	async find(id: string) {

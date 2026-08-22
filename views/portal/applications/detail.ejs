@@ -1,0 +1,61 @@
+<%- include('../partials/header', { title: 'Application detail', authenticated: true }) %>
+
+<a href="/admins/portal/applications" class="text-sm text-slate-500 hover:text-slate-700">&larr; Back to applications</a>
+
+<div class="mt-4 bg-white rounded-lg shadow p-8">
+	<div class="flex items-center justify-between mb-6">
+		<h1 class="text-2xl font-semibold"><%= application.firstName %> <%= application.lastName %></h1>
+		<%- include('../partials/status-badge', { status: application.status }) %>
+	</div>
+
+	<% if (error) { %>
+	<p class="mb-4 text-sm text-red-600"><%= error %></p>
+	<% } %>
+
+	<dl class="grid grid-cols-2 gap-4 text-sm mb-8">
+		<div>
+			<dt class="text-slate-500">Birthdate</dt>
+			<dd><%= new Date(application.birthdate).toLocaleDateString() %></dd>
+		</div>
+		<div>
+			<dt class="text-slate-500">Expires at</dt>
+			<dd><%= new Date(application.expiresAt).toLocaleDateString() %></dd>
+		</div>
+		<div>
+			<dt class="text-slate-500">Regions</dt>
+			<dd><%= application.regions.map(function (region) { return region.name; }).join(', ') || '—' %></dd>
+		</div>
+		<div>
+			<dt class="text-slate-500">Services</dt>
+			<dd><%= application.services.map(function (service) { return service.name.en; }).join(', ') || '—' %></dd>
+		</div>
+		<% if (application.notes) { %>
+		<div class="col-span-2">
+			<dt class="text-slate-500">Notes</dt>
+			<dd><%= application.notes %></dd>
+		</div>
+		<% } %>
+	</dl>
+
+	<h2 class="text-lg font-semibold mb-3">KYC documents</h2>
+	<div class="grid grid-cols-3 gap-4 mb-8">
+		<a href="<%= application.nationalIdFront %>" target="_blank" rel="noopener"><img src="<%= application.nationalIdFront %>" alt="National ID front" class="rounded border border-slate-200 w-full h-40 object-cover" /></a>
+		<a href="<%= application.nationalIdBack %>" target="_blank" rel="noopener"><img src="<%= application.nationalIdBack %>" alt="National ID back" class="rounded border border-slate-200 w-full h-40 object-cover" /></a>
+		<a href="<%= application.selfie %>" target="_blank" rel="noopener"><img src="<%= application.selfie %>" alt="Selfie" class="rounded border border-slate-200 w-full h-40 object-cover" /></a>
+	</div>
+
+	<% if (application.status === 'PENDING') { %>
+	<div class="flex gap-4">
+		<form method="POST" action="/admins/portal/applications/<%= application.id %>/accept">
+			<button type="submit" class="rounded bg-emerald-600 text-white px-4 py-2 text-sm font-medium hover:bg-emerald-700">Accept</button>
+		</form>
+
+		<form method="POST" action="/admins/portal/applications/<%= application.id %>/reject" class="flex items-start gap-2">
+			<textarea name="notes" required placeholder="Reason for rejection" rows="1" class="rounded border border-slate-300 px-3 py-2 text-sm"></textarea>
+			<button type="submit" class="rounded bg-red-600 text-white px-4 py-2 text-sm font-medium hover:bg-red-700">Reject</button>
+		</form>
+	</div>
+	<% } %>
+</div>
+
+<%- include('../partials/footer') %>

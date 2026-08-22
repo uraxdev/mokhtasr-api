@@ -1,0 +1,24 @@
+<%- include('partials/header', { title: 'Verify', authenticated: false }) %>
+
+<div class="max-w-sm mx-auto bg-white rounded-lg shadow p-8">
+	<h1 class="text-xl font-semibold mb-2">Enter the code</h1>
+	<p class="text-sm text-slate-500 mb-6">Sent to <%= phone %></p>
+
+	<% if (error) { %>
+	<p class="mb-4 text-sm text-red-600"><%= error %></p>
+	<% } %>
+
+	<form method="POST" action="/admins/portal/verify" class="space-y-4">
+		<input type="hidden" name="verificationId" value="<%= verificationId %>" />
+		<input type="hidden" name="phone" value="<%= phone %>" />
+		<div>
+			<label for="otp" class="block text-sm font-medium mb-1">6-digit code</label>
+			<input type="text" id="otp" name="otp" inputmode="numeric" pattern="\d{6}" maxlength="6" required class="w-full rounded border border-slate-300 px-3 py-2 text-sm tracking-widest focus:outline-none focus:ring-2 focus:ring-slate-500" />
+		</div>
+		<button type="submit" class="w-full rounded bg-slate-900 text-white py-2 text-sm font-medium hover:bg-slate-800">Verify</button>
+	</form>
+
+	<a href="/admins/portal/login" class="block mt-4 text-sm text-slate-500 hover:text-slate-700">&larr; Use a different number</a>
+</div>
+
+<%- include('partials/footer') %>

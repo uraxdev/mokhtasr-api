@@ -10,6 +10,7 @@ import financials from './financials';
 import handymen from './handymen';
 import jobs from './jobs';
 import notifications from './notifications';
+import portal from './portal';
 import proposals from './proposals';
 import regions from './regions';
 import register from './register';
@@ -31,6 +32,7 @@ export default (): Router => {
 	financials(router);
 	jobs(router);
 	notifications(router);
+	portal(router);
 	visits(router);
 	proposals(router);
 	handymen(router);
