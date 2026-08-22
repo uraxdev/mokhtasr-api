@@ -31,7 +31,7 @@ export class AuthSystem {
 
 		const verification = await this.client.verification.findUnique({ where: { id: payload.verificationId } });
 		if (!verification) throw new Error('Verification not found');
-		if (verification.expiresAt < new Date()) throw new Error('Verification expired');
+		if (verification.expiresAt < new Date()) throw new Error('Unauthorized: verification expired');
 
 		const tokenPayload = verifyToken(verification.token);
 		validateSchema(AuthRepository.verificationToken(), tokenPayload);

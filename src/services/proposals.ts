@@ -55,7 +55,7 @@ export class ProposalService {
 		if (!proposal) throw new Error('Proposal not found');
 		if (proposal.customerId !== customerId) throw new Error('Forbidden');
 		if (proposal.status === 'COMPLETED' || proposal.status === 'CANCELLED') {
-			throw new Error(`Cannot cancel a proposal with status ${proposal.status}`);
+			throw new Error(`Conflict: cannot cancel a proposal with status ${proposal.status}`);
 		}
 
 		const data = {
@@ -99,12 +99,12 @@ export class ProposalService {
 			if (!proposal) throw new Error('Proposal not found');
 			if (proposal.customerId !== customerId) throw new Error('Forbidden');
 			if (proposal.status !== 'WAITING_OFFERS' && proposal.status !== 'OFFERS_RECEIVED') {
-				throw new Error(`Cannot accept a visit on a proposal with status ${proposal.status}`);
+				throw new Error(`Conflict: cannot accept a visit on a proposal with status ${proposal.status}`);
 			}
 
 			const visit = proposal.visits.find((v) => v.id === payload.visitId);
 			if (!visit) throw new Error('Visit not found on this proposal');
-			if (visit.status !== 'PENDING') throw new Error('Visit is no longer pending');
+			if (visit.status !== 'PENDING') throw new Error('Conflict: visit is no longer pending');
 
 			// Accept chosen visit, decline all others
 			await tx.visit.updateMany({
@@ -144,7 +144,7 @@ export class ProposalService {
 		if (!proposal) throw new Error('Proposal not found');
 		if (proposal.customerId !== customerId) throw new Error('Forbidden');
 		if (proposal.status !== 'INSPECTION_COMPLETED') {
-			throw new Error(`Cannot reopen a proposal with status ${proposal.status}`);
+			throw new Error(`Conflict: cannot reopen a proposal with status ${proposal.status}`);
 		}
 
 		return await (this.client as PrismaClient).$transaction(async (tx) => {

@@ -62,8 +62,8 @@ export class ApplicationService {
 		const application = await this.find(id);
 
 		if (!application) throw new Error('Application not found');
-		if (application.status !== 'PENDING') throw new Error('Application already modified');
-		if (new Date(Date.now()) > application.expiresAt) throw new Error('Application expired');
+		if (application.status !== 'PENDING') throw new Error('Conflict: application already modified');
+		if (new Date(Date.now()) > application.expiresAt) throw new Error('Conflict: application expired');
 
 		await this.client.application.update({ where: { id }, data: { status: 'ACCEPTED' } });
 		await this.client.handyman.update({
@@ -85,7 +85,7 @@ export class ApplicationService {
 		const application = await this.find(id);
 
 		if (!application) throw new Error('Application not found');
-		if (application.status !== 'PENDING') throw new Error('Application already modified');
+		if (application.status !== 'PENDING') throw new Error('Conflict: application already modified');
 
 		await this.client.application.update({ where: { id }, data: { status: 'REJECTED', notes: payload.notes } });
 		await this.client.handyman.update({ where: { id: application.handymanId }, data: { status: 'REJECTED' } });
@@ -97,7 +97,7 @@ export class ApplicationService {
 		const application = await this.find(id);
 
 		if (!application) throw new Error('Application not found');
-		if (application.status !== 'PENDING') throw new Error('Application already modified');
+		if (application.status !== 'PENDING') throw new Error('Conflict: application already modified');
 		if (new Date(Date.now()) > application.expiresAt && application.status === 'PENDING') {
 			await this.client.application.update({ where: { id }, data: { status: 'EXPIRED' } });
 		}

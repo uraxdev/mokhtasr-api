@@ -20,7 +20,7 @@ export class AdminService {
 		if (!user) throw new Error('User not found');
 
 		const admin = await this.client.admin.findUnique({ where: { userId } });
-		if (admin) throw new Error('User is already a admin');
+		if (admin) throw new Error('Conflict: user is already an admin');
 
 		return await this.client.admin.create({ data: { user: { connect: { id: user.id } } } });
 	}

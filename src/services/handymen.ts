@@ -24,7 +24,7 @@ export class HandymanService {
 		if (!user) throw new Error('User not found');
 
 		const handyman = await this.client.handyman.findUnique({ where: { userId: user.id } });
-		if (handyman) throw new Error('User is already a handyman');
+		if (handyman) throw new Error('Conflict: user is already a handyman');
 
 		return await this.client.handyman.create({ data: { user: { connect: { id: user.id } } } });
 	}

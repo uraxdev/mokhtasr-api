@@ -20,7 +20,7 @@ export class CustomerService {
 		if (!user) throw new Error('User not found');
 
 		const customer = await this.client.customer.findUnique({ where: { userId } });
-		if (customer) throw new Error('User is already a customer');
+		if (customer) throw new Error('Conflict: user is already a customer');
 
 		return await this.client.customer.create({ data: { user: { connect: { id: user.id } } } });
 	}

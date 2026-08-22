@@ -60,7 +60,7 @@ export class VisitService {
 		});
 		if (!proposal) throw new Error('Proposal not found');
 		if (proposal.status !== 'WAITING_OFFERS' && proposal.status !== 'OFFERS_RECEIVED') {
-			throw new Error(`Cannot submit a visit on a proposal with status ${proposal.status}`);
+			throw new Error(`Conflict: cannot submit a visit on a proposal with status ${proposal.status}`);
 		}
 
 		const handyman = await this.client.handyman.findUnique({ where: { id: handymanId }, select: { userId: true } });
@@ -114,7 +114,7 @@ export class VisitService {
 
 		if (!visit) throw new Error('Visit not found');
 		if (visit.handymanId !== handymanId) throw new Error('Forbidden');
-		if (visit.status !== 'ACCEPTED') throw new Error('Visit is not in accepted state');
+		if (visit.status !== 'ACCEPTED') throw new Error('Conflict: visit is not in accepted state');
 
 		if (payload.stage === 'AT_LOCATION') {
 			if (visit.stage !== 'INITIATED') throw new Error('Invalid stage transition');
@@ -122,8 +122,8 @@ export class VisitService {
 			const { latitude: pLat, longitude: pLon } = payload;
 			const { latitude: rLat, longitude: rLon } = visit.proposal;
 
-			if (pLat == null || pLon == null) throw new Error('latitude and longitude are required for AT_LOCATION');
-			if (rLat == null || rLon == null) throw new Error('Proposal has no location coordinates');
+			if (pLat == null || pLon == null) throw new Error('Invalid payload: latitude and longitude are required for AT_LOCATION');
+			if (rLat == null || rLon == null) throw new Error('Conflict: proposal has no location coordinates');
 
 			const dist = this.calculateDistanceMeters(pLat, pLon, rLat, rLon);
 			if (dist > 200) throw new Error(`You are ${Math.round(dist)}m away — must be within 200m`);
@@ -166,7 +166,7 @@ export class VisitService {
 
 		if (!visit) throw new Error('Visit not found');
 		if (visit.proposal.customerId !== customerId) throw new Error('Forbidden');
-		if (visit.stage !== 'AWAITING_CODE') throw new Error('Visit is not awaiting code verification');
+		if (visit.stage !== 'AWAITING_CODE') throw new Error('Conflict: visit is not awaiting code verification');
 		if (visit.completionCode !== payload.code) throw new Error('Invalid completion code');
 
 		return await (this.client as PrismaClient).$transaction(async (tx) => {
@@ -213,11 +213,11 @@ export class VisitService {
 
 		if (!visit) throw new Error('Visit not found');
 		if (visit.handymanId !== handymanId) throw new Error('Forbidden');
-		if (visit.type !== 'INSPECTION') throw new Error('Only INSPECTION visits can be converted to work');
-		if (visit.status !== 'COMPLETED') throw new Error(`Cannot convert a visit with status ${visit.status}`);
-		if (visit.convertedTo) throw new Error('This visit has already been converted to a work visit');
+		if (visit.type !== 'INSPECTION') throw new Error('Conflict: only INSPECTION visits can be converted to work');
+		if (visit.status !== 'COMPLETED') throw new Error(`Conflict: cannot convert a visit with status ${visit.status}`);
+		if (visit.convertedTo) throw new Error('Conflict: this visit has already been converted to a work visit');
 		if (visit.proposal.status !== 'INSPECTION_COMPLETED') {
-			throw new Error(`Cannot convert visit: proposal has status ${visit.proposal.status}`);
+			throw new Error(`Conflict: cannot convert visit: proposal has status ${visit.proposal.status}`);
 		}
 
 		return await (this.client as PrismaClient).$transaction(async (tx) => {
