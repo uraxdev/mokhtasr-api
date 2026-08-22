@@ -13,9 +13,9 @@ export class UserRepository {
 			id: z.uuid(),
 			name: z.string(),
 			phone: PhoneSchema,
-			role: UserRepository.role,
+			role: this.role,
 			avatar: z.url().nullable(),
-			locale: UserRepository.locale,
+			locale: this.locale,
 			createdAt: z.iso.datetime(),
 			updatedAt: z.iso.datetime(),
 			admin: AdminRepository.get().nullable(),
@@ -28,7 +28,7 @@ export class UserRepository {
 		return z.object({
 			name: z.string(),
 			phone: PhoneSchema,
-			role: UserRepository.role
+			role: this.role
 		});
 	}
 
@@ -36,7 +36,7 @@ export class UserRepository {
 		return z.object({
 			name: z.string().optional(),
 			avatar: z.any(),
-			locale: UserRepository.locale.optional()
+			locale: this.locale.optional()
 		});
 	}
 }

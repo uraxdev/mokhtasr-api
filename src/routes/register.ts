@@ -1,5 +1,5 @@
 import { client } from '@/database/lib/client';
-import type { RegisterHandyman } from '@/database/repositories/register';
+import type { RegisterCustomer, RegisterHandyman } from '@/database/repositories/register';
 import { RegisterService } from '@/services/register';
 import type { Router } from 'express';
 
@@ -16,7 +16,7 @@ export default (router: Router) => {
 		};
 
 		try {
-			return res.status(200).json(await new RegisterService(client).handyman({ ...payload, ...images }, userId));
+			return res.status(200).json(await new RegisterService(client).handyman(userId, { ...payload, ...images }));
 		} catch (error) {
 			return next(error);
 		}
@@ -24,9 +24,11 @@ export default (router: Router) => {
 
 	router.post('/register/customer/:userId', async (req, res, next) => {
 		const userId = req.params['userId'];
+		const payload = req.body satisfies RegisterCustomer;
+		const avatar = (req.files as Express.Multer.File[])?.find((file) => file.fieldname === 'avatar');
 
 		try {
-			return res.status(200).json(await new RegisterService(client).customer(userId));
+			return res.status(200).json(await new RegisterService(client).customer(userId, { ...payload, avatar }));
 		} catch (error) {
 			return next(error);
 		}

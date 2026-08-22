@@ -27,7 +27,7 @@ export class ReviewRepository {
 			reviewerName: z.string(),
 			rating: z.number(),
 			comment: z.string().nullable(),
-			tags: z.array(z.enum(ReviewRepository.tags)),
+			tags: z.array(z.enum(this.tags)),
 			createdAt: z.iso.datetime(),
 			updatedAt: z.iso.datetime()
 		});
@@ -37,7 +37,7 @@ export class ReviewRepository {
 		return z.object({
 			rating: z.number().min(1).max(5),
 			comment: z.string().optional(),
-			tags: z.array(z.enum(ReviewRepository.tags)).optional()
+			tags: z.array(z.enum(this.tags)).optional()
 		});
 	}
 }

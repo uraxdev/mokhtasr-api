@@ -1,8 +1,8 @@
 import type z from 'zod';
 
 import type { ClientRegistry } from './registry';
-import { SubscribeChannelPayloadSchema } from './types';
 import type { BaseConnectionContext, HandlerRegistration, HandlerResult, InboundMessage, SubscribeChannelPayload } from './types';
+import { SubscribeChannelPayloadSchema } from './types';
 
 // ============================================================================
 // Handler Registry

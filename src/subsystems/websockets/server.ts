@@ -7,8 +7,8 @@ import { AccessTokenPayload } from '@/database/repositories/auth';
 import { verifyToken } from '@/lib/utils';
 import { UserService } from '@/services/users';
 
-import { Broadcaster, ClientRegistry, HandlerRegistry, InboundMessageSchema, createSystemHandlers } from './core';
 import type { BaseConnectionContext, BroadcastOptions, InboundMessage, OutboundMessage } from './core';
+import { Broadcaster, ClientRegistry, HandlerRegistry, InboundMessageSchema, createSystemHandlers } from './core';
 
 // ============================================================================
 // Types

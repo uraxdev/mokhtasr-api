@@ -9,7 +9,7 @@ export class NotificationRepository {
 		return z.object({
 			id: z.uuid(),
 			userId: z.uuid(),
-			type: z.enum(NotificationRepository.type),
+			type: z.enum(this.type),
 			title: z.object({ ar: z.string(), en: z.string() }),
 			body: z.object({ ar: z.string(), en: z.string() }),
 			data: z.record(z.string(), z.string()).nullable(),

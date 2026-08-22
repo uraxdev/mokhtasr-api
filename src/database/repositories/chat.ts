@@ -11,11 +11,11 @@ export class ChatRepository {
 			id: z.uuid(),
 			visitId: z.string(),
 			senderId: z.string(),
-			type: z.enum(ChatRepository.type),
+			type: z.enum(this.type),
 			text: z.string().nullable(),
 			imageUrl: z.url().nullable(),
 			proposedDate: z.iso.datetime().nullable(),
-			rescheduleStatus: z.enum(ChatRepository.rescheduleStatus).nullable(),
+			rescheduleStatus: z.enum(this.rescheduleStatus).nullable(),
 			createdAt: z.iso.datetime(),
 			updatedAt: z.iso.datetime()
 		});
@@ -24,7 +24,7 @@ export class ChatRepository {
 	static send() {
 		return z
 			.object({
-				type: z.enum(ChatRepository.type),
+				type: z.enum(this.type),
 				text: z.string().nullable(),
 				imageUrl: z.url().nullable()
 			})

@@ -123,6 +123,31 @@
 					}
 				}
 			],
+			"requestBody": {
+				"content": {
+					"multipart/form-data": {
+						"schema": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"example": "Seif",
+									"type": "string"
+								},
+								"avatar": {
+									"format": "binary",
+									"type": "string"
+								},
+								"locale": {
+									"type": "string",
+									"description": "locale",
+									"enum": ["AR", "EN"]
+								}
+							}
+						}
+					}
+				},
+				"required": false
+			},
 			"responses": {
 				"200": {
 					"description": "",

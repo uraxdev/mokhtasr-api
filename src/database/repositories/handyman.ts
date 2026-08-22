@@ -11,8 +11,8 @@ export class HandymanRepository {
 	static get() {
 		return z.object({
 			id: z.uuid(),
-			workDays: z.array(z.enum(HandymanRepository.weekdays)),
-			status: z.enum(HandymanRepository.status),
+			workDays: z.array(z.enum(this.weekdays)),
+			status: z.enum(this.status),
 			birthdate: z.iso.datetime().nullable(),
 			userId: z.uuid(),
 			createdAt: z.iso.datetime(),
@@ -29,7 +29,7 @@ export class HandymanRepository {
 	static update() {
 		return Refined({
 			regions: z.array(z.uuid()).optional(),
-			workDays: z.array(z.enum(HandymanRepository.weekdays)).optional()
+			workDays: z.array(z.enum(this.weekdays)).optional()
 		});
 	}
 }

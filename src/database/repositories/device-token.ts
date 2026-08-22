@@ -10,7 +10,7 @@ export class DeviceTokenRepository {
 			id: z.uuid(),
 			userId: z.uuid(),
 			token: z.string(),
-			platform: z.enum(DeviceTokenRepository.platform),
+			platform: z.enum(this.platform),
 			createdAt: z.iso.datetime(),
 			updatedAt: z.iso.datetime()
 		});
@@ -19,7 +19,7 @@ export class DeviceTokenRepository {
 	static register() {
 		return z.object({
 			token: z.string().min(1),
-			platform: z.enum(DeviceTokenRepository.platform)
+			platform: z.enum(this.platform)
 		});
 	}
 }

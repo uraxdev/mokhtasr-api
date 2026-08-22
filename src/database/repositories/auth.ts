@@ -17,7 +17,7 @@ export class AuthRepository {
 			verificationId: z.uuid(),
 			phone: PhoneSchema,
 			otp: z.string().length(6),
-			role: z.enum(AuthRepository.role).optional()
+			role: z.enum(this.role).optional()
 		});
 	}
 

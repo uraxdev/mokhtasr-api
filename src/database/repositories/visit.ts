@@ -11,15 +11,15 @@ export class VisitRepository {
 	static get() {
 		return z.object({
 			id: z.uuid(),
-			type: z.enum(VisitRepository.type),
+			type: z.enum(this.type),
 			price: z.number().positive().nullable(),
 			currency: z.string(),
-			status: z.enum(VisitRepository.status),
+			status: z.enum(this.status),
 			completionCode: z.string().nullable(),
 			message: z.string().nullable(),
 			estimatedDuration: z.string().nullable(),
 			scheduledFor: z.iso.datetime().nullable(),
-			stage: z.enum(VisitRepository.stage).nullable(),
+			stage: z.enum(this.stage).nullable(),
 			proposalId: z.uuid(),
 			handymanId: z.uuid(),
 			convertedFromVisitId: z.uuid().nullable(),
@@ -55,7 +55,7 @@ export class VisitRepository {
 
 	static advanceStage() {
 		return z.object({
-			stage: z.enum(VisitRepository.stage),
+			stage: z.enum(this.stage),
 			latitude: z.number().optional(),
 			longitude: z.number().optional()
 		});

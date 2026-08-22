@@ -14,7 +14,7 @@ export class ProposalRepository {
 			title: z.string(),
 			description: z.string(),
 			address: z.string(),
-			status: z.enum(ProposalRepository.status),
+			status: z.enum(this.status),
 			dueDate: z.iso.datetime(),
 			latitude: z.number().nullable(),
 			longitude: z.number().nullable(),
